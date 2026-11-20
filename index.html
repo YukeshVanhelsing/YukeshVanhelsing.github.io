@@ -87,6 +87,7 @@ details summary{cursor:pointer;font-size:12px;color:var(--muted);margin-top:8px}
   <div class="wrap ctl">
     <div class="sw metal" id="swMetal"><button data-v="gold">🟡 Gold</button><button data-v="silver">⚪ Silver</button></div>
     <div class="sw" id="swMkt"><button data-v="india">🇮🇳 India</button><button data-v="intl">🌍 International</button></div>
+    <button class="gstb" id="swGst" aria-pressed="false" title="Show India prices including 3% GST">+GST</button>
     <select id="swUnit" aria-label="Unit">
       <option value="1">per 1 g</option><option value="8">per 8 g (sovereign)</option><option value="10">per 10 g</option>
       <option value="11.6638">per tola (11.66 g)</option><option value="100">per 100 g</option><option value="1000">per 1 kg</option><option value="31.1035">per ounce (31.1 g)</option>
@@ -99,11 +100,12 @@ details summary{cursor:pointer;font-size:12px;color:var(--muted);margin-top:8px}
   <div class="alertbar" id="alertBar" hidden onclick="location.hash='#tools'"></div>
 
 <section data-tab="today">
+  <div id="estWrap"><h3 class="sec" data-i18n="s_est">🎯 Expected rates today</h3>
+  <div class="card" id="estimate" style="border-left:5px solid var(--gold)"></div>
+  <h3 class="sec">🔍 Do other trusted sources agree?</h3><div class="card" id="xcheck"></div></div>
   <div class="card hero" id="mood"></div>
   <h3 class="sec" id="tpTitle"></h3>
   <div class="card" id="todayPrices"></div>
-  <div id="estWrap"><h3 class="sec" data-i18n="s_est">🎯 Expected IBJA rate today</h3>
-  <div class="card" id="estimate" style="border-left:5px solid var(--gold)"></div></div>
   <div><h3 class="sec" data-i18n="s_split">Today's move: world price vs rupee</h3><div class="card" id="split"></div></div>
   <h3 class="sec" data-i18n="s_range">Tomorrow's most likely range</h3>
   <div class="card" id="todayRange"></div>
@@ -388,13 +390,21 @@ button.x{border:0;background:none;color:var(--muted);cursor:pointer;font-size:15
 .txb .sl{background:#b4372f;display:flex;align-items:center;justify-content:center}.txb .lt{flex:1;background:#1f7a4d;display:flex;align-items:center;justify-content:center}
 .gpager{display:flex;justify-content:space-between;gap:8px;margin-top:16px}
 .gpager .btn{min-height:44px;font-size:14px}
+.gstb{border:1px solid var(--line);background:var(--card);color:var(--muted);font:inherit;font-size:13px;font-weight:700;padding:6px 10px;border-radius:10px;cursor:pointer}
+.gstb.on{background:#3a5a8c;color:#fff;border-color:#3a5a8c}
+.estg{display:grid;grid-template-columns:1.1fr 1fr 1fr;gap:8px;align-items:center;padding:8px 0;border-bottom:1px solid var(--line);font-variant-numeric:tabular-nums}
+.estg span{display:flex;flex-direction:column}.estg em{font-style:normal;font-size:12px;color:var(--muted)}
+.estg.head{font-size:13px;font-weight:700;color:var(--ink);padding-top:0}.estg.head span:not(:first-child),.estg .ev{text-align:center;align-items:center}
+.estg .ev b{font-size:20px}
+.score{margin-top:12px;border-top:2px solid var(--line);padding-top:10px}.score .sh{font-weight:800;margin-bottom:4px}
+.score.empty{font-size:13px;color:var(--muted);border-top:1px dashed var(--line)}
 .tag{display:inline-block;font-size:11px;font-weight:700;padding:1px 7px;border-radius:6px;background:var(--goldsoft);color:var(--gold);margin-right:4px}
 .tag.s{background:var(--silversoft);color:var(--silver)} .tag.i{background:rgba(31,122,77,.12);color:var(--up)}
 </style>
 <script>
 const OZ = 31.1035, Z80 = 1.2816;
 let D=null, H=null, hr=60, hChart=null;
-const S = {metal:"gold", mkt:"india", unit:1};
+const S = {metal:"gold", mkt:"india", unit:1, gst:false};
 try{ Object.assign(S, JSON.parse(localStorage.getItem("gs_state")||"{}")); }catch(e){}
 const save = () => { try{ localStorage.setItem("gs_state", JSON.stringify(S)); }catch(e){} };
 
@@ -411,6 +421,8 @@ const mktName=()=>S.mkt==="india"?"India":"International";
 
 // Items for the current selection: [{name, perGram (in market currency), fmt, alt (₹ per gram for intl), status, change, asof, note, sources}]
 function items(metal=S.metal, mkt=S.mkt){
+  const r=itemsRaw(metal,mkt); if(S.gst&&mkt==="india") r.forEach(it=>{ it.pg*=1.03; if(it.prevPg) it.prevPg*=1.03; it.name+=" +GST"; }); return r; }
+function itemsRaw(metal, mkt){
   const g=D.gold, s=D.silver, fx=D.fx.usd_inr;
   if(metal==="gold" && mkt==="india") return [
     {name:"24K (999)", pg:g.india.p999_10g/10, prevPg:(g.india.prev_999_10g||0)/10, cur:"inr", m:g.india},
@@ -434,7 +446,8 @@ function syncControls(){
   document.querySelectorAll("#swMetal button").forEach(b=>b.classList.toggle("on",b.dataset.v===S.metal));
   document.querySelectorAll("#swMkt button").forEach(b=>b.classList.toggle("on",b.dataset.v===S.mkt));
   document.getElementById("swUnit").value=String(S.unit);
-  document.getElementById("ribbon").textContent = `${S.metal==="gold"?"🟡":"⚪"} ${metalName()} · ${S.mkt==="india"?"🇮🇳":"🌍"} ${mktName()} · prices per ${unitName()}`;
+  const gb=document.getElementById("swGst"); gb.classList.toggle("on",S.gst); gb.setAttribute("aria-pressed",S.gst); gb.hidden=S.mkt!=="india";
+  document.getElementById("ribbon").textContent = `${S.metal==="gold"?"🟡":"⚪"} ${metalName()} · ${S.mkt==="india"?"🇮🇳":"🌍"} ${mktName()} · prices per ${unitName()}${S.gst&&S.mkt==="india"?" · incl. 3% GST":""}`;
 }
 
 function renderAll(){
@@ -458,6 +471,7 @@ function renderToday(){
     <div class="pr"><div class="nm">${esc(it.name)}</div><div class="vv">${fmtCur(it.cur,it.pg*k)}</div>
       <div class="sub"><span>${chg(it.m.change_pct)} ${it.inrPg?"· ≈ "+inr(it.inrPg*k)+" in rupees":""}</span>${badge(it.m.status)}</div></div>`).join("")
     + `<div class="meta" style="margin-top:6px">${S.mkt==="india"?"IBJA benchmark, excluding 3% GST and making charges.":"Global spot price, converted at USD-INR ₹"+D.fx.usd_inr.toFixed(2)+"."} <a href="#prices">Details & sources →</a></div>`;
+  renderXcheck();
   const eb=estimateBlock(); document.getElementById("estWrap").style.display=eb?"":"none"; document.getElementById("estimate").innerHTML=eb;
   document.getElementById("todayRange").innerHTML = rangeRows(1) + `<div class="meta" style="margin-top:6px"><a href="#outlook">1-week range →</a></div>`;
   const hl=(D.highlights||[]).filter(h=>!h.metal||h.metal==="Both"||h.metal===metalName()||(h.metal==="India"&&S.mkt==="india"));
@@ -466,6 +480,21 @@ function renderToday(){
   document.getElementById("india").innerHTML=`${esc(D.india_outlook.text)}<div class="src">${esc(D.india_outlook.basis)}</div>`;
   const pts=(G.points||[]).filter(p=>!p.metal||p.metal==="Both"||p.metal===metalName()).slice(0,2);
   document.getElementById("todayGuide").innerHTML=pts.map(p=>`<div class="hl"><span class="dot"></span><div><b>${esc(p.who)}</b><div>${esc(p.tip)}</div></div></div>`).join("")+`<div class="meta" style="margin-top:6px">${esc(G.note)} <a href="#guide">More guidance →</a></div>`;
+}
+
+
+function renderXcheck(){
+  const X=D.crosscheck, el=document.getElementById("xcheck"); if(!el) return;
+  if(!X||S.metal!=="gold"){ el.parentElement && (el.previousElementSibling.hidden=el.hidden=true); return; }
+  el.previousElementSibling.hidden=el.hidden=false;
+  const E=D.india_estimate, base=E?E.gold_999_10g/10:D.gold.india.p999_10g/10, k=S.unit;
+  const rows=X.rows.map(r=>{ const d=(r.g24/base-1)*100; const same=!/GST|duty/i.test(r.flag)&&!/older/.test(r.flag);
+    return `<tr><td style="text-align:left"><a href="${r.url}" target="_blank" rel="noopener">${esc(r.src)}</a><div class="meta">${esc(r.kind)} · ${esc(r.when)}</div></td><td>${inr(r.g24*k)}</td><td class="${Math.abs(d)<=1.2?'pos':''}">${d>=0?'+':''}${d.toFixed(1)}%${same&&Math.abs(d)<=1.2?' ✅':''}${r.flag?`<div class="meta">${esc(r.flag)}</div>`:''}</td></tr>`; }).join("");
+  const glob=(X.global||[]).map(g=>`<div class="ol"><span><a href="${g.url}" target="_blank" rel="noopener">${esc(g.src)}</a><div class="meta">${esc(g.when)}</div></span><b>$${g.usd.toLocaleString("en-US",{maximumFractionDigits:2})}</b></div>`).join("");
+  el.innerHTML=`<div class="meta" style="margin-bottom:6px">24K, ${esc(unitName())}. Difference is measured against SY's expected IBJA rate (${inr(base*k)}). ✅ = same kind of price and within ~1%.</div>
+    <div class="scroll"><table class="gtab"><tr><th style="text-align:left">Source</th><th>24K</th><th>vs SY</th></tr>${rows}</table></div>
+    <details style="margin-top:8px"><summary class="meta">🌍 Global benchmarks (US$ per ounce)</summary>${glob}</details>
+    <div class="src">${esc(X.note)} · ${esc(X.asof)}</div>`;
 }
 
 // ---------- PRICES ----------
@@ -519,17 +548,31 @@ function rangeRows(n){
 }
 function estimateBlock(){
   const E=D.india_estimate; if(!E||S.mkt!=="india") return "";
-  const k=S.unit, m=(S.metal==="gold"?E.margin_pct.gold:E.margin_pct.silver)/100;
-  const rows = S.metal==="gold"
-    ? [["24K (999)",E.gold_999_10g/10,D.gold.india.p999_10g/10],["22K (916)",E.gold_916_10g/10,D.gold.india.p916_10g/10],["18K (750)",E.gold_750_10g/10,D.gold.india.p750_10g/10]]
-    : [["Silver 999",E.silver_999_kg/1000,D.silver.india.p999_kg/1000]];
-  const acc=D.accuracy&&D.accuracy.log&&D.accuracy.log.length ? (()=>{const L=D.accuracy.log.filter(x=>x.metal===S.metal); if(!L.length) return ""; const avg=L.reduce((a,x)=>a+Math.abs(x.err_pct),0)/L.length; const hit=L.filter(x=>Math.abs(x.err_pct)<=x.margin_pct).length;
-      return `<div class="meta" style="margin-top:6px">📏 Track record: average miss ${avg.toFixed(2)}% (≈ ${inr(rows[0][2]*k*avg/100)} ${esc(unitName())}); inside the margin on ${hit} of ${L.length} days.</div>`;})() : `<div class="meta" style="margin-top:6px">📏 ${esc(D.accuracy?.note||"")}</div>`;
-  return rows.map(([nm,e,prev])=>`<div class="tr"><span><b>${nm}</b><br><span class="meta">last IBJA ${inr(prev*k)}</span></span>
-      <span><span class="meta">expected</span><br><b>${inr(e*k)}</b></span>
-      <span style="text-align:right"><span class="meta">± margin</span><br><b>±${inr(e*k*m)}</b></span></div>`).join("")
-    + `<div class="meta">${chg((rows[0][1]/rows[0][2]-1)*100)} vs last IBJA · ${esc(E.for_date)} · <span class="badge b-warn">estimate</span></div>`
-    + `<details><summary>How this is calculated</summary><div class="src">${esc(E.basis)}</div></details>` + acc;
+  const k=S.unit*(S.gst?1.03:1), met=S.metal;
+  const ses=[E.am||E, E.pm].filter(Boolean);
+  const keys = met==="gold" ? [["24K","gold_999_10g",10,D.gold.india.p999_10g],["22K","gold_916_10g",10,D.gold.india.p916_10g],["18K","gold_750_10g",10,D.gold.india.p750_10g]]
+                            : [["Silver 999","silver_999_kg",1000,D.silver.india.p999_kg]];
+  const f=v=>inr(v, v<100?2:0);
+  const head=`<div class="estg head"><span></span>${ses.map(s=>`<span>${esc((s.label||"Today").split(" · ")[0])}<em>${esc((s.label||"").split(" · ")[1]||"")}</em></span>`).join("")}</div>`;
+  const rows=keys.map(([nm,key,div,last])=>`<div class="estg"><span><b>${nm}</b><em>last ${f(last/div*k)}</em></span>${ses.map(s=>{ const v=s[key]/div*k, m=(met==="gold"?s.margin_pct.gold:s.margin_pct.silver)/100; return `<span class="ev"><b>${f(v)}</b><em>± ${inr(v*m, v*m<10?2:0)}</em></span>`;}).join("")}</div>`).join("");
+  const chgp=((ses[0][keys[0][1]])/keys[0][3]-1)*100;
+  return head+rows
+    + `<div class="meta" style="margin-top:6px">${chg(chgp)} vs last IBJA · <span class="badge b-warn">estimate</span>${S.gst?" · incl. 3% GST":""}</div>`
+    + (E.pm_note?`<div class="gtip">🕔 ${esc(E.pm_note)}</div>`:"")
+    + `<details><summary class="meta">How this is calculated</summary><div class="src">${esc(E.basis)}</div></details>`
+    + scoreBlock();
+}
+function scoreBlock(){
+  const L=((D.accuracy&&D.accuracy.log)||[]).filter(x=>x.metal===S.metal);
+  if(!L.length) return `<div class="score empty">📏 ${esc(D.accuracy?.note||"")}</div>`;
+  const div=S.metal==="gold"?10:1000, k=S.unit;
+  const hits=L.filter(x=>Math.abs(x.err_pct)<=x.margin_pct).length, avg=L.reduce((a,x)=>a+Math.abs(x.err_pct),0)/L.length;
+  const avgRs = avg/100*(L[L.length-1].actual/div)*k;
+  const rows=L.slice(-8).reverse().map(x=>{ const ok=Math.abs(x.err_pct)<=x.margin_pct, miss=(x.actual-x.est)/div*k;
+    return `<tr><td style="text-align:left">${esc(x.date)} <span class="meta">${esc(x.session||"AM")}</span></td><td>${inr(x.est/div*k)}</td><td>${inr(x.actual/div*k)}</td><td class="${ok?'pos':'neg'}">${miss>=0?'+':'−'}${inr(Math.abs(miss))} ${ok?'✅':'❌'}</td></tr>`; }).join("");
+  return `<div class="score"><div class="sh">📏 SY's track record</div>
+    <div class="trio"><div><span>Inside margin</span><b class="${hits/L.length>=0.7?'up':'down'}">${hits}/${L.length}</b></div><div><span>Average miss</span><b>${inr(avgRs)}</b><em>${avg.toFixed(2)}%</em></div><div><span>Days scored</span><b>${new Set(L.map(x=>x.date)).size}</b></div></div>
+    <div class="scroll"><table class="gtab"><tr><th style="text-align:left">Date</th><th>SY said</th><th>Actual</th><th>Miss</th></tr>${rows}</table></div></div>`;
 }
 function renderOutlook(){
   document.getElementById("rangeDay").innerHTML=rangeRows(1);
@@ -608,6 +651,7 @@ function showTab(){ let h=(location.hash||"#today").slice(1); if(!TABS.includes(
 window.addEventListener("hashchange",showTab);
 document.querySelectorAll("#swMetal button").forEach(b=>b.onclick=()=>{S.metal=b.dataset.v; if(S.metal==="silver"&&S.unit<10) {} save(); renderAll();});
 document.querySelectorAll("#swMkt button").forEach(b=>b.onclick=()=>{S.mkt=b.dataset.v; save(); renderAll();});
+document.getElementById("swGst").onclick=()=>{S.gst=!S.gst; save(); renderAll();};
 document.getElementById("swUnit").onchange=e=>{S.unit=+e.target.value; save(); renderAll();};
 document.querySelectorAll("#hRange button").forEach(b=>b.onclick=()=>{hr=+b.dataset.r; renderHist();});
 document.getElementById("reload").onclick=load;
