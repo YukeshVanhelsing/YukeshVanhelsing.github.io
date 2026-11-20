@@ -71,7 +71,7 @@ details summary{cursor:pointer;font-size:12px;color:var(--muted);margin-top:8px}
 <div class="topbar">
   <div class="wrap tb">
     <div><div class="brand"><img src="icons/icon-192.png" alt="" class="logo">SY <span class="tagl">Gold &amp; Silver, verified daily</span></div><div class="stamp"><span id="stamp">Loading…</span> <span id="fresh"></span></div></div>
-    <div style="display:flex;gap:6px"><button class="btn" id="install" hidden>⬇ Install</button><button class="btn" id="share" aria-label="Share">↗</button><button class="btn" id="reload" aria-label="Refresh">↻</button></div>
+    <div style="display:flex;gap:6px"><button class="btn" id="install" hidden>⬇ Install</button><button class="btn" id="langBtn" aria-label="Language">தமிழ்</button><button class="btn" id="share" aria-label="Share">↗</button><button class="btn" id="reload" aria-label="Refresh">↻</button></div>
   </div>
   <nav class="wrap tabs" id="tabs">
     <a href="#today" data-t="today">⭐ Today</a>
@@ -80,6 +80,9 @@ details summary{cursor:pointer;font-size:12px;color:var(--muted);margin-top:8px}
     <a href="#news" data-t="news">📰 Why &amp; news</a>
     <a href="#history" data-t="history">🕒 History</a>
     <a href="#guide" data-t="guide">🧭 Guidance</a>
+    <a href="#tools" data-t="tools">🧮 Tools</a>
+    <a href="#learn" data-t="learn">📚 Learn</a>
+    <a href="#why" data-t="why">✨ Why SY</a>
   </nav>
   <div class="wrap ctl">
     <div class="sw metal" id="swMetal"><button data-v="gold">🟡 Gold</button><button data-v="silver">⚪ Silver</button></div>
@@ -93,19 +96,21 @@ details summary{cursor:pointer;font-size:12px;color:var(--muted);margin-top:8px}
 
 <div class="wrap">
   <div class="ribbon" id="ribbon"></div>
+  <div class="alertbar" id="alertBar" hidden onclick="location.hash='#tools'"></div>
 
 <section data-tab="today">
   <div class="card hero" id="mood"></div>
   <h3 class="sec" id="tpTitle"></h3>
   <div class="card" id="todayPrices"></div>
-  <div id="estWrap"><h3 class="sec">🎯 Expected IBJA rate today</h3>
+  <div id="estWrap"><h3 class="sec" data-i18n="s_est">🎯 Expected IBJA rate today</h3>
   <div class="card" id="estimate" style="border-left:5px solid var(--gold)"></div></div>
-  <h3 class="sec">Tomorrow's most likely range</h3>
+  <div><h3 class="sec" data-i18n="s_split">Today's move: world price vs rupee</h3><div class="card" id="split"></div></div>
+  <h3 class="sec" data-i18n="s_range">Tomorrow's most likely range</h3>
   <div class="card" id="todayRange"></div>
-  <h3 class="sec">Must know today</h3>
+  <h3 class="sec" data-i18n="s_must">Must know today</h3>
   <div class="card" id="highlights"></div>
-  <div id="indiaWrap"><h3 class="sec">What to expect in India today</h3><div class="card callout" id="india"></div></div>
-  <h3 class="sec">Our guidance</h3>
+  <div id="indiaWrap"><h3 class="sec" data-i18n="s_india">What to expect in India today</h3><div class="card callout" id="india"></div></div>
+  <h3 class="sec" data-i18n="s_guide">Our guidance</h3>
   <div class="card" id="todayGuide"></div>
 </section>
 
@@ -160,6 +165,111 @@ details summary{cursor:pointer;font-size:12px;color:var(--muted);margin-top:8px}
   </div>
   <p class="note" id="guideNote" style="margin-top:10px"></p>
 </section>
+
+<!-- ========== TOOLS ========== -->
+<section data-tab="tools">
+  <div class="toolnav" id="toolNav">
+    <button data-tool="bill" class="on" data-i18n="t_bill">🧾 Jewellery bill</button>
+    <button data-tool="old" data-i18n="t_old">♻️ Old gold value</button>
+    <button data-tool="mine" data-i18n="t_mine">💼 My gold</button>
+    <button data-tool="plan" data-i18n="t_plan">🐷 Savings plan</button>
+    <button data-tool="alert" data-i18n="t_alert">🔔 Price alerts</button>
+    <button data-tool="cmp" data-i18n="t_cmp">⚖️ Compare</button>
+  </div>
+
+  <div class="tool card" data-tool="bill">
+    <h3 class="sec" style="margin-top:0" data-i18n="bill_h">Jewellery bill calculator</h3>
+    <p class="note" data-i18n="bill_p">Check a jeweller's quote before you pay. The rate fills in from today's IBJA rate; change it to your shop's board rate if it's different.</p>
+    <div class="fg">
+      <label><span data-i18n="weight">Weight (g)</span><input id="b_w" type="number" step="0.001" value="8"></label>
+      <label><span data-i18n="purity">Purity</span><select id="b_k"><option value="999">24K (999)</option><option value="916" selected>22K (916)</option><option value="750">18K (750)</option><option value="585">14K (585)</option><option value="ag">Silver 999</option></select></label>
+      <label><span data-i18n="rate_g">Rate per gram (₹)</span><input id="b_r" type="number" step="1"></label>
+      <label><span data-i18n="making">Making charge</span><span class="row2"><input id="b_m" type="number" step="0.1" value="12"><select id="b_mt"><option value="pct">%</option><option value="pg">₹/g</option><option value="flat">₹ total</option></select></span></label>
+      <label><span data-i18n="wastage">Wastage (VA) %</span><input id="b_wa" type="number" step="0.1" value="0"></label>
+      <label><span data-i18n="stones">Stones / other (₹)</span><input id="b_s" type="number" step="1" value="0"></label>
+      <label><span data-i18n="hallmark">Hallmark charge (₹)</span><input id="b_h" type="number" step="1" value="0"></label>
+      <label><span data-i18n="gstmode">GST method</span><select id="b_g"><option value="flat3">3% on full bill (most shops)</option><option value="split">3% on gold + 5% on making</option></select></label>
+      <label><span data-i18n="quote">Shop's quoted total (₹, optional)</span><input id="b_q" type="number" step="1"></label>
+    </div>
+    <div id="b_out" class="out"></div>
+  </div>
+
+  <div class="tool card" data-tool="old" hidden>
+    <h3 class="sec" style="margin-top:0" data-i18n="old_h">Old gold exchange value</h3>
+    <p class="note" data-i18n="old_p">Roughly what your old jewellery is worth today. Shops test the purity and deduct for melting loss, so their offer can differ. There's no GST when you sell.</p>
+    <div class="fg">
+      <label><span data-i18n="weight">Weight (g)</span><input id="o_w" type="number" step="0.01" value="16"></label>
+      <label><span data-i18n="purity">Purity</span><select id="o_k"><option value="916" selected>22K (916, hallmarked)</option><option value="875">21K (875)</option><option value="750">18K (750)</option><option value="585">14K (585)</option><option value="999">24K (999)</option><option value="ag">Silver 999</option></select></label>
+      <label><span data-i18n="deduct">Deduction / melting loss %</span><input id="o_d" type="number" step="0.1" value="2"></label>
+      <label><span data-i18n="stonewt">Stone weight to exclude (g)</span><input id="o_s" type="number" step="0.01" value="0"></label>
+    </div>
+    <div id="o_out" class="out"></div>
+  </div>
+
+  <div class="tool card" data-tool="mine" hidden>
+    <h3 class="sec" style="margin-top:0" data-i18n="mine_h">My gold & silver</h3>
+    <p class="note" data-i18n="mine_p">Add what you own. It's valued at today's IBJA rate. Saved only on this phone; nothing is sent anywhere.</p>
+    <div class="fg">
+      <label><span data-i18n="item">Item</span><input id="m_n" placeholder="e.g. Chain, coin"></label>
+      <label><span data-i18n="purity">Purity</span><select id="m_k"><option value="999">24K</option><option value="916" selected>22K</option><option value="750">18K</option><option value="ag">Silver</option></select></label>
+      <label><span data-i18n="weight">Weight (g)</span><input id="m_w" type="number" step="0.001"></label>
+      <label><span data-i18n="paid">Amount paid (₹, optional)</span><input id="m_p" type="number" step="1"></label>
+      <label><span data-i18n="bought">Bought on</span><input id="m_d" type="date"></label>
+      <label><span>&nbsp;</span><button class="btn pri" id="m_add" data-i18n="add">+ Add</button></label>
+    </div>
+    <div id="m_out" class="out"></div>
+  </div>
+
+  <div class="tool card" data-tool="plan" hidden>
+    <h3 class="sec" style="margin-top:0" data-i18n="plan_h">Gold savings planner</h3>
+    <p class="note" data-i18n="plan_p">See how many grams a monthly saving builds. Uses today's 24K rate plus 3% GST. The growth line uses gold's own past growth, which is not a promise.</p>
+    <div class="fg">
+      <label><span data-i18n="monthly">Monthly amount (₹)</span><input id="p_a" type="number" step="100" value="5000"></label>
+      <label><span data-i18n="years">Years</span><input id="p_y" type="number" step="1" value="3"></label>
+      <label><span data-i18n="metal">Metal</span><select id="p_m"><option value="gold">Gold 24K</option><option value="silver">Silver 999</option></select></label>
+      <label><span data-i18n="goal">Goal (g, optional)</span><input id="p_g" type="number" step="1" value="8"></label>
+    </div>
+    <div id="p_out" class="out"></div>
+  </div>
+
+  <div class="tool card" data-tool="alert" hidden>
+    <h3 class="sec" style="margin-top:0" data-i18n="alert_h">Price alerts</h3>
+    <p class="note" data-i18n="alert_p">Set a target. SY checks it every time new rates arrive while the app is open (it checks every 5 minutes) and shows a banner, plus a phone notification if you allow it.</p>
+    <div class="fg">
+      <label><span data-i18n="purity">Purity</span><select id="a_k"><option value="999">Gold 24K</option><option value="916" selected>Gold 22K</option><option value="750">Gold 18K</option><option value="ag">Silver</option></select></label>
+      <label><span data-i18n="when">When price per gram is</span><select id="a_dir"><option value="below">at or below</option><option value="above">at or above</option></select></label>
+      <label><span data-i18n="target">Target ₹ per gram</span><input id="a_v" type="number" step="1"></label>
+      <label><span>&nbsp;</span><button class="btn pri" id="a_add" data-i18n="add">+ Add</button></label>
+    </div>
+    <div id="a_out" class="out"></div>
+    <p class="src" data-i18n="alert_lim">Limitation: a website can't wake your phone when it's closed. For alerts while SY is closed, the planned Android app or a WhatsApp/Telegram broadcast is needed.</p>
+  </div>
+
+  <div class="tool card" data-tool="cmp" hidden>
+    <h3 class="sec" style="margin-top:0" data-i18n="cmp_h">What ₹1 lakh became</h3>
+    <p class="note" data-i18n="cmp_p">Gold and silver use real past prices (in rupees). The FD uses the rate you enter, compounded yearly. Stock-market comparison will be added once a verified Nifty history source is connected.</p>
+    <div class="fg">
+      <label><span data-i18n="years">Years</span><select id="c_y"><option>1</option><option>3</option><option selected>5</option><option>10</option></select></label>
+      <label><span data-i18n="fd">FD rate % per year</span><input id="c_fd" type="number" step="0.1" value="7"></label>
+    </div>
+    <div id="c_out" class="out"></div>
+  </div>
+</section>
+
+<!-- ========== LEARN ========== -->
+<section data-tab="learn">
+  <div class="card" id="learn"></div>
+</section>
+
+<!-- ========== WHY SY ========== -->
+<section data-tab="why">
+  <div class="card hero flat"><div class="moodt" data-i18n="why_k">Why SY</div><div class="moodv" data-i18n="why_t">Honest gold & silver rates you can check</div>
+    <div data-i18n="why_s">Most rate apps show one number with no source and "AI predictions" with no track record. SY shows where every number came from, tells you how sure it is, and publishes how accurate its own estimates turned out.</div></div>
+  <div class="card scroll" style="margin-top:12px"><table id="whyTable"></table></div>
+  <h3 class="sec" data-i18n="why_help">How it helps you</h3>
+  <div class="card" id="whyHelp"></div>
+</section>
+
 <div class="foot">SY · Rates from IBJA (India) and global spot markets, checked against two sources · General information, not financial advice</div>
 </div>
 
@@ -195,6 +305,28 @@ section{display:none} section.show{display:block}
 .tr{display:grid;grid-template-columns:1fr auto auto;gap:12px;padding:9px 0;border-bottom:1px solid var(--line);font-variant-numeric:tabular-nums;align-items:center}
 .tr:last-child{border-bottom:0}
 .gp{margin-top:10px} .gp .who{font-weight:700;margin-bottom:3px}
+
+.alertbar{margin:6px 0;padding:8px 12px;border-radius:10px;background:rgba(31,122,77,.14);color:var(--up);font-weight:700;font-size:14px;cursor:pointer}
+.toolnav{display:flex;gap:6px;overflow-x:auto;scrollbar-width:none;margin:4px 0 10px}
+.toolnav button{flex:0 0 auto;border:1px solid var(--line);background:var(--card);color:var(--muted);font:inherit;font-size:13px;font-weight:700;padding:7px 11px;border-radius:10px;cursor:pointer}
+.toolnav button.on{background:var(--ink);color:var(--bg)}
+.fg{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}
+@media(min-width:640px){.fg{grid-template-columns:repeat(3,1fr)}}
+.fg label{display:flex;flex-direction:column;gap:4px;font-size:12px;font-weight:600;color:var(--muted)}
+.fg input,.fg select{font:inherit;font-size:15px;padding:8px;border:1px solid var(--line);border-radius:8px;background:var(--bg);color:var(--ink);width:100%;min-width:0}
+.row2{display:flex;gap:6px}.row2 input{flex:1}.row2 select{width:auto}
+.btn.pri{background:var(--gold);color:#fff;border-color:var(--gold)}
+.out{margin-top:12px}
+.ol{display:flex;justify-content:space-between;gap:10px;padding:7px 0;border-bottom:1px dashed var(--line);font-variant-numeric:tabular-nums}
+.ol.tot{border-bottom:0;border-top:2px solid var(--line);font-size:18px;margin-top:2px}
+button.x{border:0;background:none;color:var(--muted);cursor:pointer;font-size:15px}
+.bar{display:grid;grid-template-columns:120px 1fr auto;gap:8px;align-items:center;padding:6px 0;font-size:14px}
+.bt{height:12px;background:var(--line);border-radius:6px;position:relative;overflow:hidden}
+.bt>div{position:absolute;top:0;bottom:0;left:0;background:var(--gold);border-radius:6px}
+.bt.mid::after{content:"";position:absolute;left:50%;top:-2px;bottom:-2px;width:1px;background:var(--muted)}
+.bt>div.neg{background:var(--down);left:auto}.bt>div.pos{background:var(--up)}
+.lrn{border-bottom:1px solid var(--line);padding:10px 0}.lrn:last-child{border-bottom:0}
+.lrn summary{font-weight:700;cursor:pointer;font-size:15px}.lrn p{margin:8px 0 0}
 .tag{display:inline-block;font-size:11px;font-weight:700;padding:1px 7px;border-radius:6px;background:var(--goldsoft);color:var(--gold);margin-right:4px}
 .tag.s{background:var(--silversoft);color:var(--silver)} .tag.i{background:rgba(31,122,77,.12);color:var(--up)}
 </style>
@@ -234,7 +366,7 @@ async function load(){
   try{ const r=await fetch("data.json?t="+Date.now(),{cache:"no-store"}); if(!r.ok) throw new Error(r.status); D=await r.json(); renderAll(); }
   catch(e){ document.getElementById("stamp").innerHTML=`<span class="err">Couldn't load the latest data (${esc(e.message)}). Try Refresh.</span>`; }
 }
-async function loadHist(){ try{ const r=await fetch("history_monthly.json?t="+Date.now(),{cache:"no-store"}); H=await r.json(); if(D) renderHist(); }catch(e){} }
+async function loadHist(){ try{ const r=await fetch("history_monthly.json?t="+Date.now(),{cache:"no-store"}); H=await r.json(); if(D){ renderHist(); try{renderTools();}catch(e){} } }catch(e){} }
 
 function syncControls(){
   document.body.classList.toggle("silver", S.metal==="silver");
@@ -250,7 +382,7 @@ function renderAll(){
   document.getElementById("stamp").textContent="Last verified: "+upd.toLocaleString("en-IN",{day:"numeric",month:"short",hour:"numeric",minute:"2-digit",timeZone:"Asia/Kolkata"})+" IST";
   document.getElementById("fresh").innerHTML= ageH<26?'<span class="badge b-ok">up to date</span>':`<span class="badge b-bad">${Math.round(ageH/24)} day(s) old</span>`;
   document.getElementById("next").textContent="Auto-refresh: "+D.next_update+". The page checks for new data every 5 minutes.";
-  renderToday(); renderPrices(); renderOutlook(); renderNews(); renderGuide(); renderRecent(); renderHist();
+  renderToday(); renderPrices(); renderOutlook(); renderNews(); renderGuide(); renderRecent(); renderHist(); renderTools(); renderSplit(); checkAlerts(); applyLang();
 }
 
 // ---------- TODAY ----------
@@ -388,7 +520,7 @@ function renderRecent(){
 }
 
 // ---------- tabs & controls ----------
-const TABS=["today","prices","outlook","news","history","guide"];
+const TABS=["today","prices","outlook","news","history","guide","tools","learn","why"];
 function showTab(){ let h=(location.hash||"#today").slice(1); if(!TABS.includes(h)) h="today";
   document.querySelectorAll("section[data-tab]").forEach(s=>s.classList.toggle("show",s.dataset.tab===h));
   document.querySelectorAll("#tabs a").forEach(a=>a.classList.toggle("on",a.dataset.t===h));
@@ -409,6 +541,234 @@ document.getElementById("share").onclick=async()=>{ const data={title:"SY · Gol
   try{ if(navigator.share) await navigator.share(data); else { await navigator.clipboard.writeText(data.url); alert("Link copied"); } }catch(e){} };
 if("serviceWorker" in navigator) navigator.serviceWorker.register("sw.js").catch(()=>{});
 showTab(); load(); loadHist(); setInterval(load,5*60*1000);
+</script>
+<script>
+// ================= TOOLS / LEARN / WHY / I18N =================
+const LS = { get:(k,d)=>{ try{ const v=JSON.parse(localStorage.getItem(k)); return v==null?d:v; }catch(e){ return d; } },
+             set:(k,v)=>{ try{ localStorage.setItem(k,JSON.stringify(v)); }catch(e){} } };
+const $ = id => document.getElementById(id);
+const num = id => parseFloat($(id).value)||0;
+
+// today's IBJA rate per gram for a purity code
+function rateFor(code){
+  if(!D) return 0; const g=D.gold.india;
+  if(code==="ag") return D.silver.india.p999_kg/1000;
+  const p24=g.p999_10g/10;
+  if(code==="999") return p24; if(code==="916") return g.p916_10g/10; if(code==="750") return g.p750_10g/10;
+  return p24*(+code)/999;  // 875, 585 etc. from the 24K rate
+}
+const rs = (v,dp=0) => "₹"+(Math.round(v*10**dp)/10**dp).toLocaleString("en-IN",{minimumFractionDigits:dp,maximumFractionDigits:dp});
+const line = (a,b,cls="") => `<div class="ol ${cls}"><span>${a}</span><b>${b}</b></div>`;
+
+// ---- tool navigation
+document.querySelectorAll("#toolNav button").forEach(b=>b.onclick=()=>{
+  document.querySelectorAll("#toolNav button").forEach(x=>x.classList.toggle("on",x===b));
+  document.querySelectorAll(".tool").forEach(t=>t.hidden=t.dataset.tool!==b.dataset.tool);
+  renderTools(); });
+
+// ---- 1. jewellery bill
+let billRateTouched=false;
+$("b_r").addEventListener("input",()=>billRateTouched=true);
+$("b_k").addEventListener("change",()=>{billRateTouched=false; renderBill();});
+function renderBill(){
+  if(!D) return;
+  if(!billRateTouched) $("b_r").value=Math.round(rateFor($("b_k").value));
+  const w=num("b_w"), r=num("b_r"), mv=num("b_m"), mt=$("b_mt").value, wa=num("b_wa"), st=num("b_s"), hm=num("b_h"), q=num("b_q");
+  const gold=w*r, waste=gold*wa/100;
+  const making = mt==="pct" ? gold*mv/100 : mt==="pg" ? w*mv : mv;
+  let gst, base=gold+waste+making+st+hm;
+  if($("b_g").value==="flat3") gst=base*0.03; else gst=(gold+waste+st+hm)*0.03+making*0.05;
+  const total=base+gst;
+  let h=line(T("gold_value"),rs(gold))+(waste?line(T("wastage")+` (${wa}%)`,rs(waste)):"")+line(T("making"),rs(making))+(st?line(T("stones"),rs(st)):"")+(hm?line(T("hallmark"),rs(hm)):"")+line("GST",rs(gst))+line(T("total"),rs(total),"tot")
+    +`<div class="meta">${T("eff_rate")}: <b>${rs(total/(w||1))}</b>/g · ${T("extra_over")} ${rs(total-gold)} (${((total/gold-1)*100||0).toFixed(1)}%)</div>`;
+  if(q){ const d=q-total; h+=`<div class="callout card" style="margin-top:8px">${d>0?`⚠️ ${T("quote_hi")} <b>${rs(d)}</b> (${(d/total*100).toFixed(1)}%). ${T("quote_ask")}`:`✅ ${T("quote_ok")} ${rs(-d)}.`}</div>`; }
+  $("b_out").innerHTML=h;
+}
+["b_w","b_r","b_m","b_mt","b_wa","b_s","b_h","b_g","b_q"].forEach(id=>$(id).addEventListener("input",renderBill));
+
+// ---- 2. old gold
+function renderOld(){
+  if(!D) return;
+  const k=$("o_k").value, w=Math.max(0,num("o_w")-num("o_s")), d=num("o_d");
+  const r=rateFor(k), gross=w*r, net=gross*(1-d/100);
+  $("o_out").innerHTML=line(T("net_wt"),w.toFixed(2)+" g")+line(T("rate_used"),rs(r)+"/g")+line(T("full_value"),rs(gross))+line(T("deduct")+` (${d}%)`,"− "+rs(gross-net))+line(T("expected_offer"),rs(net),"tot")
+    +`<div class="meta">${T("old_tip")}</div>`;
+}
+["o_w","o_k","o_d","o_s"].forEach(id=>$(id).addEventListener("input",renderOld));
+
+// ---- 3. my gold
+let mine=LS.get("sy_mine",[]);
+$("m_add").onclick=()=>{ const w=num("m_w"); if(!w) return; mine.push({n:$("m_n").value||"Item",k:$("m_k").value,w,p:num("m_p")||null,d:$("m_d").value||null}); LS.set("sy_mine",mine); $("m_n").value=$("m_w").value=$("m_p").value=""; renderMine(); };
+function renderMine(){
+  if(!D) return;
+  if(!mine.length){ $("m_out").innerHTML=`<div class="meta">${T("mine_empty")}</div>`; return; }
+  let tv=0,tp=0,tpv=0, gG=0, gS=0;
+  const rows=mine.map((m,i)=>{ const v=m.w*rateFor(m.k); tv+=v; if(m.p){tp+=m.p; tpv+=v;} if(m.k==="ag") gS+=m.w; else gG+=m.w*(+m.k)/999;
+    const pl=m.p? v-m.p : null;
+    return `<tr><td>${esc(m.n)}<div class="meta">${m.k==="ag"?"Silver":({999:"24K",916:"22K",750:"18K"})[m.k]} · ${m.w} g${m.d?" · "+m.d:""}</div></td><td>${rs(v)}</td><td class="${pl==null?'':pl>=0?'pos':'neg'}">${pl==null?"–":(pl>=0?"+":"−")+rs(Math.abs(pl))}</td><td><button class="x" data-i="${i}">✕</button></td></tr>`; }).join("");
+  $("m_out").innerHTML=`<div class="scroll"><table class="gtab"><tr><th>${T("item")}</th><th>${T("today_val")}</th><th>${T("pl")}</th><th></th></tr>${rows}</table></div>`
+    + line(T("total_val"),rs(tv),"tot") + (tp?line(T("pl")+` (${T("items_w_price")})`,(tpv-tp>=0?"+":"−")+rs(Math.abs(tpv-tp))+` (${((tpv/tp-1)*100).toFixed(1)}%)`):"")
+    + `<div class="meta">${T("pure_gold")}: ${gG.toFixed(2)} g · ${T("silver")}: ${gS.toFixed(1)} g · ${T("valued_at")} IBJA ${esc(D.gold.india.date)}. ${T("sell_note")}</div>`;
+  $("m_out").querySelectorAll("button.x").forEach(b=>b.onclick=()=>{ mine.splice(+b.dataset.i,1); LS.set("sy_mine",mine); renderMine(); });
+}
+
+// ---- 4. savings plan
+function cagr(metal,years){ if(!H) return null; const s=series(metal,"inr"); const n=s.length-1, k=Math.min(years*12,n); return Math.pow(s[n][1]/s[n-k][1],12/k)-1; }
+function renderPlan(){
+  if(!D) return;
+  const a=num("p_a"), y=Math.max(1,Math.round(num("p_y"))), m=$("p_m").value, goal=num("p_g");
+  const r=(m==="gold"?D.gold.india.p999_10g/10:D.silver.india.p999_kg/1000)*1.03;
+  const months=y*12, gFlat=a*months/r, invested=a*months;
+  const g10=cagr(m,10); let gGrow=0, val=0;
+  if(g10!=null){ const mr=Math.pow(1+g10,1/12)-1; for(let i=0;i<months;i++){ const price=r*Math.pow(1+mr,i); gGrow+=a/price; } val=gGrow*r*Math.pow(1+mr,months); }
+  const need = goal? Math.ceil(goal*r/months/100)*100 : 0;
+  $("p_out").innerHTML=line(T("invested"),rs(invested))+line(T("grams_flat"),gFlat.toFixed(2)+" g")
+    + (g10!=null?line(T("grams_grow")+` (${(g10*100).toFixed(1)}%/yr)`,gGrow.toFixed(2)+" g")+line(T("value_grow"),rs(val),"tot"):"")
+    + (goal?`<div class="meta">🎯 ${T("goal_need")} ${goal} g ${T("in")} ${y} ${T("years_l")}: ${T("about")} <b>${rs(need)}</b>/${T("month")} ${T("at_today")}</div>`:"")
+    + `<div class="meta">${T("plan_note")}</div>`;
+}
+["p_a","p_y","p_m","p_g"].forEach(id=>$(id).addEventListener("input",renderPlan));
+
+// ---- 5. alerts
+let alerts=LS.get("sy_alerts",[]);
+$("a_add").onclick=()=>{ const v=num("a_v"); if(!v) return; alerts.push({k:$("a_k").value,dir:$("a_dir").value,v,hit:false}); LS.set("sy_alerts",alerts);
+  $("a_v").value=""; checkAlerts(); renderAlerts();
+  try{ if("Notification" in window && Notification.permission==="default") Notification.requestPermission(); }catch(e){} };
+function kName(k){ return k==="ag"?"Silver":({999:"Gold 24K",916:"Gold 22K",750:"Gold 18K"})[k]; }
+function checkAlerts(){
+  if(!D) return; const fired=[];
+  alerts.forEach(a=>{ const p=rateFor(a.k), ok=a.dir==="below"?p<=a.v:p>=a.v; if(ok&&!a.hit){ fired.push(`${kName(a.k)} ${rs(p)}/g (${a.dir==="below"?"≤":"≥"} ${rs(a.v)})`); } a.hit=ok; });
+  LS.set("sy_alerts",alerts);
+  const bar=$("alertBar"); if(!bar) return;
+  const active=alerts.filter(a=>a.hit);
+  bar.hidden=!active.length; bar.innerHTML=active.length?`🔔 ${T("alert_hit")}: `+active.map(a=>`${kName(a.k)} ${rs(rateFor(a.k))}/g`).join(" · "):"";
+  if(fired.length){ try{ if("Notification" in window && Notification.permission==="granted") new Notification("SY price alert",{body:fired.join("\n"),icon:"icons/icon-192.png"}); }catch(e){} }
+}
+function renderAlerts(){
+  $("a_out").innerHTML = alerts.length ? alerts.map((a,i)=>`<div class="ol"><span>${kName(a.k)} ${a.dir==="below"?"≤":"≥"} ${rs(a.v)}/g ${a.hit?'<span class="badge b-ok">'+T("reached")+'</span>':''}</span><button class="x" data-i="${i}">✕</button></div>`).join("")
+    + `<div class="meta">${T("now")}: 24K ${rs(rateFor("999"))} · 22K ${rs(rateFor("916"))} · 18K ${rs(rateFor("750"))} · Silver ${rs(rateFor("ag"),2)}</div>` : `<div class="meta">${T("no_alerts")}</div>`;
+  $("a_out").querySelectorAll("button.x").forEach(b=>b.onclick=()=>{ alerts.splice(+b.dataset.i,1); LS.set("sy_alerts",alerts); renderAlerts(); checkAlerts(); });
+}
+
+// ---- 6. compare
+function renderCmp(){
+  if(!H){ $("c_out").innerHTML=`<div class="meta">Loading history…</div>`; return; }
+  const y=+$("c_y").value, fd=num("c_fd")/100, P=100000;
+  const res=["gold","silver"].map(m=>{ const s=series(m,"inr"), n=s.length-1, k=Math.min(y*12,n); return [m, P*s[n][1]/s[n-k][1], s[n-k][0]]; });
+  const fdv=P*Math.pow(1+fd,y);
+  const all=[["🟡 "+T("gold"),res[0][1]],["⚪ "+T("silver"),res[1][1]],["🏦 FD "+(fd*100).toFixed(1)+"%",fdv]];
+  const mx=Math.max(...all.map(x=>x[1]));
+  $("c_out").innerHTML=all.map(([n,v])=>`<div class="bar"><span>${n}</span><div class="bt"><div style="width:${(v/mx*100).toFixed(1)}%"></div></div><b class="${v>=P?'up':'down'}">${rs(v)}</b></div>`).join("")
+    + `<div class="meta">${T("from")} ${mName(res[0][2])} ${T("to_now")}. ${T("cmp_note")}</div>`;
+}
+["c_y","c_fd"].forEach(id=>$(id).addEventListener("input",renderCmp));
+
+function renderTools(){ renderBill(); renderOld(); renderMine(); renderPlan(); renderAlerts(); renderCmp(); }
+
+// ---- rupee vs dollar breakdown (Today tab)
+function renderSplit(){
+  const g=D.gold.india, el=$("split"); if(!el) return;
+  if(!g.spot_at_fix_usd||!g.fx_at_fix){ el.parentElement.hidden=true; return; }
+  el.parentElement.hidden=false;
+  const sp=(D.gold.intl.usd_oz/g.spot_at_fix_usd-1)*100, fx=(D.fx.usd_inr/g.fx_at_fix-1)*100, tot=((1+sp/100)*(1+fx/100)-1)*100;
+  const bar=(v,lab)=>`<div class="bar"><span>${lab}</span><div class="bt mid"><div class="${v<0?'neg':'pos'}" style="width:${Math.min(50,Math.abs(v)*12)}%;${v<0?'right:50%':'left:50%'}"></div></div><b class="${v<0?'down':'up'}">${v>=0?'+':''}${v.toFixed(2)}%</b></div>`;
+  el.innerHTML=bar(sp,"🌍 "+T("intl_gold"))+bar(fx,"💱 "+T("rupee_eff"))+bar(tot,"🇮🇳 "+T("india_net"))
+    +`<div class="meta">${T("split_note")}</div>`;
+}
+
+// ---- LEARN
+const LEARN={en:[
+ ["🔢 Purity: what 24K, 22K, 18K mean","24K = 99.9% gold (coins, bars). 22K = 91.6% (most jewellery, marked 916). 18K = 75% (stone-studded and lighter jewellery). 14K = 58.5%. Rates scale with purity: 22K ≈ 91.6% of the 24K rate."],
+ ["🏷️ Hallmark & HUID: check before you buy","Hallmarked jewellery carries the BIS mark, the purity (e.g. 22K916) and a 6-digit HUID code. Enter the HUID in the BIS CARE app to see the item's registered purity and jeweller. Insist on it; it's your proof when you sell."],
+ ["📊 What the IBJA rate is","India Bullion and Jewellers Association publishes benchmark rates twice each working day (AM and PM). They exclude GST and making charges. Shop board rates are usually close to IBJA plus a small local margin."],
+ ["🧾 How a jewellery bill is built","Gold value (weight × rate) + making charge (% or ₹/g) + wastage/VA (if charged) + stones + 3% GST. Ask for each part separately. Making and wastage vary most between shops, and you lose them when you sell or exchange."],
+ ["♻️ Selling or exchanging old gold","The shop tests purity and deducts for melting loss. Exchange (for new jewellery) usually gets a better value than cash sale. Keep bills and hallmark details. Selling may attract capital-gains tax; check the current rules."],
+ ["🌍 Why international prices and the rupee matter","India imports most of its gold, so the Indian price ≈ international price × USD-INR rate + import duty and taxes. If the dollar strengthens against the rupee, Indian gold gets costlier even when world gold is flat. SY's Today tab shows this split."],
+ ["🏦 Ways to own gold","Jewellery (wearable, but making charges are lost), coins/bars (low making, need safe storage), digital gold (small amounts, stored by the provider), and gold ETFs or mutual funds (bought through a demat or MF account). Check charges and the provider before choosing."],
+ ["🪙 Units","1 sovereign (pavan) = 8 g. 1 tola = 11.66 g. 1 troy ounce = 31.1 g (used for international prices). 1 kg silver = 1,000 g."],
+ ["⚖️ Gold vs silver","Silver moves about 1.5× as much as gold, both up and down, and is also an industrial metal (solar, electronics). The gold-to-silver ratio shows how many grams of silver one gram of gold buys."]],
+ ta:[
+ ["🔢 தூய்மை: 24K, 22K, 18K என்றால் என்ன","24K = 99.9% தங்கம் (நாணயம், பிஸ்கட்). 22K = 91.6% (பெரும்பாலான நகைகள், 916 முத்திரை). 18K = 75% (கல் பதித்த நகைகள்). 14K = 58.5%. விலை தூய்மைக்கு ஏற்ப மாறும்: 22K ≈ 24K விலையின் 91.6%."],
+ ["🏷️ ஹால்மார்க் & HUID: வாங்கும் முன் சரிபார்க்கவும்","ஹால்மார்க் நகையில் BIS முத்திரை, தூய்மை (உ.தா. 22K916) மற்றும் 6 இலக்க HUID இருக்கும். BIS CARE செயலியில் HUID-ஐ உள்ளிட்டு தூய்மை மற்றும் கடையை சரிபார்க்கலாம். விற்கும்போது இதுவே உங்கள் சான்று."],
+ ["📊 IBJA விலை என்றால் என்ன","இந்திய புல்லியன் & நகை வியாபாரிகள் சங்கம் ஒவ்வொரு வேலை நாளும் இருமுறை (காலை, மாலை) விலையை வெளியிடுகிறது. இதில் GST மற்றும் செய்கூலி சேர்க்கப்படவில்லை. கடை விலை பொதுவாக IBJA-க்கு அருகில் இருக்கும்."],
+ ["🧾 நகை பில் எப்படி கணக்கிடப்படுகிறது","தங்க மதிப்பு (எடை × விலை) + செய்கூலி + சேதாரம் + கற்கள் + 3% GST. ஒவ்வொன்றையும் தனியாக கேளுங்கள். செய்கூலி, சேதாரம் கடைக்கு கடை மாறும்; விற்கும்போது இவை திரும்ப கிடைக்காது."],
+ ["♻️ பழைய தங்கம் விற்பது/மாற்றுவது","கடை தூய்மையை சோதித்து உருக்கும் இழப்பை கழிக்கும். புதிய நகைக்கு மாற்றினால் பொதுவாக பணமாக விற்பதைவிட நல்ல மதிப்பு கிடைக்கும். பில் மற்றும் ஹால்மார்க் விவரங்களை வைத்திருங்கள்."],
+ ["🌍 சர்வதேச விலையும் ரூபாயும் ஏன் முக்கியம்","இந்தியா பெரும்பாலான தங்கத்தை இறக்குமதி செய்கிறது. இந்திய விலை ≈ சர்வதேச விலை × டாலர்-ரூபாய் + வரிகள். டாலர் வலுவானால் உலக விலை மாறாவிட்டாலும் இந்திய தங்கம் விலை உயரும்."],
+ ["🏦 தங்கம் வைத்திருக்கும் வழிகள்","நகை (அணியலாம், ஆனால் செய்கூலி இழப்பு), நாணயம்/பிஸ்கட் (குறைந்த செய்கூலி), டிஜிட்டல் தங்கம் (சிறிய தொகை), கோல்ட் ETF/மியூச்சுவல் ஃபண்ட். கட்டணங்களை சரிபார்த்து தேர்ந்தெடுக்கவும்."],
+ ["🪙 அளவுகள்","1 பவுன் = 8 கிராம். 1 தோலா = 11.66 கிராம். 1 அவுன்ஸ் = 31.1 கிராம். 1 கிலோ வெள்ளி = 1,000 கிராம்."],
+ ["⚖️ தங்கம் vs வெள்ளி","வெள்ளி விலை தங்கத்தைவிட சுமார் 1.5 மடங்கு அதிகமாக ஏறி இறங்கும். இது தொழில்துறை உலோகமும் கூட (சோலார், மின்னணு)."]]};
+function renderLearn(){ const L=LEARN[LANG]||LEARN.en; $("learn").innerHTML=L.map(([h,b],i)=>`<details ${i<2?"open":""} class="lrn"><summary>${h}</summary><p>${b}</p></details>`).join(""); }
+
+// ---- WHY SY
+function renderWhy(){
+  const rows=[
+    ["Where each price came from (2-source check)","✅ Every number, with links","Rarely"],
+    ["Badge when a price is single-source or old","✅","No"],
+    ["Expected next IBJA rate with ± margin","✅","Some show “AI predictions”"],
+    ["Public track record of its own estimates","✅ Average miss shown daily","No"],
+    ["Honest ranges (how far, not fake direction)","✅","No"],
+    ["Rupee vs world-price split of today's move","✅","Rare"],
+    ["24K / 22K / 18K + silver, per g / sovereign / tola / kg","✅","Partly"],
+    ["Bill check, old-gold value, my gold, savings plan","✅ All in one, offline","Spread across apps"],
+    ["Dated news with reasons, events calendar","✅","Headlines only"],
+    ["Tamil + English","✅","Rare"],
+    ["No ads, no login, no data collected","✅ Data stays on your phone","Ads / sign-up common"]];
+  $("whyTable").innerHTML=`<tr><th style="text-align:left">${T("feature")}</th><th>SY</th><th>${T("typical")}</th></tr>`+rows.map(r=>`<tr><td style="text-align:left">${r[0]}</td><td>${r[1]}</td><td class="meta">${r[2]}</td></tr>`).join("");
+  const help=[
+    ["🛒 Buying",T("h_buy")],["💰 Saving",T("h_save")],["♻️ Selling",T("h_sell")],["📚 Learning",T("h_learn")],["📈 Understanding moves",T("h_vis")]];
+  $("whyHelp").innerHTML=help.map(([a,b])=>`<div class="hl"><span class="dot"></span><div><b>${a}</b><div>${b}</div></div></div>`).join("");
+}
+
+// ---- I18N
+let LANG=LS.get("sy_lang","en");
+const TX={
+ en:{tab_today:"⭐ Today",tab_prices:"💰 Prices",tab_outlook:"📈 Next days",tab_news:"📰 Why & news",tab_history:"🕒 History",tab_guide:"🧭 Guidance",tab_tools:"🧮 Tools",tab_learn:"📚 Learn",tab_why:"✨ Why SY",
+   gold:"Gold",silver:"Silver",total:"Total",gold_value:"Gold value",wastage:"Wastage",making:"Making charge",stones:"Stones / other",hallmark:"Hallmark",eff_rate:"Effective rate",extra_over:"Extra over gold value",
+   quote_hi:"The shop's quote is higher than this calculation by",quote_ask:"Ask for the making/wastage breakup or compare another shop.",quote_ok:"The shop's quote is within this calculation; it's lower by",
+   net_wt:"Net gold weight",rate_used:"Today's rate used",full_value:"Full metal value",deduct:"Deduction",expected_offer:"Expected offer (approx.)",old_tip:"Exchanging for new jewellery usually gets a better value than selling for cash. Ask the shop to show the purity test result.",
+   mine_empty:"No items yet. Add your chain, coin or bangles above.",item:"Item",today_val:"Today's value",pl:"Profit / loss",total_val:"Total value today",items_w_price:"items with price",pure_gold:"Pure gold content",valued_at:"Valued at",sell_note:"Selling value will be lower after deductions; making charges are not recovered.",
+   invested:"Total you put in",grams_flat:"Grams at today's price",grams_grow:"Grams if past 10-year growth repeats",value_grow:"Value at the end (same assumption)",goal_need:"To reach",in:"in",years_l:"years",about:"about",month:"month",at_today:"at today's price",plan_note:"Past growth doesn't guarantee future returns. Digital gold and ETFs have their own charges.",
+   alert_hit:"Alert reached",reached:"reached",now:"Now",no_alerts:"No alerts yet.",from:"From",to_now:"to now",cmp_note:"Gold/silver: international price in rupees (before duty/GST). FD: before tax. Past results don't predict the future.",
+   intl_gold:"International gold",rupee_eff:"Rupee effect",india_net:"India price (net)",split_note:"Change since the last IBJA rate. If the rupee weakens, Indian gold rises even when world gold is flat.",
+   feature:"Feature",typical:"Typical rate apps",
+   h_buy:"Know the fair rate before entering a shop, check the bill line by line, and spot an inflated quote.",h_save:"Plan a monthly amount, see grams building up, and track what your gold is worth today.",
+   h_sell:"Estimate your old gold's value and the deductions before you go, so you can't be under-quoted.",h_learn:"Plain explanations of purity, hallmark/HUID, IBJA, GST and making charges, in Tamil and English.",
+   h_vis:"See why prices moved (world price vs rupee), long-term charts, and how often SY's own estimates were right."},
+ ta:{tab_today:"⭐ இன்று",tab_prices:"💰 விலைகள்",tab_outlook:"📈 அடுத்த நாட்கள்",tab_news:"📰 காரணம் & செய்தி",tab_history:"🕒 வரலாறு",tab_guide:"🧭 வழிகாட்டல்",tab_tools:"🧮 கருவிகள்",tab_learn:"📚 கற்றல்",tab_why:"✨ ஏன் SY",
+   gold:"தங்கம்",silver:"வெள்ளி",total:"மொத்தம்",gold_value:"தங்க மதிப்பு",wastage:"சேதாரம்",making:"செய்கூலி",stones:"கற்கள் / மற்றவை",hallmark:"ஹால்மார்க்",eff_rate:"உண்மையான விலை",extra_over:"தங்க மதிப்பைவிட கூடுதல்",
+   quote_hi:"கடை சொன்ன தொகை இந்த கணக்கைவிட அதிகம்:",quote_ask:"செய்கூலி/சேதார விவரம் கேளுங்கள் அல்லது வேறு கடையுடன் ஒப்பிடுங்கள்.",quote_ok:"கடை சொன்ன தொகை சரியான வரம்பில் உள்ளது; குறைவு:",
+   net_wt:"நிகர தங்க எடை",rate_used:"இன்றைய விலை",full_value:"முழு உலோக மதிப்பு",deduct:"கழிவு",expected_offer:"எதிர்பார்க்கும் தொகை (தோராயம்)",old_tip:"பணமாக விற்பதைவிட புதிய நகைக்கு மாற்றினால் பொதுவாக நல்ல மதிப்பு கிடைக்கும். தூய்மை சோதனை முடிவை காட்டச் சொல்லுங்கள்.",
+   mine_empty:"இன்னும் எதுவும் இல்லை. உங்கள் சங்கிலி, நாணயம், வளையல் சேர்க்கவும்.",item:"பொருள்",today_val:"இன்றைய மதிப்பு",pl:"லாபம் / நஷ்டம்",total_val:"இன்றைய மொத்த மதிப்பு",items_w_price:"விலை உள்ளவை",pure_gold:"சுத்த தங்க அளவு",valued_at:"மதிப்பீடு",sell_note:"விற்கும்போது கழிவுக்குப் பின் குறைவாக இருக்கும்; செய்கூலி திரும்ப கிடைக்காது.",
+   invested:"நீங்கள் செலுத்தும் மொத்தம்",grams_flat:"இன்றைய விலையில் கிராம்",grams_grow:"கடந்த 10 ஆண்டு வளர்ச்சி தொடர்ந்தால் கிராம்",value_grow:"இறுதி மதிப்பு (அதே அனுமானம்)",goal_need:"அடைய",in:"இல்",years_l:"ஆண்டுகள்",about:"சுமார்",month:"மாதம்",at_today:"இன்றைய விலையில்",plan_note:"கடந்த வளர்ச்சி எதிர்கால லாபத்திற்கு உத்தரவாதம் அல்ல.",
+   alert_hit:"எச்சரிக்கை எட்டியது",reached:"எட்டியது",now:"இப்போது",no_alerts:"எச்சரிக்கைகள் இல்லை.",from:"இருந்து",to_now:"இன்று வரை",cmp_note:"தங்கம்/வெள்ளி: ரூபாயில் சர்வதேச விலை (வரி முன்). FD: வரி முன். கடந்த முடிவுகள் எதிர்காலத்தை கணிக்காது.",
+   intl_gold:"சர்வதேச தங்கம்",rupee_eff:"ரூபாய் தாக்கம்",india_net:"இந்திய விலை (நிகர)",split_note:"கடைசி IBJA விலையிலிருந்து மாற்றம். ரூபாய் பலவீனமானால் உலக விலை மாறாவிட்டாலும் இந்திய தங்கம் உயரும்.",
+   feature:"அம்சம்",typical:"மற்ற செயலிகள்",
+   h_buy:"கடைக்கு செல்லும் முன் நியாய விலையை அறிந்து, பில்லை சரிபார்த்து, அதிக விலையை கண்டறியுங்கள்.",h_save:"மாதச் சேமிப்பை திட்டமிட்டு, உங்கள் தங்கத்தின் இன்றைய மதிப்பை அறியுங்கள்.",
+   h_sell:"பழைய தங்கத்தின் மதிப்பையும் கழிவையும் முன்பே கணக்கிடுங்கள்.",h_learn:"தூய்மை, ஹால்மார்க், IBJA, GST, செய்கூலி பற்றி எளிய விளக்கம்.",
+   h_vis:"விலை ஏன் மாறியது (உலக விலை vs ரூபாய்), நீண்டகால வரைபடம், SY கணிப்புகள் எவ்வளவு சரி என்பதை பாருங்கள்."}};
+const TS={ // static text with data-i18n
+ en:{}, ta:{t_bill:"🧾 நகை பில்",t_old:"♻️ பழைய தங்கம்",t_mine:"💼 என் தங்கம்",t_plan:"🐷 சேமிப்பு",t_alert:"🔔 விலை எச்சரிக்கை",t_cmp:"⚖️ ஒப்பீடு",
+   bill_h:"நகை பில் கணக்கீடு",bill_p:"பணம் செலுத்தும் முன் கடையின் விலையை சரிபார்க்கவும். இன்றைய IBJA விலை தானாக வரும்; கடை விலை வேறு என்றால் மாற்றலாம்.",weight:"எடை (கிராம்)",purity:"தூய்மை",rate_g:"கிராமுக்கு விலை (₹)",making:"செய்கூலி",wastage:"சேதாரம் (VA) %",stones:"கற்கள் / மற்றவை (₹)",hallmark:"ஹால்மார்க் கட்டணம் (₹)",gstmode:"GST முறை",quote:"கடை சொன்ன மொத்தம் (₹)",
+   old_h:"பழைய தங்கம் மாற்று மதிப்பு",old_p:"உங்கள் பழைய நகையின் இன்றைய தோராய மதிப்பு. கடை தூய்மையை சோதித்து கழிவு செய்யும். விற்கும்போது GST இல்லை.",deduct:"கழிவு / உருக்கும் இழப்பு %",stonewt:"கல் எடை (கிராம்)",
+   mine_h:"என் தங்கம் & வெள்ளி",mine_p:"உங்களிடம் உள்ளதைச் சேர்க்கவும். இன்றைய IBJA விலையில் மதிப்பிடப்படும். இந்த போனில் மட்டுமே சேமிக்கப்படும்.",item:"பொருள்",paid:"செலுத்திய தொகை (₹)",bought:"வாங்கிய தேதி",add:"+ சேர்",
+   plan_h:"தங்க சேமிப்பு திட்டம்",plan_p:"மாதச் சேமிப்பு எத்தனை கிராம் ஆகும் என்று பாருங்கள். இன்றைய 24K விலை + 3% GST.",monthly:"மாத தொகை (₹)",years:"ஆண்டுகள்",metal:"உலோகம்",goal:"இலக்கு (கிராம்)",
+   alert_h:"விலை எச்சரிக்கை",alert_p:"இலக்கு விலையை அமைக்கவும். செயலி திறந்திருக்கும்போது புதிய விலை வந்ததும் சரிபார்க்கும்.",when:"கிராம் விலை",target:"இலக்கு ₹/கிராம்",alert_lim:"வரம்பு: செயலி மூடியிருக்கும்போது இணையதளம் போனை எழுப்ப முடியாது.",
+   cmp_h:"₹1 லட்சம் என்ன ஆனது",cmp_p:"தங்கம், வெள்ளி உண்மையான கடந்த விலைகளைப் பயன்படுத்துகிறது. FD நீங்கள் உள்ளிடும் வட்டியில்.",fd:"FD வட்டி % (ஆண்டு)",
+   why_k:"ஏன் SY",why_t:"சரிபார்க்கக்கூடிய நேர்மையான தங்கம் & வெள்ளி விலைகள்",why_s:"பெரும்பாலான செயலிகள் ஆதாரம் இல்லாத ஒரு எண்ணைக் காட்டுகின்றன. SY ஒவ்வொரு எண்ணும் எங்கிருந்து வந்தது, எவ்வளவு உறுதி, தன் கணிப்புகள் எவ்வளவு சரியாக இருந்தன என்பதைக் காட்டுகிறது.",why_help:"இது உங்களுக்கு எப்படி உதவும்",
+   s_mood:"சந்தை நிலை",s_est:"🎯 இன்றைய எதிர்பார்க்கப்படும் IBJA விலை",s_range:"நாளைய பெரும்பாலும் விலை வரம்பு",s_must:"இன்று தெரிந்துகொள்ள வேண்டியவை",s_india:"இன்று இந்தியாவில் என்ன எதிர்பார்க்கலாம்",s_guide:"எங்கள் வழிகாட்டல்",s_split:"இன்றைய மாற்றம்: உலக விலை vs ரூபாய்"}};
+function T(k){ return (TX[LANG]&&TX[LANG][k])||TX.en[k]||k; }
+const EN_STATIC={};
+function applyLang(){
+  document.documentElement.lang = LANG==="ta"?"ta":"en-IN";
+  document.querySelectorAll("[data-i18n]").forEach(el=>{ const k=el.dataset.i18n; if(!(k in EN_STATIC)) EN_STATIC[k]=el.textContent; el.textContent = LANG==="ta" && TS.ta[k] ? TS.ta[k] : EN_STATIC[k]; });
+  document.querySelectorAll("#tabs a").forEach(a=>a.textContent=T("tab_"+a.dataset.t));
+  document.querySelectorAll("#swMetal button").forEach(b=>b.textContent=(b.dataset.v==="gold"?"🟡 ":"⚪ ")+T(b.dataset.v));
+  $("langBtn").textContent = LANG==="ta"?"EN":"தமிழ்";
+  renderLearn(); renderWhy(); if(D){ renderTools(); renderSplit(); }
+}
+
+document.getElementById("langBtn").onclick=()=>{ LANG = LANG==="ta"?"en":"ta"; LS.set("sy_lang",LANG); applyLang(); };
+applyLang();
 </script>
 </body>
 </html>
