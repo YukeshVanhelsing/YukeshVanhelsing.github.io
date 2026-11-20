@@ -71,7 +71,7 @@ details summary{cursor:pointer;font-size:12px;color:var(--muted);margin-top:8px}
 <div class="topbar">
   <div class="wrap tb">
     <div><div class="brand"><img src="icons/icon-192.png" alt="" class="logo">SY <span class="tagl">Gold &amp; Silver, verified daily</span></div><div class="stamp"><span id="stamp">Loading…</span> <span id="fresh"></span></div></div>
-    <div style="display:flex;gap:6px"><button class="btn" id="install" hidden>⬇ Install</button><button class="btn" id="langBtn" aria-label="Language">தமிழ்</button><button class="btn" id="share" aria-label="Share">↗</button><button class="btn" id="reload" aria-label="Refresh">↻</button></div>
+    <div style="display:flex;gap:6px"><button class="btn" id="install" hidden>⬇ Install</button><button class="btn" id="fsBtn" aria-label="Text size">Aa</button><button class="btn" id="langBtn" aria-label="Language">தமிழ்</button><button class="btn" id="share" aria-label="Share">↗</button><button class="btn" id="reload" aria-label="Refresh">↻</button></div>
   </div>
   <nav class="wrap tabs" id="tabs">
     <a href="#today" data-t="today">⭐ Today</a>
@@ -81,7 +81,7 @@ details summary{cursor:pointer;font-size:12px;color:var(--muted);margin-top:8px}
     <a href="#history" data-t="history">🕒 History</a>
     <a href="#guide" data-t="guide">🧭 Guidance</a>
     <a href="#tools" data-t="tools">🧮 Tools</a>
-    <a href="#learn" data-t="learn">📚 Learn</a>
+    <a href="#learn" data-t="learn">🎓 Gold Guide</a>
     <a href="#why" data-t="why">✨ Why SY</a>
   </nav>
   <div class="wrap ctl">
@@ -119,6 +119,8 @@ details summary{cursor:pointer;font-size:12px;color:var(--muted);margin-top:8px}
   <div class="card" id="priceDetail"></div>
   <h3 class="sec">Same metal in the other market</h3>
   <div class="card" id="priceOther"></div>
+  <div id="cityWrap" hidden><h3 class="sec">🏙️ City rates <span class="meta" id="cityAsof"></span></h3>
+  <div class="card scroll"><table id="cityTable"></table><p class="src" id="cityNote"></p></div></div>
   <h3 class="sec">USD → INR</h3>
   <div class="card" id="fxCard"></div>
 </section>
@@ -258,7 +260,9 @@ details summary{cursor:pointer;font-size:12px;color:var(--muted);margin-top:8px}
 
 <!-- ========== LEARN ========== -->
 <section data-tab="learn">
-  <div class="card" id="learn"></div>
+  <nav class="gnav" id="gNav" role="tablist" aria-label="Gold Guide chapters"></nav>
+  <div class="card gbody" id="gBody" aria-live="polite"></div>
+  <div id="learn" hidden></div>
 </section>
 
 <!-- ========== WHY SY ========== -->
@@ -327,6 +331,63 @@ button.x{border:0;background:none;color:var(--muted);cursor:pointer;font-size:15
 .bt>div.neg{background:var(--down);left:auto}.bt>div.pos{background:var(--up)}
 .lrn{border-bottom:1px solid var(--line);padding:10px 0}.lrn:last-child{border-bottom:0}
 .lrn summary{font-weight:700;cursor:pointer;font-size:15px}.lrn p{margin:8px 0 0}
+
+:focus-visible{outline:3px solid var(--gold);outline-offset:2px;border-radius:6px}
+@media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
+.gnav{display:flex;gap:6px;margin:6px 0 10px;overflow-x:auto;scrollbar-width:none;scroll-snap-type:x proximity;padding-bottom:2px}
+.gnav::-webkit-scrollbar{display:none}
+.gnav button{flex:0 0 84px;scroll-snap-align:start;border:1px solid var(--line);background:var(--card);color:var(--ink);font:inherit;font-size:12px;font-weight:700;padding:8px 4px;border-radius:12px;cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:2px;line-height:1.2;text-align:center}
+.gnav button .gi{font-size:24px}
+.gnav button.on{background:var(--goldsoft);border-color:var(--gold);color:var(--gold)}
+.gh{margin:0 0 10px;font-size:20px}
+.gbig{display:flex;gap:12px;align-items:center;background:var(--goldsoft);border-radius:14px;padding:12px 14px;font-size:17px;line-height:1.45;margin-bottom:12px}
+.gbig .ge{font-size:40px;line-height:1}
+.gtip{background:var(--bg);border:1px solid var(--line);border-radius:12px;padding:10px 12px;margin:10px 0;font-size:15px}
+.kbars{display:grid;gap:10px}
+.kb{display:grid;grid-template-columns:86px 1fr auto;gap:10px;align-items:center}
+.kl{display:flex;flex-direction:column;font-size:12px;color:var(--muted)}.kl b{font-size:18px;color:var(--ink)}
+.kt{height:22px;background:var(--line);border-radius:11px;overflow:hidden}.kt div{height:100%;background:linear-gradient(90deg,#e8b73a,#b8860b);border-radius:11px}
+.kv{font-weight:700;font-variant-numeric:tabular-nums;font-size:14px}
+.units{display:flex;flex-wrap:wrap;gap:10px;align-items:flex-end;justify-content:space-around;margin:6px 0}
+.un{display:flex;flex-direction:column;align-items:center;text-align:center;gap:3px;max-width:92px;font-size:12px}
+.un b{font-size:15px}.un em{font-style:normal;color:var(--gold);font-weight:700}
+.coin{border-radius:50%;background:radial-gradient(circle at 35% 30%,#fff3b0,#e8b73a 45%,#a8770a);box-shadow:inset 0 0 0 3px rgba(150,100,10,.5)}
+.cause{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:8px}
+.cz{display:flex;gap:12px;align-items:center;border:1px solid var(--line);border-radius:12px;padding:10px;font-size:15px}
+.cicons{display:flex;align-items:center;gap:4px;font-size:26px;flex:0 0 auto}
+.cicons i{font-style:normal;font-size:18px;font-weight:900}.cicons i.u{color:var(--up)}.cicons i.d{color:var(--down)}.cicons .arr{font-size:16px;color:var(--muted)}
+.dchip{border-left:4px solid var(--gold);padding:6px 10px;margin:6px 0;background:var(--bg);border-radius:8px;font-weight:600;font-size:14px}
+.dchip.down{border-color:var(--down)}.dchip.up{border-color:var(--up)}
+.ways{display:flex;gap:10px;overflow-x:auto;scroll-snap-type:x mandatory;padding-bottom:6px}
+.ways .wc{flex:0 0 78%;max-width:300px;scroll-snap-align:start}
+.swipe{font-size:12px;color:var(--muted);text-align:right;margin:-4px 0 6px}
+.wc{border:1px solid var(--line);border-radius:14px;padding:12px;display:flex;flex-direction:column;gap:5px}
+.wh{display:flex;align-items:center;gap:8px;font-size:16px}.wi{font-size:28px}
+.mt{display:flex;justify-content:space-between;font-size:13px;color:var(--muted)}
+.dots{display:inline-flex;gap:4px}.dots i{width:12px;height:12px;border-radius:50%;background:var(--line)}.dots i.on{background:var(--gold)}
+.wm{font-size:13px}
+.sq{margin:12px 0}.sq b{display:block;margin-bottom:6px;font-size:16px}
+.sopts{display:flex;flex-wrap:wrap;gap:8px}
+.sopts button{border:2px solid var(--line);background:var(--card);color:var(--ink);font:inherit;font-size:15px;padding:10px 14px;border-radius:12px;cursor:pointer;min-height:44px}
+.sopts button.on{border-color:var(--gold);background:var(--goldsoft)}
+.sopts button.ok{border-color:var(--up);background:rgba(31,122,77,.12)}.sopts button.bad{border-color:var(--down);background:rgba(180,55,47,.1)}
+.result{margin-top:14px;border:2px solid var(--gold);border-radius:16px;padding:14px;text-align:center;display:flex;flex-direction:column;gap:8px;align-items:center}
+.rbig{font-size:22px;font-weight:800}
+.trio{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin:10px 0}
+.trio div{border:1px solid var(--line);border-radius:12px;padding:8px;text-align:center;display:flex;flex-direction:column;gap:2px;font-size:12px;color:var(--muted)}
+.trio b{font-size:17px;color:var(--ink)}.trio b.up{color:var(--up)}.trio b.down{color:var(--down)}.trio em{font-style:normal}
+.stack{display:flex;height:34px;border-radius:10px;overflow:hidden;margin:8px 0}
+.sg{background:#d9a520}.sm{background:#b4372f}.st{background:#3a5a8c}
+.legend{display:flex;flex-wrap:wrap;gap:6px 14px;font-size:14px}.legend i{display:inline-block;width:12px;height:12px;border-radius:3px;margin-right:5px;vertical-align:-1px}
+.flips{display:grid;grid-template-columns:repeat(2,1fr);gap:8px}
+.flip{min-height:120px;font-size:14px!important;border:2px solid var(--line);border-radius:14px;background:var(--card);color:var(--ink);font:inherit;font-size:15px;padding:12px;cursor:pointer;text-align:left}
+.flip .fa{display:none}.flip.on{border-color:var(--up);background:rgba(31,122,77,.08)}.flip.on .fq{display:none}.flip.on .fa{display:block}
+.txaxis{display:flex;justify-content:space-between;font-size:12px;color:var(--muted);margin:6px 0 4px 0;padding-left:0}
+.tx{margin:8px 0}.txl{font-size:14px;font-weight:700;margin-bottom:4px}
+.txb{display:flex;height:30px;border-radius:10px;overflow:hidden;font-size:12px;font-weight:700;color:#fff}
+.txb .sl{background:#b4372f;display:flex;align-items:center;justify-content:center}.txb .lt{flex:1;background:#1f7a4d;display:flex;align-items:center;justify-content:center}
+.gpager{display:flex;justify-content:space-between;gap:8px;margin-top:16px}
+.gpager .btn{min-height:44px;font-size:14px}
 .tag{display:inline-block;font-size:11px;font-weight:700;padding:1px 7px;border-radius:6px;background:var(--goldsoft);color:var(--gold);margin-right:4px}
 .tag.s{background:var(--silversoft);color:var(--silver)} .tag.i{background:rgba(31,122,77,.12);color:var(--up)}
 </style>
@@ -366,7 +427,7 @@ async function load(){
   try{ const r=await fetch("data.json?t="+Date.now(),{cache:"no-store"}); if(!r.ok) throw new Error(r.status); D=await r.json(); renderAll(); }
   catch(e){ document.getElementById("stamp").innerHTML=`<span class="err">Couldn't load the latest data (${esc(e.message)}). Try Refresh.</span>`; }
 }
-async function loadHist(){ try{ const r=await fetch("history_monthly.json?t="+Date.now(),{cache:"no-store"}); H=await r.json(); if(D){ renderHist(); try{renderTools();}catch(e){} } }catch(e){} }
+async function loadHist(){ try{ const r=await fetch("history_monthly.json?t="+Date.now(),{cache:"no-store"}); H=await r.json(); if(D){ renderHist(); try{renderTools(); renderGuideTab();}catch(e){} } }catch(e){} }
 
 function syncControls(){
   document.body.classList.toggle("silver", S.metal==="silver");
@@ -423,7 +484,25 @@ function renderPrices(){
   document.getElementById("priceDetail").innerHTML=priceBlock(S.metal,S.mkt);
   const other=S.mkt==="india"?"intl":"india";
   document.getElementById("priceOther").innerHTML=`<div class="meta" style="margin-bottom:4px">${metalName()} · ${other==="india"?"India":"International"}</div>`+priceBlock(S.metal,other);
+  renderCities();
   document.getElementById("fxCard").innerHTML=`<div class="pr"><div class="nm">1 US dollar</div><div class="vv">₹${D.fx.usd_inr.toFixed(2)}</div><div class="sub"><span>${esc(D.fx.asof)}</span>${badge(D.fx.status)}</div></div><details><summary>Sources</summary>${links(D.fx.sources)}</details>`;
+}
+
+
+function renderCities(){
+  const C=D.cities, w=document.getElementById("cityWrap");
+  if(!C||!C.rows||!C.rows.length||S.mkt!=="india"){ w.hidden=true; return; }
+  w.hidden=false; const k=S.unit;
+  document.getElementById("cityAsof").textContent=C.asof||"";
+  let reg="";
+  const head = S.metal==="gold" ? `<tr><th>City</th><th>24K</th><th>22K</th><th>18K</th><th></th></tr>` : `<tr><th>City</th><th>Silver</th><th></th></tr>`;
+  const ibja = S.metal==="gold"? D.gold.india.p916_10g/10 : D.silver.india.p999_kg/1000;
+  document.getElementById("cityTable").innerHTML = head + C.rows.map(r=>{
+    const g = v => v? inr(v*k) : "–";
+    const sep = r.region!==reg ? `<tr><td colspan="5" class="meta" style="text-align:left;font-weight:700;padding-top:10px">${esc(r.region||"")}</td></tr>` : ""; reg=r.region;
+    const cells = S.metal==="gold" ? `<td>${g(r.g24)}</td><td><b>${g(r.g22)}</b></td><td>${g(r.g18)}</td>` : `<td>${r.silver_kg?inr(r.silver_kg/1000*k,2):"–"}</td>`;
+    return sep+`<tr><td style="text-align:left">${esc(r.city)}</td>${cells}<td>${badge(r.status||"single source")}</td></tr>`; }).join("");
+  document.getElementById("cityNote").innerHTML = esc(C.note||"") + (C.sources? " "+links(C.sources).replace('<div class="src">','').replace('</div>',''):"");
 }
 
 // ---------- OUTLOOK ----------
@@ -722,7 +801,7 @@ function renderWhy(){
 // ---- I18N
 let LANG=LS.get("sy_lang","en");
 const TX={
- en:{tab_today:"⭐ Today",tab_prices:"💰 Prices",tab_outlook:"📈 Next days",tab_news:"📰 Why & news",tab_history:"🕒 History",tab_guide:"🧭 Guidance",tab_tools:"🧮 Tools",tab_learn:"📚 Learn",tab_why:"✨ Why SY",
+ en:{tab_today:"⭐ Today",tab_prices:"💰 Prices",tab_outlook:"📈 Next days",tab_news:"📰 Why & news",tab_history:"🕒 History",tab_guide:"🧭 Guidance",tab_tools:"🧮 Tools",tab_learn:"🎓 Gold Guide",tab_why:"✨ Why SY",
    gold:"Gold",silver:"Silver",total:"Total",gold_value:"Gold value",wastage:"Wastage",making:"Making charge",stones:"Stones / other",hallmark:"Hallmark",eff_rate:"Effective rate",extra_over:"Extra over gold value",
    quote_hi:"The shop's quote is higher than this calculation by",quote_ask:"Ask for the making/wastage breakup or compare another shop.",quote_ok:"The shop's quote is within this calculation; it's lower by",
    net_wt:"Net gold weight",rate_used:"Today's rate used",full_value:"Full metal value",deduct:"Deduction",expected_offer:"Expected offer (approx.)",old_tip:"Exchanging for new jewellery usually gets a better value than selling for cash. Ask the shop to show the purity test result.",
@@ -734,7 +813,7 @@ const TX={
    h_buy:"Know the fair rate before entering a shop, check the bill line by line, and spot an inflated quote.",h_save:"Plan a monthly amount, see grams building up, and track what your gold is worth today.",
    h_sell:"Estimate your old gold's value and the deductions before you go, so you can't be under-quoted.",h_learn:"Plain explanations of purity, hallmark/HUID, IBJA, GST and making charges, in Tamil and English.",
    h_vis:"See why prices moved (world price vs rupee), long-term charts, and how often SY's own estimates were right."},
- ta:{tab_today:"⭐ இன்று",tab_prices:"💰 விலைகள்",tab_outlook:"📈 அடுத்த நாட்கள்",tab_news:"📰 காரணம் & செய்தி",tab_history:"🕒 வரலாறு",tab_guide:"🧭 வழிகாட்டல்",tab_tools:"🧮 கருவிகள்",tab_learn:"📚 கற்றல்",tab_why:"✨ ஏன் SY",
+ ta:{tab_today:"⭐ இன்று",tab_prices:"💰 விலைகள்",tab_outlook:"📈 அடுத்த நாட்கள்",tab_news:"📰 காரணம் & செய்தி",tab_history:"🕒 வரலாறு",tab_guide:"🧭 வழிகாட்டல்",tab_tools:"🧮 கருவிகள்",tab_learn:"🎓 தங்க வழிகாட்டி",tab_why:"✨ ஏன் SY",
    gold:"தங்கம்",silver:"வெள்ளி",total:"மொத்தம்",gold_value:"தங்க மதிப்பு",wastage:"சேதாரம்",making:"செய்கூலி",stones:"கற்கள் / மற்றவை",hallmark:"ஹால்மார்க்",eff_rate:"உண்மையான விலை",extra_over:"தங்க மதிப்பைவிட கூடுதல்",
    quote_hi:"கடை சொன்ன தொகை இந்த கணக்கைவிட அதிகம்:",quote_ask:"செய்கூலி/சேதார விவரம் கேளுங்கள் அல்லது வேறு கடையுடன் ஒப்பிடுங்கள்.",quote_ok:"கடை சொன்ன தொகை சரியான வரம்பில் உள்ளது; குறைவு:",
    net_wt:"நிகர தங்க எடை",rate_used:"இன்றைய விலை",full_value:"முழு உலோக மதிப்பு",deduct:"கழிவு",expected_offer:"எதிர்பார்க்கும் தொகை (தோராயம்)",old_tip:"பணமாக விற்பதைவிட புதிய நகைக்கு மாற்றினால் பொதுவாக நல்ல மதிப்பு கிடைக்கும். தூய்மை சோதனை முடிவை காட்டச் சொல்லுங்கள்.",
@@ -763,12 +842,190 @@ function applyLang(){
   document.querySelectorAll("[data-i18n]").forEach(el=>{ const k=el.dataset.i18n; if(!(k in EN_STATIC)) EN_STATIC[k]=el.textContent; el.textContent = LANG==="ta" && TS.ta[k] ? TS.ta[k] : EN_STATIC[k]; });
   document.querySelectorAll("#tabs a").forEach(a=>a.textContent=T("tab_"+a.dataset.t));
   document.querySelectorAll("#swMetal button").forEach(b=>b.textContent=(b.dataset.v==="gold"?"🟡 ":"⚪ ")+T(b.dataset.v));
+  document.querySelectorAll("#swMkt button").forEach(b=>b.textContent=(b.dataset.v==="india"?"🇮🇳 ":"🌍 ")+(LANG==="ta"?(b.dataset.v==="india"?"இந்தியா":"சர்வதேசம்"):(b.dataset.v==="india"?"India":"International")));
   $("langBtn").textContent = LANG==="ta"?"EN":"தமிழ்";
-  renderLearn(); renderWhy(); if(D){ renderTools(); renderSplit(); }
+  renderLearn(); renderWhy(); if(D){ renderTools(); renderSplit(); } try{ renderGuideTab(); }catch(e){}
 }
 
 document.getElementById("langBtn").onclick=()=>{ LANG = LANG==="ta"?"en":"ta"; LS.set("sy_lang",LANG); applyLang(); };
 applyLang();
+</script>
+<script>
+// ================= GOLD GUIDE (visual, kid-friendly) =================
+const L2 = o => (o && (o[LANG] || o.en)) || "";
+const CH = [
+  {id:"basics", ic:"🪙", t:{en:"What is 24K?",ta:"24K என்றால்?"}},
+  {id:"units",  ic:"📏", t:{en:"Units",ta:"அளவுகள்"}},
+  {id:"why",    ic:"🎢", t:{en:"Why price moves",ta:"விலை ஏன் மாறுகிறது"}},
+  {id:"ways",   ic:"🏦", t:{en:"Ways to own",ta:"வாங்கும் வழிகள்"}},
+  {id:"suits",  ic:"🧭", t:{en:"Which suits me?",ta:"எனக்கு எது?"}},
+  {id:"when",   ic:"📅", t:{en:"When to buy",ta:"எப்போது வாங்குவது"}},
+  {id:"bill",   ic:"🧾", t:{en:"Inside a bill",ta:"பில் உள்ளே"}},
+  {id:"myths",  ic:"✅", t:{en:"Myth or fact",ta:"கட்டுக்கதை / உண்மை"}},
+  {id:"tax",    ic:"💸", t:{en:"Tax basics",ta:"வரி அடிப்படை"}},
+  {id:"quiz",   ic:"🏆", t:{en:"Quiz",ta:"வினாடி வினா"}}];
+let gch = LS.get("sy_gch","basics");
+
+function guideNav(){
+  $("gNav").innerHTML = CH.map((c,i)=>`<button role="tab" aria-selected="${c.id===gch}" class="${c.id===gch?'on':''}" data-c="${c.id}"><span class="gi">${c.ic}</span><span>${i+1}. ${L2(c.t)}</span></button>`).join("");
+  const onb=$("gNav").querySelector("button.on"); if(onb) onb.scrollIntoView({inline:"center",block:"nearest"});
+  $("gNav").querySelectorAll("button").forEach(b=>b.onclick=()=>{ gch=b.dataset.c; LS.set("sy_gch",gch); renderGuideTab(); $("gBody").scrollIntoView({block:"nearest"}); });
+}
+function pager(){
+  const i=CH.findIndex(c=>c.id===gch);
+  return `<div class="gpager">${i>0?`<button class="btn" data-go="${CH[i-1].id}">← ${L2(CH[i-1].t)}</button>`:"<span></span>"}${i<CH.length-1?`<button class="btn pri" data-go="${CH[i+1].id}">${L2(CH[i+1].t)} →</button>`:""}</div>`;
+}
+function bindPager(){ $("gBody").querySelectorAll("[data-go]").forEach(b=>b.onclick=()=>{ gch=b.dataset.go; LS.set("sy_gch",gch); renderGuideTab(); window.scrollTo({top:0}); }); }
+const big = (emoji, en, ta) => `<div class="gbig"><div class="ge">${emoji}</div><div>${L2({en,ta})}</div></div>`;
+
+// ---------- chapters ----------
+const G = {
+basics(){
+  const ks=[["24K","999",99.9],["22K","916",91.6],["18K","750",75],["14K","585",58.5]];
+  return big("🪙","Gold is measured in <b>karats (K)</b>. More K = more pure gold = higher price.","காரட் (K) அதிகம் = தூய தங்கம் அதிகம் = விலை அதிகம்.")
+   + `<div class="kbars">${ks.map(([k,c,p])=>`<div class="kb"><div class="kl"><b>${k}</b><span>${p}% ${LANG==="ta"?"தங்கம்":"gold"}</span></div><div class="kt" role="img" aria-label="${k} is ${p}% gold"><div style="width:${p}%"></div></div><div class="kv">${D?rs(rateFor(c))+"/g":""}</div></div>`).join("")}</div>`
+   + `<div class="gtip">💡 ${L2({en:"Pure gold (24K) is soft, so jewellers mix in a little copper or silver to make it strong. That's why most jewellery is <b>22K</b>.",ta:"24K தங்கம் மென்மையானது; வலிமைக்காக சிறிது செம்பு/வெள்ளி சேர்ப்பார்கள். அதனால் பெரும்பாலான நகைகள் <b>22K</b>."})}</div>`
+   + `<div class="gtip">🏷️ ${L2({en:"Look for the <b>BIS hallmark</b> + a 6-digit <b>HUID</b> code on jewellery. Check it in the BIS CARE app.",ta:"நகையில் <b>BIS ஹால்மார்க்</b> + 6 இலக்க <b>HUID</b> பாருங்கள். BIS CARE செயலியில் சரிபார்க்கலாம்."})}</div>`;
+},
+units(){
+  const u=[["1 g",1,{en:"1 gram",ta:"1 கிராம்"}],["8 g",8,{en:"1 sovereign / pavan",ta:"1 பவுன்"}],["10 g",10,{en:"10 grams",ta:"10 கிராம்"}],["11.66 g",11.6638,{en:"1 tola",ta:"1 தோலா"}],["31.1 g",31.1035,{en:"1 troy ounce (world price)",ta:"1 அவுன்ஸ் (உலக விலை)"}]];
+  const mx=Math.sqrt(31.1035);
+  return big("📏","Same gold, different units. Tap the unit menu at the top to see any price this way.","ஒரே தங்கம், வெவ்வேறு அளவுகள். மேலே உள்ள அளவு பட்டியலில் மாற்றலாம்.")
+   + `<div class="units">${u.map(([w,g,lab])=>{ const d=26+70*Math.sqrt(g)/mx; return `<div class="un"><div class="coin" style="width:${d}px;height:${d}px" aria-hidden="true"></div><b>${w}</b><span>${L2(lab)}</span><em>${D?"22K "+rs(rateFor("916")*g):""}</em></div>`;}).join("")}</div>`
+   + `<div class="gtip">💡 ${L2({en:"South Indian families often count in <b>sovereigns (8 g)</b>. World news quotes gold per <b>ounce</b> in US dollars.",ta:"தென்னிந்தியாவில் <b>பவுன் (8 கி)</b> கணக்கு பொதுவானது. உலக செய்திகள் <b>அவுன்ஸ்</b> டாலரில் சொல்லும்."})}</div>`;
+},
+why(){
+  const c=[["💵","↑","🪙","↓",{en:"US dollar gets stronger → world gold usually falls",ta:"டாலர் வலுத்தால் → உலக தங்கம் பொதுவாக குறையும்"}],
+           ["🏦","↑","🪙","↓",{en:"Interest rates go up → gold falls (gold pays no interest)",ta:"வட்டி விகிதம் உயர்ந்தால் → தங்கம் குறையும் (தங்கத்துக்கு வட்டி இல்லை)"}],
+           ["😟","↑","🪙","↑",{en:"War, crisis or fear → gold rises (a 'safe' place for money)",ta:"போர்/நெருக்கடி/பயம் → தங்கம் உயரும் (பாதுகாப்பான இடம்)"}],
+           ["🏛️","↑","🪙","↑",{en:"Central banks buy more gold → gold rises",ta:"மத்திய வங்கிகள் அதிகம் வாங்கினால் → தங்கம் உயரும்"}],
+           ["₹","↓","🇮🇳","↑",{en:"Rupee gets weaker → gold in India costs more",ta:"ரூபாய் பலவீனமானால் → இந்தியாவில் தங்கம் விலை உயரும்"}],
+           ["💍","↑","🇮🇳","↑",{en:"Wedding & festival buying → Indian demand rises",ta:"திருமணம்/பண்டிகை → இந்திய தேவை உயரும்"}]];
+  const today = D ? D.drivers.slice(0,3).map(d=>`<div class="dchip ${d.impact}">${d.impact==="down"?"⬇️":d.impact==="up"?"⬆️":"↕️"} ${esc(d.title)} <span class="meta">${esc(d.date)}</span></div>`).join("") : "";
+  return big("🎢","Gold's price is like a see-saw. These things push it up or down:","தங்க விலை ஒரு ஊஞ்சல் போல. இவை மேலே/கீழே தள்ளும்:")
+   + `<div class="cause">${c.map(([a,ad,b,bd,t])=>`<div class="cz"><div class="cicons" aria-hidden="true"><span>${a}<i class="${ad==="↑"?"u":"d"}">${ad}</i></span><span class="arr">➜</span><span>${b}<i class="${bd==="↑"?"u":"d"}">${bd}</i></span></div><div>${L2(t)}</div></div>`).join("")}</div>`
+   + `<h4>${L2({en:"📰 Happening now",ta:"📰 இப்போது நடப்பது"})}</h4>${today}<div class="meta"><a href="#news">${L2({en:"See all reasons with sources →",ta:"அனைத்து காரணங்களும் →"})}</a></div>`;
+},
+ways(){
+  const W=[
+   {n:{en:"Jewellery",ta:"நகை"},i:"💍",start:{en:"Any amount",ta:"எந்த தொகையும்"},cost:1,safe:2,sell:3,reg:"BIS hallmark",fit:{en:"Wearing, weddings",ta:"அணிய, திருமணம்"},note:{en:"Making charges + wastage are lost when you sell",ta:"விற்கும்போது செய்கூலி, சேதாரம் இழப்பு"}},
+   {n:{en:"Coins & bars",ta:"நாணயம் & பிஸ்கட்"},i:"🪙",start:{en:"From ~1 g",ta:"~1 கி முதல்"},cost:2,safe:2,sell:3,reg:"BIS hallmark",fit:{en:"Gifts, physical saving",ta:"பரிசு, சேமிப்பு"},note:{en:"Low making charge; keep safely",ta:"குறைந்த செய்கூலி; பாதுகாப்பாக வைக்கவும்"}},
+   {n:{en:"Gold ETF",ta:"கோல்ட் ETF"},i:"📈",start:{en:"1 unit (needs demat)",ta:"1 யூனிட் (டிமேட் தேவை)"},cost:3,safe:3,sell:3,reg:"SEBI",fit:{en:"Long-term saving",ta:"நீண்டகால சேமிப்பு"},note:{en:"No making charge or GST; tracks gold price",ta:"செய்கூலி/GST இல்லை"}},
+   {n:{en:"Gold mutual fund",ta:"கோல்ட் மியூச்சுவல் ஃபண்ட்"},i:"🗓️",start:{en:"Small monthly SIP",ta:"சிறிய மாத SIP"},cost:3,safe:3,sell:2,reg:"SEBI",fit:{en:"Monthly saving, no demat",ta:"மாதச் சேமிப்பு, டிமேட் இல்லாமல்"},note:{en:"Invests in gold ETFs; small yearly fee",ta:"ETF-ல் முதலீடு; சிறிய ஆண்டு கட்டணம்"}},
+   {n:{en:"Sovereign Gold Bond (old ones)",ta:"தங்க பத்திரம் (பழையவை)"},i:"📜",start:{en:"Buy on NSE/BSE only",ta:"NSE/BSE-ல் மட்டும்"},cost:3,safe:3,sell:1,reg:"RBI / Govt",fit:{en:"8-year holders",ta:"8 ஆண்டு வைத்திருப்போர்"},note:{en:"No new issues since Feb 2024; pays 2.5% interest",ta:"பிப் 2024 முதல் புதிய வெளியீடு இல்லை; 2.5% வட்டி"}},
+   {n:{en:"Digital gold apps",ta:"டிஜிட்டல் தங்கம்"},i:"📱",start:{en:"Very small amounts",ta:"மிகச் சிறிய தொகை"},cost:2,safe:1,sell:3,reg:{en:"⚠️ Not SEBI-regulated",ta:"⚠️ SEBI கட்டுப்பாட்டில் இல்லை"},fit:{en:"Tiny savings (with caution)",ta:"சிறு சேமிப்பு (கவனத்துடன்)"},note:{en:"SEBI cautioned in Nov 2025: no investor protection",ta:"நவ 2025-ல் SEBI எச்சரிக்கை"}}];
+  const dots=(v,lab)=>`<div class="mt"><span>${lab}</span><span class="dots" role="img" aria-label="${lab} ${v} of 3">${[1,2,3].map(i=>`<i class="${i<=v?'on':''}"></i>`).join("")}</span></div>`;
+  return big("🏦","There are many ways to own gold. More dots = better for you.","தங்கம் வைத்திருக்க பல வழிகள். அதிக புள்ளி = உங்களுக்கு நல்லது.")
+   + `<div class="swipe">${L2({en:"Swipe → to see all 6",ta:"→ தள்ளி அனைத்தும் பாருங்கள்"})}</div><div class="ways">${W.map(w=>`<div class="wc"><div class="wh"><span class="wi">${w.i}</span><b>${L2(w.n)}</b></div>
+      ${dots(w.cost,L2({en:"Low cost",ta:"குறைந்த செலவு"}))}${dots(w.safe,L2({en:"Safety",ta:"பாதுகாப்பு"}))}${dots(w.sell,L2({en:"Easy to sell",ta:"விற்க எளிது"}))}
+      <div class="wm">🏁 ${L2(w.start)}</div><div class="wm">🛡️ ${typeof w.reg==="string"?w.reg:L2(w.reg)}</div><div class="wm">👤 ${L2(w.fit)}</div><div class="meta">${L2(w.note)}</div></div>`).join("")}</div>
+     <div class="meta">${L2({en:"SY's simple ratings for learning, not financial advice. Facts checked Nov 2026 (SGB status, SEBI caution).",ta:"கற்றலுக்கான எளிய மதிப்பீடு; நிதி ஆலோசனை அல்ல. நவ 2026 சரிபார்க்கப்பட்டது."})}</div>`;
+},
+suits(){
+  const Q=[["goal",{en:"What is it for?",ta:"எதற்காக?"},[["wear",{en:"💍 To wear / wedding",ta:"💍 அணிய / திருமணம்"}],["save",{en:"🏦 Saving for future",ta:"🏦 எதிர்கால சேமிப்பு"}],["gift",{en:"🎁 A gift",ta:"🎁 பரிசு"}],["learn",{en:"🌱 Start small & learn",ta:"🌱 சிறிதாக தொடங்க"}]]],
+           ["time",{en:"How long will you keep it?",ta:"எவ்வளவு காலம் வைத்திருப்பீர்கள்?"},[["s",{en:"Under 1 year",ta:"1 ஆண்டுக்குள்"}],["m",{en:"1–3 years",ta:"1–3 ஆண்டு"}],["l",{en:"More than 3 years",ta:"3 ஆண்டுக்கு மேல்"}]]],
+           ["demat",{en:"Do you have a demat account?",ta:"டிமேட் கணக்கு உள்ளதா?"},[["y",{en:"Yes",ta:"ஆம்"}],["n",{en:"No / not sure",ta:"இல்லை / தெரியாது"}]]],
+           ["how",{en:"How will you pay?",ta:"எப்படி செலுத்துவீர்கள்?"},[["m",{en:"A little every month",ta:"மாதம் சிறிது"}],["o",{en:"All at once",ta:"ஒரே முறை"}]]]];
+  const A=LS.get("sy_suits",{});
+  const qs=Q.map(([k,q,opts])=>`<div class="sq"><b>${L2(q)}</b><div class="sopts">${opts.map(([v,l])=>`<button class="${A[k]===v?'on':''}" data-k="${k}" data-v="${v}">${L2(l)}</button>`).join("")}</div></div>`).join("");
+  let res="";
+  if(Q.every(([k])=>A[k])){
+    let pick, why;
+    if(A.goal==="wear"){ pick={en:"💍 Hallmarked jewellery (22K or 18K)",ta:"💍 ஹால்மார்க் நகை (22K/18K)"}; why={en:A.how==="m"?"Use a jeweller's monthly scheme or buy coins in parts, then exchange for jewellery. Check making charges with the Bill tool.":"Compare 2–3 shops' making charges with the Bill tool and insist on HUID.",ta:A.how==="m"?"நகைக்கடை மாதத் திட்டம் அல்லது நாணயம் சிறிது சிறிதாக வாங்கி பின்னர் நகையாக மாற்றலாம்.":"2–3 கடைகளின் செய்கூலியை ஒப்பிட்டு HUID கேளுங்கள்."}; }
+    else if(A.goal==="gift"){ pick={en:"🪙 A hallmarked gold coin",ta:"🪙 ஹால்மார்க் தங்க நாணயம்"}; why={en:"Low making charge, easy to give, easy to sell later.",ta:"குறைந்த செய்கூலி, கொடுக்க எளிது, பின்னர் விற்க எளிது."}; }
+    else if(A.demat==="y"){ pick={en:"📈 Gold ETF",ta:"📈 கோல்ட் ETF"}; why={en:"Regulated by SEBI, no making charge or GST, long-term tax after 12 months."+(A.time==="s"?" For under a year, remember prices can swing a lot.":""),ta:"SEBI கட்டுப்பாடு, செய்கூலி/GST இல்லை, 12 மாதத்துக்குப் பின் நீண்டகால வரி."}; }
+    else { pick={en:"🗓️ Gold mutual fund (monthly SIP)",ta:"🗓️ கோல்ட் மியூச்சுவல் ஃபண்ட் (மாத SIP)"}; why={en:"No demat needed, small monthly amounts, regulated by SEBI. Or buy small coins in parts.",ta:"டிமேட் தேவையில்லை, சிறு மாதத் தொகை, SEBI கட்டுப்பாடு. அல்லது சிறு நாணயங்கள்."}; }
+    res=`<div class="result"><div class="meta">${L2({en:"A good fit for you",ta:"உங்களுக்கு பொருத்தமானது"})}</div><div class="rbig">${L2(pick)}</div><div>${L2(why)}</div>
+      ${A.time==="s"?`<div class="gtip">⚠️ ${L2({en:"Gold can move 10–25% in a few months. Money you need within a year is safer in a bank deposit.",ta:"சில மாதங்களில் தங்கம் 10–25% மாறலாம். ஒரு வருடத்துக்குள் தேவைப்படும் பணம் வங்கி வைப்பில் பாதுகாப்பானது."})}</div>`:""}
+      <div class="meta">${L2({en:"General learning only, not personal advice.",ta:"பொதுவான கற்றல் மட்டும்; தனிப்பட்ட ஆலோசனை அல்ல."})}</div><button class="btn" id="sReset">↺ ${L2({en:"Start again",ta:"மீண்டும்"})}</button></div>`;
+  }
+  return big("🧭","Answer 4 quick questions to see which kind of gold fits you.","4 கேள்விகளுக்கு பதில் சொல்லுங்கள்; உங்களுக்கு எது பொருத்தம் என்று பாருங்கள்.") + qs + res;
+},
+when(){
+  if(!H) return big("📅","Loading price history…","");
+  const s=series("gold","inr").slice(-25).map(x=>[x[0],x[1]/S.unit]); // ₹ per g
+  const amt=1000, grams=s.reduce((a,x)=>a+amt/x[1],0), avg=amt*s.length/grams;
+  const mn=s.reduce((a,b)=>b[1]<a[1]?b:a), mx=s.reduce((a,b)=>b[1]>a[1]?b:a);
+  setTimeout(()=>drawWhen(s,avg),0);
+  return big("📅","Nobody knows the cheapest day. Buying a little <b>every month</b> gives you an average price, not the worst one.","மலிவான நாள் யாருக்கும் தெரியாது. <b>மாதம் தோறும்</b> சிறிது வாங்கினால் சராசரி விலை கிடைக்கும்.")
+   + `<div class="chartbox" style="height:230px"><canvas id="whenChart" aria-label="Gold price over the last 2 years with average monthly-buying cost"></canvas></div>
+     <div class="trio"><div><span>${L2({en:"Cheapest month",ta:"மலிவான மாதம்"})}</span><b class="up">${rs(mn[1])}</b><em>${mName(mn[0])}</em></div>
+     <div><span>${L2({en:"Monthly buyer's average",ta:"மாத வாங்குபவர் சராசரி"})}</span><b>${rs(avg)}</b><em>${L2({en:"per gram",ta:"கிராமுக்கு"})}</em></div>
+     <div><span>${L2({en:"Costliest month",ta:"அதிக விலை மாதம்"})}</span><b class="down">${rs(mx[1])}</b><em>${mName(mx[0])}</em></div></div>
+     <div class="gtip">✅ ${L2({en:"Tips: buy in parts, don't put everything in just before big news days (US inflation report, Fed decision), and compare shop rates with SY's IBJA rate.",ta:"குறிப்பு: பகுதிகளாக வாங்குங்கள்; பெரிய செய்தி நாட்களுக்கு முன் முழுத் தொகையையும் போடாதீர்கள்; கடை விலையை SY IBJA விலையுடன் ஒப்பிடுங்கள்."})}</div>
+     <div class="meta">${L2({en:"Last 2 years, international gold price in rupees per gram (before duty/GST), ₹1,000 bought each month.",ta:"கடந்த 2 ஆண்டு, ரூபாயில் சர்வதேச விலை (வரி முன்), மாதம் ₹1,000."})}</div>`;
+},
+bill(){
+  const w=8, r=D?rateFor("916"):11907, gold=w*r, mk=gold*0.12, gst=(gold+mk)*0.03, tot=gold+mk+gst;
+  const seg=[[gold,"g",{en:"Gold",ta:"தங்கம்"}],[mk,"m",{en:"Making 12%",ta:"செய்கூலி 12%"}],[gst,"t",{en:"GST 3%",ta:"GST 3%"}]];
+  return big("🧾","What you pay for 1 sovereign (8 g) of 22K jewellery:","22K நகை 1 பவுன் (8 கி) வாங்கும்போது நீங்கள் செலுத்துவது:")
+   + `<div class="stack" role="img" aria-label="Bill split: gold ${Math.round(gold/tot*100)}%, making ${Math.round(mk/tot*100)}%, GST ${Math.round(gst/tot*100)}%">${seg.map(([v,c])=>`<div class="s${c}" style="width:${v/tot*100}%"></div>`).join("")}</div>
+     <div class="legend">${seg.map(([v,c,l])=>`<div><i class="s${c}"></i>${L2(l)} <b>${rs(v)}</b></div>`).join("")}<div><b>${L2({en:"Total",ta:"மொத்தம்"})} ${rs(tot)}</b></div></div>
+     <div class="trio"><div><span>${L2({en:"You pay",ta:"நீங்கள் செலுத்துவது"})}</span><b>${rs(tot)}</b></div><div><span>${L2({en:"If you sell next day",ta:"மறுநாள் விற்றால்"})}</span><b class="down">≈ ${rs(gold*0.98)}</b></div><div><span>${L2({en:"Lost",ta:"இழப்பு"})}</span><b class="down">${rs(tot-gold*0.98)}</b></div></div>
+     <div class="gtip">💡 ${L2({en:"Making charges differ a lot between shops, so ask for the breakup and try the Jewellery bill tool.",ta:"செய்கூலி கடைக்கு கடை வேறுபடும்; விவரம் கேட்டு நகை பில் கருவியை பயன்படுத்துங்கள்."})} <a href="#tools">🧮 →</a></div>`;
+},
+myths(){
+  const drop = H ? (()=>{ const s=series("gold","inr"); const hi=s.reduce((a,b)=>b[1]>a[1]?b:a); return Math.round((1-s[s.length-1][1]/hi[1])*100)+"% "+L2({en:"below its",ta:"குறைவு,"})+" "+mName(hi[0])+L2({en:" peak",ta:" உச்சத்திலிருந்து"}); })() : "";
+  const M=[
+   [{en:"Gold price only goes up.",ta:"தங்க விலை எப்போதும் ஏறும்."},{en:`False. Gold is now about ${drop}. Over many years it has grown, but it can fall for months.`,ta:`தவறு. தங்கம் இப்போது ${drop}. நீண்டகாலத்தில் வளர்ந்தாலும் மாதக்கணக்கில் குறையலாம்.`}],
+   [{en:"Jewellery is the best investment.",ta:"நகையே சிறந்த முதலீடு."},{en:"Not really. Making charges and wastage are lost when you sell. Coins, ETFs or gold funds waste less money.",ta:"இல்லை. விற்கும்போது செய்கூலி, சேதாரம் இழப்பு. நாணயம், ETF குறைந்த இழப்பு."}],
+   [{en:"Digital gold is the same as a gold ETF.",ta:"டிஜிட்டல் தங்கமும் ETF-ம் ஒன்றே."},{en:"No. SEBI says app-based digital gold is outside its rules. Gold ETFs are SEBI-regulated.",ta:"இல்லை. டிஜிட்டல் தங்கம் SEBI விதிகளுக்கு வெளியே; ETF SEBI கட்டுப்பாட்டில்."}],
+   [{en:"22K and 24K cost the same.",ta:"22K, 24K ஒரே விலை."},{en:`No. 22K has 91.6% gold, so it costs about 91.6% of 24K. Today: 24K ${D?rs(rateFor("999")):""}/g, 22K ${D?rs(rateFor("916")):""}/g.`,ta:`இல்லை. 22K = 91.6% தங்கம். இன்று 24K ${D?rs(rateFor("999")):""}/கி, 22K ${D?rs(rateFor("916")):""}/கி.`}],
+   [{en:"An auspicious day means a lower price.",ta:"நல்ல நாளில் விலை குறைவு."},{en:"No. The price follows world markets and the rupee. Festival days can be busier, so compare rates.",ta:"இல்லை. விலை உலக சந்தை, ரூபாயைப் பொறுத்தது. விலையை ஒப்பிடுங்கள்."}],
+   [{en:"You need lakhs to start.",ta:"தொடங்க லட்சங்கள் தேவை."},{en:"No. Gold mutual fund SIPs and ETFs let you start with small amounts.",ta:"இல்லை. கோல்ட் ஃபண்ட் SIP, ETF சிறு தொகையில் தொடங்கலாம்."}]];
+  return big("✅","Tap a card to flip it: myth or fact?","அட்டையை தொட்டு திருப்புங்கள்: கட்டுக்கதையா உண்மையா?")
+   + `<div class="flips">${M.map(([q,a],i)=>`<button class="flip" data-i="${i}" aria-pressed="false"><span class="fq">🤔 ${L2(q)}</span><span class="fa">💡 ${L2(a)}</span></button>`).join("")}</div>`;
+},
+tax(){
+  const row=(lab,cut,tot=36)=>`<div class="tx"><div class="txl">${lab}</div><div class="txb"><div class="sl" style="width:${cut/tot*100}%">${L2({en:"Slab rate",ta:"வருமான வரி விகிதம்"})}</div><div class="lt">12.5%</div></div></div>`;
+  return big("💸","When you sell gold at a profit, you may pay tax. Holding longer usually means a flat 12.5% rate.","லாபத்தில் விற்றால் வரி. நீண்ட காலம் வைத்திருந்தால் 12.5% நிலையான வரி.")
+   + `<div class="txaxis"><span>0</span><span>12 ${L2({en:"months",ta:"மாதம்"})}</span><span>24</span><span>36+</span></div>`
+   + row(L2({en:"📈 Gold ETF",ta:"📈 கோல்ட் ETF"}),12) + row(L2({en:"💍 Jewellery, coins, digital gold, gold funds",ta:"💍 நகை, நாணயம், டிஜிட்டல், ஃபண்ட்"}),24)
+   + `<div class="gtip">📜 ${L2({en:"Old Sovereign Gold Bonds held by the original buyer to 8-year maturity: no capital-gains tax at maturity.",ta:"பழைய தங்க பத்திரம் — முதல் வாங்கியவர் 8 ஆண்டு முடிவு வரை வைத்தால் முதிர்வில் மூலதன லாப வரி இல்லை."})}</div>
+     <div class="meta">${L2({en:"Rules as of Nov 2026, simplified (4% cess applies). Tax rules change, so check with a tax adviser before selling large amounts.",ta:"நவ 2026 விதிகள் (எளிமைப்படுத்தப்பட்டது). விதிகள் மாறும்; வரி ஆலோசகரிடம் கேளுங்கள்."})}</div>`;
+},
+quiz(){
+  const Q=[[{en:"Which is the purest gold?",ta:"எது மிக தூய தங்கம்?"},["18K","22K","24K"],2,{en:"24K = 99.9% gold.",ta:"24K = 99.9% தங்கம்."}],
+           [{en:"1 sovereign (pavan) weighs…",ta:"1 பவுன் எடை…"},["8 g","10 g","11.66 g"],0,{en:"1 sovereign = 8 grams.",ta:"1 பவுன் = 8 கிராம்."}],
+           [{en:"If the rupee gets weaker, gold in India usually…",ta:"ரூபாய் பலவீனமானால் இந்திய தங்கம்…"},[{en:"Gets cheaper",ta:"மலியும்"},{en:"Gets costlier",ta:"விலை உயரும்"},{en:"No change",ta:"மாற்றமில்லை"}],1,{en:"India imports gold in dollars, so a weaker rupee makes it costlier.",ta:"இந்தியா டாலரில் தங்கம் வாங்குகிறது; ரூபாய் பலவீனம் = விலை உயர்வு."}],
+           [{en:"What should you check on jewellery?",ta:"நகையில் எதை சரிபார்க்க வேண்டும்?"},[{en:"Shop's logo",ta:"கடை லோகோ"},{en:"BIS hallmark + HUID",ta:"BIS ஹால்மார்க் + HUID"},{en:"Box colour",ta:"பெட்டி நிறம்"}],1,{en:"The HUID proves the purity.",ta:"HUID தூய்மையை நிரூபிக்கிறது."}],
+           [{en:"Which one is regulated by SEBI?",ta:"எது SEBI கட்டுப்பாட்டில் உள்ளது?"},[{en:"Gold ETF",ta:"கோல்ட் ETF"},{en:"App digital gold",ta:"செயலி டிஜிட்டல் தங்கம்"},{en:"Gold chit from a friend",ta:"நண்பர் சீட்டு"}],0,{en:"Gold ETFs are SEBI-regulated.",ta:"கோல்ட் ETF SEBI கட்டுப்பாட்டில்."}]];
+  const ans=LS.get("sy_quiz",{}); let score=0, done=0;
+  const qs=Q.map(([q,opts,ok,ex],i)=>{ const a=ans[i]; if(a!=null){ done++; if(a===ok) score++; }
+    return `<div class="sq"><b>${i+1}. ${L2(q)}</b><div class="sopts">${opts.map((o,j)=>{ const cls = a==null?"": j===ok?"ok": j===a?"bad":""; return `<button class="${cls}" data-q="${i}" data-a="${j}" ${a!=null?"disabled":""}>${typeof o==="string"?o:L2(o)}</button>`;}).join("")}</div>${a!=null?`<div class="meta">${a===ok?"✅":"❌"} ${L2(ex)}</div>`:""}</div>`; }).join("");
+  const badge = done===Q.length ? `<div class="result"><div class="rbig">${score===Q.length?"🏅":score>=3?"🥈":"📘"} ${score}/${Q.length}</div><div>${score===Q.length?L2({en:"Gold Smart! Share SY with a friend.",ta:"தங்க அறிவாளி! நண்பருடன் பகிருங்கள்."}):L2({en:"Good try! Read the chapters and try again.",ta:"நல்ல முயற்சி! பாடங்களைப் படித்து மீண்டும் முயலுங்கள்."})}</div><button class="btn" id="qReset">↺ ${L2({en:"Try again",ta:"மீண்டும்"})}</button></div>` : "";
+  return big("🏆","5 quick questions. How gold-smart are you?","5 கேள்விகள். உங்கள் தங்க அறிவு எவ்வளவு?") + qs + badge;
+}};
+
+function drawWhen(s,avg){
+  const el=$("whenChart"); if(!el||typeof Chart==="undefined") return;
+  if(window._whenC) window._whenC.destroy();
+  window._whenC=new Chart(el,{type:"line",data:{labels:s.map(x=>mName(x[0])),datasets:[
+    {label:"Price",data:s.map(x=>x[1]),borderColor:css("--gold"),pointRadius:3,pointBackgroundColor:css("--gold"),tension:.25,borderWidth:2},
+    {label:"Average",data:s.map(()=>avg),borderColor:css("--up"),borderDash:[6,4],pointRadius:0,borderWidth:2}]},
+    options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},tooltip:{callbacks:{label:c=>c.dataset.label+": "+rs(c.raw)}}},
+      scales:{x:{ticks:{color:css("--muted"),maxTicksLimit:5,maxRotation:0},grid:{display:false}},y:{ticks:{color:css("--muted"),callback:v=>rs(v)},grid:{color:css("--line")}}}}});
+}
+
+function renderGuideTab(){
+  if(!$("gNav")) return;
+  guideNav();
+  $("gBody").innerHTML = `<h3 class="gh">${CH.find(c=>c.id===gch).ic} ${L2(CH.find(c=>c.id===gch).t)}</h3>` + G[gch]() + pager();
+  bindPager();
+  $("gBody").querySelectorAll(".sopts button[data-k]").forEach(b=>b.onclick=()=>{ const A=LS.get("sy_suits",{}); A[b.dataset.k]=b.dataset.v; LS.set("sy_suits",A); renderGuideTab(); });
+  const sr=$("sReset"); if(sr) sr.onclick=()=>{ LS.set("sy_suits",{}); renderGuideTab(); };
+  $("gBody").querySelectorAll(".sopts button[data-q]").forEach(b=>b.onclick=()=>{ const A=LS.get("sy_quiz",{}); A[b.dataset.q]=+b.dataset.a; LS.set("sy_quiz",A); renderGuideTab(); });
+  const qr=$("qReset"); if(qr) qr.onclick=()=>{ LS.set("sy_quiz",{}); renderGuideTab(); };
+  $("gBody").querySelectorAll(".flip").forEach(b=>b.onclick=()=>{ const on=b.classList.toggle("on"); b.setAttribute("aria-pressed",on); });
+}
+
+// ---------- text size ----------
+let fs=LS.get("sy_fs",100);
+function applyFs(){ document.body.style.zoom = fs/100; }
+$("fsBtn").onclick=()=>{ fs = fs>=130?100:fs+15; LS.set("sy_fs",fs); applyFs(); };
+applyFs();
+
+try{renderGuideTab();}catch(e){}
 </script>
 </body>
 </html>
