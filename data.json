@@ -439,11 +439,11 @@
     "flag": ""
    },
    {
-    "src": "Goodreturns (Bangalore)",
-    "kind": "City board rate · ex-GST",
+    "src": "TN board rate (Chennai / Madurai shops)",
+    "kind": "Shop board rate · ex-GST",
     "g24": 12557,
     "when": "20 Nov, morning",
-    "url": "https://www.goodreturns.in/gold-rates/bangalore.html",
+    "url": "https://www.goodreturns.in/news/gold-rate-crash-today-20-11-2026-rs-51200-24k-22k-18k-gold-price-chennai-bangalore-hyderabad-cities-1548441.html",
     "flag": ""
    },
    {
@@ -489,6 +489,77 @@
     "usd": 3551.68,
     "when": "20 Nov, 02:57 GMT",
     "url": "https://rallies.ai/news/gold-set-for-worst-week-in-eight-months-as-firm-dollar-fed-hike-bets-weigh-17c788828354aa0b"
+   }
+  ]
+ },
+ "board": {
+  "region": "Tamil Nadu (Chennai / Madurai board rate)",
+  "asof": "20 Nov 2026, morning",
+  "status": "verified",
+  "g24": 12557,
+  "g22": 11510,
+  "g18": 9418,
+  "silver_g": 175,
+  "note": "Shop board rate set each morning by the jewellers' association; excludes 3% GST and making charges. Same figures shown by Jai Jewellers, Madurai, and Goodreturns (Chennai).",
+  "sources": [
+   {
+    "name": "Goodreturns: Chennai 22K ₹11,510, 8 g ₹92,080, silver ₹1,75,000/kg",
+    "url": "https://www.goodreturns.in/news/gold-rate-crash-today-20-11-2026-rs-51200-24k-22k-18k-gold-price-chennai-bangalore-hyderabad-cities-1548441.html"
+   },
+   {
+    "name": "The Hans India: Chennai 22K ₹1,15,100 per 10 g",
+    "url": "https://www.thehansindia.com/business/gold-and-silver-rates-today-20-nov-2026-slashes-in-bengaluru-and-chennai-check-gold-prices-of-18k-22k-24k-1143932"
+   },
+   {
+    "name": "Goodreturns Bangalore (same 24K/22K/18K)",
+    "url": "https://www.goodreturns.in/gold-rates/bangalore.html"
+   }
+  ]
+ },
+ "cities": {
+  "asof": "20 Nov 2026, morning",
+  "note": "Shop/website board rates; they vary by jeweller and usually exclude 3% GST and making charges. More cities are added at the 1:41 pm refresh.",
+  "sources": [
+   {
+    "name": "Goodreturns: Chennai 22K ₹11,510, 8 g ₹92,080, silver ₹1,75,000/kg",
+    "url": "https://www.goodreturns.in/news/gold-rate-crash-today-20-11-2026-rs-51200-24k-22k-18k-gold-price-chennai-bangalore-hyderabad-cities-1548441.html"
+   },
+   {
+    "name": "The Hans India: Chennai 22K ₹1,15,100 per 10 g",
+    "url": "https://www.thehansindia.com/business/gold-and-silver-rates-today-20-nov-2026-slashes-in-bengaluru-and-chennai-check-gold-prices-of-18k-22k-24k-1143932"
+   },
+   {
+    "name": "Goodreturns Bangalore (same 24K/22K/18K)",
+    "url": "https://www.goodreturns.in/gold-rates/bangalore.html"
+   }
+  ],
+  "rows": [
+   {
+    "region": "Tamil Nadu",
+    "city": "Chennai",
+    "g24": 12557,
+    "g22": 11510,
+    "g18": 9418,
+    "silver_kg": 175000,
+    "status": "verified"
+   },
+   {
+    "region": "Tamil Nadu",
+    "city": "Madurai",
+    "g24": null,
+    "g22": 11510,
+    "g18": null,
+    "silver_kg": 175000,
+    "status": "single source"
+   },
+   {
+    "region": "Karnataka",
+    "city": "Bangalore",
+    "g24": 12557,
+    "g22": 11510,
+    "g18": 9418,
+    "silver_kg": null,
+    "status": "single source"
    }
   ]
  }

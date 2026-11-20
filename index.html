@@ -100,6 +100,7 @@ details summary{cursor:pointer;font-size:12px;color:var(--muted);margin-top:8px}
   <div class="alertbar" id="alertBar" hidden onclick="location.hash='#tools'"></div>
 
 <section data-tab="today">
+  <div id="boardWrap" hidden><h3 class="sec">🏪 Shop rate today <span class="meta" id="boardSub"></span></h3><div class="card" id="board" style="border-left:5px solid var(--up)"></div></div>
   <div id="estWrap"><h3 class="sec" data-i18n="s_est">🎯 Expected rates today</h3>
   <div class="card" id="estimate" style="border-left:5px solid var(--gold)"></div>
   <h3 class="sec">🔍 Do other trusted sources agree?</h3><div class="card" id="xcheck"></div></div>
@@ -408,6 +409,11 @@ button.x{border:0;background:none;color:var(--muted);cursor:pointer;font-size:15
 .wv .bt{height:16px}.wv .bt>div.w{background:#3a5a8c}.wv .bt>div.i{background:var(--gold)}
 .wv b{font-size:17px;font-variant-numeric:tabular-nums}
 @media(max-width:420px){.wv{grid-template-columns:110px 1fr auto}}
+.bgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}.bgrid div{display:flex;flex-direction:column;align-items:center;text-align:center}
+.bgrid em{font-style:normal;font-weight:700;color:var(--muted);font-size:13px}.bgrid b{font-size:22px;font-variant-numeric:tabular-nums}
+.bar2{display:grid;grid-template-columns:1.3fr 1fr auto;gap:10px;align-items:center;padding:8px 0;border-bottom:1px solid var(--line)}
+.bar2 .bl{display:flex;flex-direction:column;font-weight:700;font-size:14px}.bar2 em{font-style:normal;font-weight:500;font-size:11px;color:var(--muted)}
+.bar2 .br{display:flex;flex-direction:column;align-items:flex-end}.bar2 .br b{font-size:17px;font-variant-numeric:tabular-nums}
 .tag{display:inline-block;font-size:11px;font-weight:700;padding:1px 7px;border-radius:6px;background:var(--goldsoft);color:var(--gold);margin-right:4px}
 .tag.s{background:var(--silversoft);color:var(--silver)} .tag.i{background:rgba(31,122,77,.12);color:var(--up)}
 </style>
@@ -481,7 +487,7 @@ function renderToday(){
     <div class="pr"><div class="nm">${esc(it.name)}</div><div class="vv">${fmtCur(it.cur,it.pg*k)}</div>
       <div class="sub"><span>${chg(it.m.change_pct)} ${it.inrPg?"· ≈ "+inr(it.inrPg*k)+" in rupees":""}</span>${badge(it.m.status)}</div></div>`).join("")
     + `<div class="meta" style="margin-top:6px">${S.mkt==="india"?"IBJA benchmark, excluding 3% GST and making charges.":"Global spot price, converted at USD-INR ₹"+D.fx.usd_inr.toFixed(2)+"."} <a href="#prices">Details & sources →</a></div>`;
-  renderXcheck();
+  renderXcheck(); renderBoard();
   const eb=estimateBlock(); document.getElementById("estWrap").style.display=eb?"":"none"; document.getElementById("estimate").innerHTML=eb;
   document.getElementById("todayRange").innerHTML = rangeRows(1) + `<div class="meta" style="margin-top:6px"><a href="#outlook">1-week range →</a></div>`;
   const hl=(D.highlights||[]).filter(h=>!h.metal||h.metal==="Both"||h.metal===metalName()||(h.metal==="India"&&S.mkt==="india"));
@@ -520,6 +526,20 @@ function renderWvI(){
     + bar("₹ India (IBJA)",india,"i",ES?"expected today":"last official")
     + `<div class="ol tot"><span>India costs more by</span><b>${inr(gap*k)} (${gp.toFixed(1)}%)</b></div>
        <div class="meta">${g?"24K":"Silver 999"}, ${esc(unitName())}. The gap is mainly India's import duty and taxes on bullion plus local dealer premium; GST (3%) is extra on top. The rupee rate also matters: a weaker rupee makes both bars taller.</div>`;
+}
+
+
+function renderBoard(){
+  const B=D.board, w=document.getElementById("boardWrap"); if(!w) return;
+  if(!B||S.mkt!=="india"){ w.hidden=true; return; } w.hidden=false;
+  const k=S.unit*(S.gst?1.03:1), f=v=>inr(v*k, v*k<100?2:0);
+  const E=D.india_estimate, ES=E&&(E.am||E);
+  document.getElementById("boardSub").textContent="· "+B.region;
+  const rows = S.metal==="gold" ? [["24K",B.g24,ES&&ES.gold_999_10g/10],["22K",B.g22,ES&&ES.gold_916_10g/10],["18K",B.g18,ES&&ES.gold_750_10g/10]] : [["Silver",B.silver_g,ES&&ES.silver_999_kg/1000]];
+  document.getElementById("board").innerHTML = `<div class="bgrid">${rows.filter(r=>r[1]).map(([n,v,ib])=>`<div><em>${n}</em><b>${f(v)}</b>${ib?`<span class="meta">IBJA est. ${f(ib)}</span>`:""}</div>`).join("")}</div>
+    <div class="meta" style="margin-top:6px">${badge(B.status)} ${esc(B.asof)}${S.gst?" · incl. 3% GST":" · before GST & making charges"}</div>
+    <div class="gtip">ℹ️ This is the rate shops use at the counter. The IBJA estimate below is the wholesale benchmark; shop rates usually sit a little above it${S.metal==="silver"?", and much higher for silver":""}.</div>
+    <details><summary class="meta">Sources</summary><div class="src">${esc(B.note)}</div>${links(B.sources)}</details>`;
 }
 
 // ---------- PRICES ----------
@@ -694,7 +714,7 @@ window.addEventListener("beforeinstallprompt",e=>{e.preventDefault();deferredPro
 document.getElementById("install").onclick=async()=>{ if(!deferredPrompt) return; deferredPrompt.prompt(); await deferredPrompt.userChoice; deferredPrompt=null; document.getElementById("install").hidden=true; };
 document.getElementById("share").onclick=async()=>{ const data={title:"SY · Gold & Silver Live",text:"Verified daily gold & silver rates (24K/22K/18K, silver), ranges and news",url:location.href.split("#")[0]};
   try{ if(navigator.share) await navigator.share(data); else { await navigator.clipboard.writeText(data.url); alert("Link copied"); } }catch(e){} };
-if("serviceWorker" in navigator) navigator.serviceWorker.register("sw.js").catch(()=>{});
+if("serviceWorker" in navigator){ navigator.serviceWorker.register("sw.js").then(r=>{ try{ r.update(); }catch(e){} }).catch(()=>{}); let _rl=false; navigator.serviceWorker.addEventListener("controllerchange",()=>{ if(_rl) return; _rl=true; location.reload(); }); }
 showTab(); load(); loadHist(); setInterval(load,5*60*1000);
 </script>
 <script>
@@ -825,10 +845,16 @@ function renderSplit(){
   const g=D.gold.india, el=$("split"); if(!el) return;
   if(!g.spot_at_fix_usd||!g.fx_at_fix){ el.parentElement.hidden=true; return; }
   el.parentElement.hidden=false;
-  const sp=(D.gold.intl.usd_oz/g.spot_at_fix_usd-1)*100, fx=(D.fx.usd_inr/g.fx_at_fix-1)*100, tot=((1+sp/100)*(1+fx/100)-1)*100;
-  const bar=(v,lab)=>`<div class="bar"><span>${lab}</span><div class="bt mid"><div class="${v<0?'neg':'pos'}" style="width:${Math.min(50,Math.abs(v)*12)}%;${v<0?'right:50%':'left:50%'}"></div></div><b class="${v<0?'down':'up'}">${v>=0?'+':''}${v.toFixed(2)}%</b></div>`;
-  el.innerHTML=bar(sp,"🌍 "+T("intl_gold")+" ($)")+bar(fx,"💱 "+T("rupee_eff"))+bar(tot,"₹ "+T("india_net"))
-    +`<div class="meta">${T("split_note")}</div>`;
+  const k=S.unit, base=(S.metal==="gold"?g.p999_10g/10:D.silver.india.p999_kg/1000)*k;
+  const sp0=S.metal==="gold"?g.spot_at_fix_usd:D.silver.india.spot_at_fix_usd, sp1=S.metal==="gold"?D.gold.intl.usd_oz:D.silver.intl.usd_oz;
+  const sp=(sp1/sp0-1)*100, fx=(D.fx.usd_inr/g.fx_at_fix-1)*100, tot=((1+sp/100)*(1+fx/100)-1)*100;
+  const rsW=base*sp/100, rsF=base*(1+sp/100)*fx/100, rsT=base*tot/100;
+  const sgn=v=>(v>=0?"+":"−")+inr(Math.abs(v));
+  const bar=(v,r,lab,sub)=>`<div class="bar2"><div class="bl"><span>${lab}</span><em>${sub}</em></div><div class="bt mid"><div class="${v<0?'neg':'pos'}" style="width:${Math.min(50,Math.abs(v)*10)}%;${v<0?'right:50%':'left:50%'}"></div></div><div class="br ${v<0?'down':'up'}"><b>${sgn(r)}</b><em>${v>=0?'+':''}${v.toFixed(2)}%</em></div></div>`;
+  el.innerHTML=bar(sp,rsW,"🌍 "+T("intl_gold"),`$${sp0.toLocaleString("en-US")} → $${sp1.toLocaleString("en-US")}/oz`)
+    +bar(fx,rsF,"💱 "+T("rupee_eff"),`₹${g.fx_at_fix.toFixed(2)} → ₹${D.fx.usd_inr.toFixed(2)} per $`)
+    +bar(tot,rsT,"₹ "+T("india_net"),`${inr(base)} → ${inr(base+rsT)}`)
+    +`<div class="meta">${S.metal==="gold"?"24K":"Silver"}, ${esc(unitName())}, since the last IBJA rate (${esc(g.session+", "+g.date)}). ${T("split_note")}</div>`;
 }
 
 // ---- LEARN
