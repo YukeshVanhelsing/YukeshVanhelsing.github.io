@@ -48,15 +48,15 @@
    "pm_999_10g": 129531,
    "pm_916_10g": 118650,
    "status": "verified",
-   "note": "IBJA benchmark rates exclude 3% GST and making charges. 24K = 999, 22K = 916, 18K = 750 purity. AM rates for all purities match in 5paisa and Bhavflow; the PM rate is from one source only.",
+   "note": "Matches IBJA's official website (ibjarates.com) exactly: 19/11/2026 AM 999 ₹1,29,985 · 916 ₹1,19,066 · 750 ₹97,489; PM 999 ₹1,29,531. Rates per 10 g, without 3% GST and making charges.",
    "sources": [
     {
-     "name": "5paisa: full IBJA AM table (999/916/750), with previous AM",
-     "url": "https://www.5paisa.com/blog/gold-rate-today-19-november-2026"
+     "name": "IBJA official website",
+     "url": "https://www.ibjarates.com/"
     },
     {
-     "name": "Bhavflow — IBJA AM/PM table",
-     "url": "https://bhavflow.com/"
+     "name": "5paisa: IBJA AM table",
+     "url": "https://www.5paisa.com/blog/gold-rate-today-19-november-2026"
     }
    ],
    "p750_10g": 97489,
@@ -109,15 +109,11 @@
    "change_pct": -1.78,
    "pm_999_kg": 160439,
    "status": "verified",
-   "note": "IBJA silver 999 AM ₹1,61,575/kg (previous ₹1,64,506), matching in 5paisa and Bhavflow.",
+   "note": "Matches IBJA's official website: 19/11/2026 AM ₹1,61,575/kg, PM ₹1,60,439/kg (without GST).",
    "sources": [
     {
-     "name": "Bhavflow — IBJA silver 999 AM/PM",
-     "url": "https://bhavflow.com/"
-    },
-    {
-     "name": "5paisa — silver fell ₹2,931",
-     "url": "https://www.5paisa.com/blog/gold-rate-today-19-november-2026"
+     "name": "IBJA official website",
+     "url": "https://www.ibjarates.com/"
     }
    ],
    "spot_at_fix_usd": 45.16

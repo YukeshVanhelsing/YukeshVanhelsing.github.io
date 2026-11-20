@@ -1,5 +1,5 @@
 // SY service worker: app shell cached for offline use; data always fetched fresh (falls back to last copy offline).
-const SHELL = "sy-shell-v5";
+const SHELL = "sy-shell-v6";
 const FILES = ["./", "index.html", "manifest.webmanifest", "vendor/chart.umd.min.js",
   "icons/icon-192.png", "icons/icon-512.png", "icons/favicon-48.png"];
 self.addEventListener("install", e => { e.waitUntil(caches.open(SHELL).then(c => c.addAll(FILES))); self.skipWaiting(); });

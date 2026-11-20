@@ -414,6 +414,12 @@ button.x{border:0;background:none;color:var(--muted);cursor:pointer;font-size:15
 .bar2{display:grid;grid-template-columns:1.3fr 1fr auto;gap:10px;align-items:center;padding:8px 0;border-bottom:1px solid var(--line)}
 .bar2 .bl{display:flex;flex-direction:column;font-weight:700;font-size:14px}.bar2 em{font-style:normal;font-weight:500;font-size:11px;color:var(--muted)}
 .bar2 .br{display:flex;flex-direction:column;align-items:flex-end}.bar2 .br b{font-size:17px;font-variant-numeric:tabular-nums}
+.ladder{display:flex;flex-direction:column;gap:6px}
+.lstep{display:grid;grid-template-columns:34px 1fr auto;gap:8px;align-items:center;border:1px solid var(--line);border-radius:12px;padding:8px 10px}
+.lstep.tot{background:var(--goldsoft);border-color:var(--gold)}
+.li{font-size:24px;text-align:center}.lt{display:flex;flex-direction:column;gap:2px}.lt em{font-style:normal;font-size:12px;color:var(--muted)}
+.lbar{height:8px;background:var(--line);border-radius:4px;overflow:hidden}.lbar div{height:100%;background:var(--gold)}
+.lv{font-size:16px;font-variant-numeric:tabular-nums;white-space:nowrap}
 .tag{display:inline-block;font-size:11px;font-weight:700;padding:1px 7px;border-radius:6px;background:var(--goldsoft);color:var(--gold);margin-right:4px}
 .tag.s{background:var(--silversoft);color:var(--silver)} .tag.i{background:rgba(31,122,77,.12);color:var(--up)}
 </style>
@@ -957,6 +963,7 @@ applyLang();
 const L2 = o => (o && (o[LANG] || o.en)) || "";
 const CH = [
   {id:"basics", ic:"🪙", t:{en:"What is 24K?",ta:"24K என்றால்?"}},
+  {id:"ladder", ic:"🪜", t:{en:"Bullion vs shop rate",ta:"மொத்த விலை vs கடை விலை"}},
   {id:"units",  ic:"📏", t:{en:"Units",ta:"அளவுகள்"}},
   {id:"why",    ic:"🎢", t:{en:"Why price moves",ta:"விலை ஏன் மாறுகிறது"}},
   {id:"ways",   ic:"🏦", t:{en:"Ways to own",ta:"வாங்கும் வழிகள்"}},
@@ -965,6 +972,8 @@ const CH = [
   {id:"bill",   ic:"🧾", t:{en:"Inside a bill",ta:"பில் உள்ளே"}},
   {id:"myths",  ic:"✅", t:{en:"Myth or fact",ta:"கட்டுக்கதை / உண்மை"}},
   {id:"tax",    ic:"💸", t:{en:"Tax basics",ta:"வரி அடிப்படை"}},
+  {id:"words",  ic:"📖", t:{en:"Gold words",ta:"தங்கச் சொற்கள்"}},
+  {id:"story",  ic:"🌏", t:{en:"Gold's story",ta:"தங்கத்தின் கதை"}},
   {id:"quiz",   ic:"🏆", t:{en:"Quiz",ta:"வினாடி வினா"}}];
 let gch = LS.get("sy_gch","basics");
 
@@ -982,6 +991,61 @@ const big = (emoji, en, ta) => `<div class="gbig"><div class="ge">${emoji}</div>
 
 // ---------- chapters ----------
 const G = {
+ladder(){
+  const fx=D?D.fx.usd_inr:93.3, w=D?D.gold.intl.usd_oz/OZ*fx:10642;
+  const E=D&&D.india_estimate, ES=E&&(E.am||E);
+  const ib=ES?ES.gold_999_10g/10:12350, bd=(D&&D.board&&D.board.g24)||12557;
+  const mk=bd*0.12, gst=(bd+mk)*0.03, bill=bd+mk+gst;
+  const steps=[
+    ["🌍",{en:"World price",ta:"உலக விலை"},w,{en:"Gold traded in London & New York, converted to rupees",ta:"லண்டன்/நியூயார்க் விலை, ரூபாயில்"}],
+    ["🚢",{en:"+ Import duty & taxes",ta:"+ இறக்குமதி வரி"},ib-w,{en:"India brings in almost all its gold from abroad",ta:"இந்தியா பெரும்பாலான தங்கத்தை இறக்குமதி செய்கிறது"}],
+    ["🏦",{en:"= Bullion rate (IBJA)",ta:"= மொத்த விலை (IBJA)"},ib,{en:"Wholesale price of pure gold bars, set twice a day",ta:"தூய தங்க கட்டிகளின் மொத்த விலை, தினம் இருமுறை"},1],
+    ["🏪",{en:"+ Trade margin",ta:"+ வியாபார லாபம்"},bd-ib,{en:"Jewellers' association adds margin, transport, safety cushion",ta:"சங்கம் சேர்க்கும் லாபம், போக்குவரத்து"}],
+    ["📋",{en:"= Shop board rate",ta:"= கடை விலை"},bd,{en:"The 'today's rate' written on the shop board",ta:"கடையில் எழுதப்படும் இன்றைய விலை"},1],
+    ["🔨",{en:"+ Making charge (12%)",ta:"+ செய்கூலி (12%)"},mk,{en:"Craftsmanship; varies a lot by shop and design",ta:"கைவினை; கடை/வடிவமைப்புக்கு ஏற்ப மாறும்"}],
+    ["🧾",{en:"+ GST 3%",ta:"+ GST 3%"},gst,{en:"Tax on the bill",ta:"பில்லில் வரி"}],
+    ["💍",{en:"= What you pay",ta:"= நீங்கள் செலுத்துவது"},bill,{en:"For 24K value; 22K jewellery is ~91.6% of this",ta:"24K மதிப்பு; 22K ≈ 91.6%"},1]];
+  const mx=bill;
+  return big("🪜","One gram of gold climbs a <b>price ladder</b> before it reaches you. Each step adds something.","ஒரு கிராம் தங்கம் உங்களை அடையும் முன் <b>விலை ஏணியில்</b> ஏறுகிறது.")
+   + `<div class="ladder">${steps.map(([ic,l,v,d,tot])=>`<div class="lstep ${tot?'tot':''}"><span class="li">${ic}</span><div class="lt"><b>${L2(l)}</b><em>${L2(d)}</em><div class="lbar"><div style="width:${Math.max(3,Math.abs(v)/mx*100)}%"></div></div></div><b class="lv">${tot?"":"+"}${rs(v)}</b></div>`).join("")}</div>
+     <div class="gtip">🏦 ${L2({en:"<b>Bullion rate</b> = wholesale price of pure gold (bars/biscuits) between big dealers. In India the benchmark is the <b>IBJA rate</b>: it includes import duty but not GST or making charges.",ta:"<b>மொத்த (புல்லியன்) விலை</b> = பெரிய வியாபாரிகளுக்கிடையே தூய தங்கத்தின் விலை. இந்தியாவில் இது <b>IBJA விலை</b>; இறக்குமதி வரி சேர்த்து, GST/செய்கூலி இல்லாமல்."})}</div>
+     <div class="gtip">🏪 ${L2({en:"<b>Shop (normal) rate</b> = the board rate your jeweller shows. It's the bullion rate plus a small trade margin, fixed each morning. Your bill adds making charges and GST on top.",ta:"<b>கடை விலை</b> = நகைக்கடை பலகை விலை. மொத்த விலை + சிறு லாபம், காலையில் நிர்ணயம். பில்லில் செய்கூலி, GST கூடுதல்."})}</div>
+     <div class="meta">${L2({en:"Today's real numbers, 24K per gram. Making charge 12% is an example.",ta:"இன்றைய உண்மையான எண்கள், 24K கிராமுக்கு. செய்கூலி 12% உதாரணம்."})}</div>`;
+},
+words(){
+  const W=[["Bullion","Pure gold or silver in bars or coins, traded by weight.","கட்டி/நாணய வடிவில் தூய தங்கம்/வெள்ளி."],
+   ["Spot price","The price for buying gold right now, quoted in US$ per troy ounce.","உடனடி விலை; டாலரில் ஒரு அவுன்ஸுக்கு."],
+   ["LBMA price","London's global benchmark, set twice each working day.","லண்டனின் உலக அளவுகோல் விலை, தினம் இருமுறை."],
+   ["IBJA rate","India's official bullion benchmark, published ~12:30 pm and ~5 pm.","இந்தியாவின் அதிகாரப்பூர்வ மொத்த விலை."],
+   ["MCX","India's commodity exchange where gold futures trade live during the day.","தங்க ஃப்யூச்சர்ஸ் வர்த்தகம் நடக்கும் இந்திய சந்தை."],
+   ["Futures","A deal to buy/sell gold at a set price on a future date.","எதிர்கால தேதியில் நிர்ணய விலையில் வாங்க/விற்க ஒப்பந்தம்."],
+   ["Board rate","The day's rate written in jewellery shops, set by the local association.","கடை பலகை விலை; உள்ளூர் சங்கம் நிர்ணயம்."],
+   ["Karat (K)","Purity out of 24. 24K = 99.9%, 22K = 91.6%, 18K = 75%.","24-ல் தூய்மை அளவு."],
+   ["Hallmark / HUID","BIS purity stamp plus a 6-digit ID you can check in the BIS CARE app.","BIS முத்திரை + 6 இலக்க அடையாளம்."],
+   ["Making charge","Fee for crafting jewellery, as % or ₹ per gram.","நகை செய்யும் கூலி."],
+   ["Wastage / VA","Extra charged for gold lost while making; varies by shop.","செய்யும்போது இழக்கும் தங்கத்துக்கான கட்டணம்."],
+   ["GST","3% tax on gold jewellery and coins.","தங்கத்துக்கு 3% வரி."],
+   ["Import duty","Tax India charges on gold coming from abroad; part of the IBJA price.","வெளிநாட்டு தங்கத்துக்கு இந்திய வரி."],
+   ["Troy ounce","31.1 g, the unit for world gold prices.","31.1 கிராம்; உலக விலை அளவு."],
+   ["Sovereign / Pavan","8 grams, common in South India.","8 கிராம்; தென்னிந்தியாவில் பொதுவானது."],
+   ["Tola","11.66 grams, used in North India and the Gulf.","11.66 கிராம்."],
+   ["Gold ETF","Fund on the stock exchange that tracks gold's price; needs a demat account.","தங்க விலையை பின்பற்றும் பங்குச்சந்தை நிதி."],
+   ["Volatility","How much a price swings. High volatility = big daily moves.","விலை எவ்வளவு ஏறி இறங்குகிறது."]];
+  return big("📖","Tap a word to see what it means.","சொல்லைத் தொட்டு அர்த்தம் பாருங்கள்.")
+   + `<div class="flips">${W.map(([w,e,ta],i)=>`<button class="flip" data-i="${i}" aria-pressed="false"><span class="fq"><b>${w}</b></span><span class="fa"><b>${w}</b><br>${LANG==="ta"?ta:e}</span></button>`).join("")}</div>`;
+},
+story(){
+  const F=[["⚛️",{en:"Gold is an element: symbol <b>Au</b> (from Latin <i>aurum</i>), number 79.",ta:"தங்கம் ஒரு தனிமம்: குறியீடு <b>Au</b> (லத்தீன் <i>aurum</i>), எண் 79."}],
+   ["✨",{en:"It never rusts or tarnishes. That's why old gold coins still shine.",ta:"துருப்பிடிக்காது, மங்காது. அதனால் பழைய நாணயங்களும் மின்னும்."}],
+   ["🔨",{en:"It's super soft and stretchy: it can be hammered into sheets thinner than paper.",ta:"மிக மென்மையானது: காகிதத்தைவிட மெல்லிய தகடாக அடிக்கலாம்."}],
+   ["⛏️",{en:"Gold is dug from mines, then refined into 99.9% pure bars.",ta:"சுரங்கத்திலிருந்து எடுத்து 99.9% தூய கட்டியாக சுத்திகரிக்கப்படுகிறது."}],
+   ["🇮🇳",{en:"India is one of the world's biggest gold buyers, but mines very little; most comes from imports, and some from recycling old gold.",ta:"இந்தியா உலகின் பெரிய தங்க வாங்குபவர்களில் ஒன்று; ஆனால் சுரங்கம் மிகக் குறைவு; பெரும்பாலும் இறக்குமதி, சில பழைய தங்க மறுசுழற்சி."}],
+   ["🏛️",{en:"Central banks (like RBI) keep gold as a safe reserve for the country.",ta:"RBI போன்ற மத்திய வங்கிகள் நாட்டின் பாதுகாப்பு கையிருப்பாக தங்கம் வைக்கின்றன."}],
+   ["💍",{en:"In India gold is for weddings, festivals and saving; it's also used in phones and electronics.",ta:"இந்தியாவில் திருமணம், பண்டிகை, சேமிப்புக்கு; போன், மின்னணுவிலும் பயன்."}],
+   ["🥈",{en:"Silver is cheaper and swings more; it's used a lot in solar panels and electronics.",ta:"வெள்ளி மலிவு, அதிகம் ஏறி இறங்கும்; சோலார், மின்னணுவில் அதிகம் பயன்."}]];
+  return big("🌏","The story of gold in 8 quick facts.","8 சின்ன உண்மைகளில் தங்கத்தின் கதை.")
+   + `<div class="cause">${F.map(([ic,t])=>`<div class="cz"><div class="cicons" aria-hidden="true">${ic}</div><div>${L2(t)}</div></div>`).join("")}</div>`;
+},
 basics(){
   const ks=[["24K","999",99.9],["22K","916",91.6],["18K","750",75],["14K","585",58.5]];
   return big("🪙","Gold is measured in <b>karats (K)</b>. More K = more pure gold = higher price.","காரட் (K) அதிகம் = தூய தங்கம் அதிகம் = விலை அதிகம்.")
