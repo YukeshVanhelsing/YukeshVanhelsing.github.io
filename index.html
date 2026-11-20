@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>SY · Gold &amp; Silver Live</title>
+<meta name="description" content="SY: verified daily gold and silver rates for India (24K, 22K, 18K, silver) and international markets, with likely price ranges, news and guidance.">
+<meta name="theme-color" content="#7a1a1a">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" type="image/png" href="icons/favicon-48.png">
+<link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Fraunces:opsz,wght@9..144,600&display=swap" rel="stylesheet">
+<script src="vendor/chart.umd.min.js"></script>
+<style>
+:root{--bg:#faf8f3;--card:#fff;--ink:#1d1a14;--muted:#6f6a5f;--line:#e9e4d8;--gold:#b8860b;--goldsoft:rgba(184,134,11,.13);
+  --silver:#6b7684;--silversoft:rgba(107,118,132,.13);--up:#1f7a4d;--down:#b4372f;--warn:#a86a00}
+@media (prefers-color-scheme:dark){:root{--bg:#141310;--card:#1e1c17;--ink:#f1ece0;--muted:#a39d8f;--line:#332f26;--gold:#e0b040;
+  --goldsoft:rgba(224,176,64,.15);--silver:#b7c0cc;--silversoft:rgba(183,192,204,.13);--up:#5cc48f;--down:#ef7a70;--warn:#e9a93c}}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.5 Inter,system-ui,sans-serif}
+.wrap{max-width:980px;margin:0 auto;padding:18px 14px 48px}
+header{display:flex;justify-content:space-between;align-items:flex-start;gap:10px;flex-wrap:wrap}
+h1{font-family:Fraunces,Georgia,serif;font-size:27px;margin:0;letter-spacing:-.01em}
+.stamp{font-size:13px;color:var(--muted)}
+.badge{display:inline-block;font-size:11px;font-weight:700;padding:2px 9px;border-radius:999px;text-transform:uppercase;letter-spacing:.04em}
+.b-ok{background:rgba(31,122,77,.13);color:var(--up)} .b-warn{background:rgba(168,106,0,.14);color:var(--warn)} .b-bad{background:rgba(180,55,47,.13);color:var(--down)}
+.seg{display:inline-flex;background:var(--card);border:1px solid var(--line);border-radius:999px;padding:3px;margin:14px 0 4px}
+.seg button{border:0;background:none;color:var(--muted);font:inherit;font-weight:600;font-size:14px;padding:7px 14px;border-radius:999px;cursor:pointer}
+.seg button.on{background:var(--ink);color:var(--bg)}
+.grid{display:grid;gap:12px;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));margin-top:12px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:15px}
+.metal{border-top:4px solid var(--gold)} .metal.ag{border-top-color:var(--silver)}
+.lbl{font-size:12px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.06em;display:flex;justify-content:space-between;gap:6px;align-items:center}
+.big{font-size:30px;font-weight:700;font-variant-numeric:tabular-nums;margin:6px 0 0;line-height:1.15}
+.unit{font-size:14px;font-weight:500;color:var(--muted)}
+.row{display:flex;justify-content:space-between;font-size:13px;color:var(--muted);margin-top:4px;font-variant-numeric:tabular-nums}
+.up{color:var(--up)} .down{color:var(--down)}
+h2{font-size:17px;margin:26px 0 4px}
+.note{color:var(--muted);font-size:13px;margin:0 0 10px}
+table{width:100%;border-collapse:collapse;font-size:14px;font-variant-numeric:tabular-nums}
+th,td{padding:9px 6px;border-bottom:1px solid var(--line);text-align:right;vertical-align:top}
+th:first-child,td:first-child{text-align:left}
+th{font-size:11px;text-transform:uppercase;letter-spacing:.05em;color:var(--muted)}
+.scroll{overflow-x:auto}
+.pill{font-weight:700;white-space:nowrap}
+.drv{display:grid;grid-template-columns:auto 1fr;gap:10px;padding:12px 0;border-bottom:1px solid var(--line)}
+.drv:last-child{border-bottom:0}
+.arrow{width:30px;height:30px;border-radius:9px;display:flex;align-items:center;justify-content:center;font-weight:800}
+.a-down{background:rgba(180,55,47,.12);color:var(--down)} .a-up{background:rgba(31,122,77,.12);color:var(--up)} .a-mixed{background:var(--goldsoft);color:var(--gold)}
+.drv b{display:block} .meta{font-size:12px;color:var(--muted)}
+a{color:var(--gold)}
+.callout{background:var(--goldsoft);border-radius:12px;padding:12px 14px;font-size:14px}
+.src{font-size:12px;color:var(--muted);margin-top:8px}
+.src a{display:inline-block;margin-right:8px}
+details summary{cursor:pointer;font-size:12px;color:var(--muted);margin-top:8px}
+.btn{font:inherit;font-size:13px;font-weight:600;border:1px solid var(--line);background:var(--card);color:var(--ink);padding:6px 12px;border-radius:8px;cursor:pointer}
+.rng{border-top:1px dashed var(--line);margin-top:10px;padding-top:8px}
+.rbar{display:flex;justify-content:space-between;gap:8px;margin:4px 0 2px}
+.rv{font-size:20px;font-weight:700;font-variant-numeric:tabular-nums}
+.chips{display:flex;flex-wrap:wrap;gap:6px;margin:6px 0 10px}
+.chips button{border:1px solid var(--line);background:var(--card);color:var(--muted);font:inherit;font-size:13px;font-weight:600;padding:5px 11px;border-radius:999px;cursor:pointer}
+.chips button.on{border-color:var(--gold);color:var(--gold);background:var(--goldsoft)}
+.chartbox{position:relative;height:290px}
+.gtab td.pos{color:var(--up);font-weight:600}.gtab td.neg{color:var(--down);font-weight:600}
+.err{color:var(--down);font-weight:600}
+</style>
+</head>
+<body>
+<div class="topbar">
+  <div class="wrap tb">
+    <div><div class="brand"><img src="icons/icon-192.png" alt="" class="logo">SY <span class="tagl">Gold &amp; Silver, verified daily</span></div><div class="stamp"><span id="stamp">Loading…</span> <span id="fresh"></span></div></div>
+    <div style="display:flex;gap:6px"><button class="btn" id="install" hidden>⬇ Install</button><button class="btn" id="share" aria-label="Share">↗</button><button class="btn" id="reload" aria-label="Refresh">↻</button></div>
+  </div>
+  <nav class="wrap tabs" id="tabs">
+    <a href="#today" data-t="today">⭐ Today</a>
+    <a href="#prices" data-t="prices">💰 Prices</a>
+    <a href="#outlook" data-t="outlook">📈 Next days</a>
+    <a href="#news" data-t="news">📰 Why &amp; news</a>
+    <a href="#history" data-t="history">🕒 History</a>
+    <a href="#guide" data-t="guide">🧭 Guidance</a>
+  </nav>
+  <div class="wrap ctl">
+    <div class="sw metal" id="swMetal"><button data-v="gold">🟡 Gold</button><button data-v="silver">⚪ Silver</button></div>
+    <div class="sw" id="swMkt"><button data-v="india">🇮🇳 India</button><button data-v="intl">🌍 International</button></div>
+    <select id="swUnit" aria-label="Unit">
+      <option value="1">per 1 g</option><option value="8">per 8 g (sovereign)</option><option value="10">per 10 g</option>
+      <option value="11.6638">per tola (11.66 g)</option><option value="100">per 100 g</option><option value="1000">per 1 kg</option><option value="31.1035">per ounce (31.1 g)</option>
+    </select>
+  </div>
+</div>
+
+<div class="wrap">
+  <div class="ribbon" id="ribbon"></div>
+
+<section data-tab="today">
+  <div class="card hero" id="mood"></div>
+  <h3 class="sec" id="tpTitle"></h3>
+  <div class="card" id="todayPrices"></div>
+  <h3 class="sec">Tomorrow's likely range</h3>
+  <div class="card" id="todayRange"></div>
+  <h3 class="sec">Must know today</h3>
+  <div class="card" id="highlights"></div>
+  <div id="indiaWrap"><h3 class="sec">What to expect in India today</h3><div class="card callout" id="india"></div></div>
+  <h3 class="sec">Our guidance</h3>
+  <div class="card" id="todayGuide"></div>
+</section>
+
+<section data-tab="prices">
+  <h3 class="sec" id="pTitle"></h3>
+  <div class="card" id="priceDetail"></div>
+  <h3 class="sec">Same metal in the other market</h3>
+  <div class="card" id="priceOther"></div>
+  <h3 class="sec">USD → INR</h3>
+  <div class="card" id="fxCard"></div>
+</section>
+
+<section data-tab="outlook">
+  <div class="card callout" style="margin-top:4px"><b>How to read this:</b> on about 8 days out of 10, the price should stay between "could fall to" and "could rise to". These ranges show how far prices may move, not which direction.</div>
+  <h3 class="sec">Tomorrow</h3><div class="card" id="rangeDay"></div>
+  <h3 class="sec">Next 1 week</h3><div class="card" id="rangeWeek"></div>
+  <p class="note" id="rangeNote" style="margin-top:10px"></p>
+</section>
+
+<section data-tab="news">
+  <h3 class="sec">Why prices are moving <span class="meta">(what &amp; why)</span></h3>
+  <div class="card" id="drivers"></div>
+  <h3 class="sec">Coming up <span class="meta">(when)</span></h3>
+  <div class="card scroll"><table id="events"></table></div>
+  <h3 class="sec">What analysts say <span class="meta">(who)</span></h3>
+  <div class="card" id="views"></div>
+</section>
+
+<section data-tab="history">
+  <div class="card">
+    <div class="chips" id="hRange"><button data-r="12">1 Y</button><button data-r="36">3 Y</button><button data-r="60" class="on">5 Y</button><button data-r="120">10 Y</button><button data-r="999">All</button></div>
+    <div class="chartbox"><canvas id="hChart"></canvas></div>
+    <p class="src" id="hNote"></p>
+  </div>
+  <h3 class="sec">Growth over time</h3>
+  <div class="card scroll"><table class="gtab" id="growth"></table><p class="src" id="gNote"></p></div>
+  <h3 class="sec">Recent daily rates (checked)</h3>
+  <div class="card scroll"><table id="recent"></table>
+    <p class="src">This table adds a new row each time the app refreshes. A dash (–) means no verified figure was available for that day.</p></div>
+</section>
+
+<section data-tab="guide">
+  <div class="card hero" id="guideTop"></div>
+  <div id="guidePoints"></div>
+  <h3 class="sec">How this app gets its numbers <span class="meta">(how)</span></h3>
+  <div class="card note" style="margin:0">
+    <p style="margin-top:0">• Each price is checked against at least two independent reports. The badges show the result: <span class="badge b-ok">verified</span> two sources agree; <span class="badge b-warn">single source</span> only one could be confirmed; <span class="badge b-bad">stale</span> the latest published value is old.</p>
+    <p>• Websites that disagree with the IBJA benchmark by more than 1% are ignored. Live feeds are cross-checked too: on 20 Nov one data feed was 2.5% off the market and was rejected.</p>
+    <p>• The next-days ranges come from Cboe's options-market volatility indices (GVZ for gold, VXSLV for silver). They show how far prices may move, not which direction.</p>
+    <p>• India rates are IBJA benchmark rates. They exclude 3% GST and making charges, so your jeweller's bill will be higher.</p>
+    <p style="margin-bottom:0">• <span id="next"></span> If the data is more than a day old, the header shows a warning.</p>
+  </div>
+  <p class="note" id="guideNote" style="margin-top:10px"></p>
+</section>
+<div class="foot">SY · Rates from IBJA (India) and global spot markets, checked against two sources · General information, not financial advice</div>
+</div>
+
+<style>
+.topbar{position:sticky;top:0;z-index:5;background:var(--bg);border-bottom:1px solid var(--line)}
+.tb{display:flex;justify-content:space-between;align-items:center;padding-top:10px;padding-bottom:6px}
+.brand{font-family:Fraunces,Georgia,serif;font-size:22px;font-weight:600;display:flex;align-items:center;gap:8px;flex-wrap:wrap}.logo{width:30px;height:30px;border-radius:8px}.tagl{font-family:Inter,system-ui,sans-serif;font-size:12px;font-weight:600;color:var(--muted)}
+.foot{margin:30px 0 10px;font-size:12px;color:var(--muted);text-align:center}
+.tabs{display:flex;gap:4px;overflow-x:auto;scrollbar-width:none;padding-top:0;padding-bottom:6px}
+.tabs::-webkit-scrollbar{display:none}
+.tabs a{flex:0 0 auto;text-decoration:none;color:var(--muted);font-weight:600;font-size:14px;padding:6px 12px;border-radius:999px;border:1px solid var(--line);background:var(--card)}
+.tabs a.on{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+.ctl{display:flex;flex-wrap:wrap;gap:6px;padding-bottom:8px;align-items:center}
+.sw{display:inline-flex;border:1px solid var(--line);border-radius:10px;overflow:hidden;background:var(--card)}
+.sw button{border:0;background:none;font:inherit;font-size:13px;font-weight:700;color:var(--muted);padding:6px 10px;cursor:pointer}
+.sw button.on{background:var(--gold);color:#fff}
+body.silver .sw button.on{background:var(--silver)}
+#swUnit{font:inherit;font-size:13px;font-weight:600;padding:6px 8px;border-radius:10px;border:1px solid var(--line);background:var(--card);color:var(--ink)}
+.ribbon{margin:12px 0 4px;padding:8px 12px;border-radius:10px;font-weight:700;font-size:14px;background:var(--goldsoft);color:var(--gold)}
+body.silver .ribbon{background:var(--silversoft);color:var(--silver)}
+section{display:none} section.show{display:block}
+.sec{font-size:15px;margin:18px 0 8px}
+.hero{margin-top:8px;border-left:5px solid var(--down)}
+.hero.up{border-left-color:var(--up)} .hero.flat{border-left-color:var(--gold)}
+.hero .moodt{font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--muted)}
+.hero .moodv{font-size:22px;font-weight:700;margin:2px 0 6px}
+.pr{display:grid;grid-template-columns:1fr auto;gap:4px 10px;padding:10px 0;border-bottom:1px solid var(--line);align-items:baseline}
+.pr:last-child{border-bottom:0}
+.pr .nm{font-weight:700} .pr .vv{font-size:24px;font-weight:700;font-variant-numeric:tabular-nums;text-align:right}
+.pr .sub{grid-column:1/-1;display:flex;justify-content:space-between;gap:8px;font-size:12px;color:var(--muted);flex-wrap:wrap}
+.hl{display:flex;gap:10px;padding:10px 0;border-bottom:1px solid var(--line)} .hl:last-child{border-bottom:0}
+.dot{flex:0 0 10px;height:10px;border-radius:50%;margin-top:6px;background:var(--gold)} .dot.alert{background:var(--down)}
+.tr{display:grid;grid-template-columns:1fr auto auto;gap:12px;padding:9px 0;border-bottom:1px solid var(--line);font-variant-numeric:tabular-nums;align-items:center}
+.tr:last-child{border-bottom:0}
+.gp{margin-top:10px} .gp .who{font-weight:700;margin-bottom:3px}
+.tag{display:inline-block;font-size:11px;font-weight:700;padding:1px 7px;border-radius:6px;background:var(--goldsoft);color:var(--gold);margin-right:4px}
+.tag.s{background:var(--silversoft);color:var(--silver)} .tag.i{background:rgba(31,122,77,.12);color:var(--up)}
+</style>
+<script>
+const OZ = 31.1035, Z80 = 1.2816;
+let D=null, H=null, hr=60, hChart=null;
+const S = {metal:"gold", mkt:"india", unit:1};
+try{ Object.assign(S, JSON.parse(localStorage.getItem("gs_state")||"{}")); }catch(e){}
+const save = () => { try{ localStorage.setItem("gs_state", JSON.stringify(S)); }catch(e){} };
+
+const inr=(v,dp)=>{ if(dp==null) dp = v<100?2:0; return "₹"+v.toLocaleString("en-IN",{minimumFractionDigits:dp,maximumFractionDigits:dp}); };
+const usd=(v,dp)=>{ if(dp==null) dp = v<100?2:0; return "$"+v.toLocaleString("en-US",{minimumFractionDigits:dp,maximumFractionDigits:dp}); };
+const chg=p=>p==null?"":`<span class="${p>=0?'up':'down'}">${p>=0?'▲ +':'▼ '}${p.toFixed(2)}%</span>`;
+const badge=s=>`<span class="badge ${s==='verified'?'b-ok':s==='stale'?'b-bad':'b-warn'}">${s}</span>`;
+const esc=s=>String(s??"").replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+const links=a=>`<div class="src">Sources: ${(a||[]).map(s=>`<a href="${s.url}" target="_blank" rel="noopener">${esc(s.name)}</a>`).join(" · ")}</div>`;
+const css=v=>getComputedStyle(document.documentElement).getPropertyValue(v).trim();
+const unitName=()=>document.querySelector(`#swUnit option[value="${S.unit}"]`)?.textContent.replace("per ","") || S.unit+" g";
+const metalName=()=>S.metal==="gold"?"Gold":"Silver";
+const mktName=()=>S.mkt==="india"?"India":"International";
+
+// Items for the current selection: [{name, perGram (in market currency), fmt, alt (₹ per gram for intl), status, change, asof, note, sources}]
+function items(metal=S.metal, mkt=S.mkt){
+  const g=D.gold, s=D.silver, fx=D.fx.usd_inr;
+  if(metal==="gold" && mkt==="india") return [
+    {name:"24K (999)", pg:g.india.p999_10g/10, prevPg:(g.india.prev_999_10g||0)/10, cur:"inr", m:g.india},
+    {name:"22K (916)", pg:g.india.p916_10g/10, prevPg:(g.india.prev_916_10g||0)/10, cur:"inr", m:g.india},
+    {name:"18K (750)", pg:g.india.p750_10g/10, prevPg:(g.india.prev_750_10g||0)/10, cur:"inr", m:g.india}];
+  if(metal==="silver" && mkt==="india") return [{name:"Silver 999", pg:s.india.p999_kg/1000, prevPg:(s.india.prev_999_kg||0)/1000, cur:"inr", m:s.india}];
+  const src = metal==="gold"?g.intl:s.intl;
+  return [{name:(metal==="gold"?"Gold":"Silver")+" spot (pure)", pg:src.usd_oz/OZ, cur:"usd", inrPg:src.usd_oz/OZ*fx, m:src}];
+}
+const fmtCur=(cur,v)=>cur==="inr"?inr(v):usd(v);
+const volOf=metal=>metal==="gold"?D.gold.vol:D.silver.vol;
+
+async function load(){
+  try{ const r=await fetch("data.json?t="+Date.now(),{cache:"no-store"}); if(!r.ok) throw new Error(r.status); D=await r.json(); renderAll(); }
+  catch(e){ document.getElementById("stamp").innerHTML=`<span class="err">Couldn't load the latest data (${esc(e.message)}). Try Refresh.</span>`; }
+}
+async function loadHist(){ try{ const r=await fetch("history_monthly.json?t="+Date.now(),{cache:"no-store"}); H=await r.json(); if(D) renderHist(); }catch(e){} }
+
+function syncControls(){
+  document.body.classList.toggle("silver", S.metal==="silver");
+  document.querySelectorAll("#swMetal button").forEach(b=>b.classList.toggle("on",b.dataset.v===S.metal));
+  document.querySelectorAll("#swMkt button").forEach(b=>b.classList.toggle("on",b.dataset.v===S.mkt));
+  document.getElementById("swUnit").value=String(S.unit);
+  document.getElementById("ribbon").textContent = `${S.metal==="gold"?"🟡":"⚪"} ${metalName()} · ${S.mkt==="india"?"🇮🇳":"🌍"} ${mktName()} · prices per ${unitName()}`;
+}
+
+function renderAll(){
+  if(!D) return; syncControls();
+  const upd=new Date(D.updated_at), ageH=(Date.now()-upd)/36e5;
+  document.getElementById("stamp").textContent="Last verified: "+upd.toLocaleString("en-IN",{day:"numeric",month:"short",hour:"numeric",minute:"2-digit",timeZone:"Asia/Kolkata"})+" IST";
+  document.getElementById("fresh").innerHTML= ageH<26?'<span class="badge b-ok">up to date</span>':`<span class="badge b-bad">${Math.round(ageH/24)} day(s) old</span>`;
+  document.getElementById("next").textContent="Auto-refresh: "+D.next_update+". The page checks for new data every 5 minutes.";
+  renderToday(); renderPrices(); renderOutlook(); renderNews(); renderGuide(); renderRecent(); renderHist();
+}
+
+// ---------- TODAY ----------
+function renderToday(){
+  const G=D.guidance||{}, k=S.unit;
+  const mood=document.getElementById("mood");
+  mood.className="card hero "+(/fall|down/i.test(G.mood)?"":/ris|up/i.test(G.mood)?"up":"flat");
+  mood.innerHTML=`<div class="moodt">Market mood</div><div class="moodv">${esc(G.mood)}</div><div>${esc(G.summary)}</div>`;
+  const its=items(), m0=its[0].m;
+  document.getElementById("tpTitle").innerHTML=`${metalName()} · ${mktName()} · ${esc(unitName())} <span class="meta">${S.mkt==="india"?esc(m0.session+", "+m0.date):esc(m0.asof)}</span>`;
+  document.getElementById("todayPrices").innerHTML = its.map(it=>`
+    <div class="pr"><div class="nm">${esc(it.name)}</div><div class="vv">${fmtCur(it.cur,it.pg*k)}</div>
+      <div class="sub"><span>${chg(it.m.change_pct)} ${it.inrPg?"· ≈ "+inr(it.inrPg*k)+" in rupees":""}</span>${badge(it.m.status)}</div></div>`).join("")
+    + `<div class="meta" style="margin-top:6px">${S.mkt==="india"?"IBJA benchmark, excluding 3% GST and making charges.":"Global spot price, converted at USD-INR ₹"+D.fx.usd_inr.toFixed(2)+"."} <a href="#prices">Details & sources →</a></div>`;
+  document.getElementById("todayRange").innerHTML = rangeRows(1) + `<div class="meta" style="margin-top:6px"><a href="#outlook">1-week range →</a></div>`;
+  const hl=(D.highlights||[]).filter(h=>!h.metal||h.metal==="Both"||h.metal===metalName()||(h.metal==="India"&&S.mkt==="india"));
+  document.getElementById("highlights").innerHTML=hl.map(h=>`<div class="hl"><span class="dot ${h.level}"></span><div><b>${esc(h.text)}</b><div class="meta">${h.url?`<a href="${h.url}" target="_blank" rel="noopener">${esc(h.src)}</a>`:esc(h.src)}</div></div></div>`).join("") || '<div class="meta">No specific highlights for this selection today.</div>';
+  document.getElementById("indiaWrap").style.display = S.mkt==="india"?"":"none";
+  document.getElementById("india").innerHTML=`${esc(D.india_outlook.text)}<div class="src">${esc(D.india_outlook.basis)}</div>`;
+  const pts=(G.points||[]).filter(p=>!p.metal||p.metal==="Both"||p.metal===metalName()).slice(0,2);
+  document.getElementById("todayGuide").innerHTML=pts.map(p=>`<div class="hl"><span class="dot"></span><div><b>${esc(p.who)}</b><div>${esc(p.tip)}</div></div></div>`).join("")+`<div class="meta" style="margin-top:6px">${esc(G.note)} <a href="#guide">More guidance →</a></div>`;
+}
+
+// ---------- PRICES ----------
+function priceBlock(metal, mkt){
+  const its=items(metal,mkt), k=S.unit, m=its[0].m;
+  const pmRow = (mkt==="india" && metal==="gold" && m.pm_999_10g) ? `<div class="meta">PM session: 24K ${inr(m.pm_999_10g/10*k)}${m.pm_916_10g?" · 22K "+inr(m.pm_916_10g/10*k):""}${m.pm_750_10g?" · 18K "+inr(m.pm_750_10g/10*k):""}</div>`
+             : (mkt==="india" && metal==="silver" && m.pm_999_kg) ? `<div class="meta">PM session: ${inr(m.pm_999_kg/1000*k)}</div>` : "";
+  return its.map(it=>`
+    <div class="pr"><div class="nm">${esc(it.name)}</div><div class="vv">${fmtCur(it.cur,it.pg*k)}</div>
+      <div class="sub"><span>${chg(m.change_pct)}${it.prevPg?" · previous "+fmtCur(it.cur,it.prevPg*k):""}${it.inrPg?" · ≈ "+inr(it.inrPg*k):""}</span>${badge(m.status)}</div></div>`).join("")
+    + pmRow + `<div class="meta" style="margin-top:6px">${esc(mkt==="india"?m.session+", "+m.date:m.asof)}</div>`
+    + `<details><summary>Sources & notes</summary><div class="src">${esc(m.note)}</div>${links(m.sources)}</details>`;
+}
+function renderPrices(){
+  document.getElementById("pTitle").innerHTML=`${metalName()} · ${mktName()} · ${esc(unitName())}`;
+  document.getElementById("priceDetail").innerHTML=priceBlock(S.metal,S.mkt);
+  const other=S.mkt==="india"?"intl":"india";
+  document.getElementById("priceOther").innerHTML=`<div class="meta" style="margin-bottom:4px">${metalName()} · ${other==="india"?"India":"International"}</div>`+priceBlock(S.metal,other);
+  document.getElementById("fxCard").innerHTML=`<div class="pr"><div class="nm">1 US dollar</div><div class="vv">₹${D.fx.usd_inr.toFixed(2)}</div><div class="sub"><span>${esc(D.fx.asof)}</span>${badge(D.fx.status)}</div></div><details><summary>Sources</summary>${links(D.fx.sources)}</details>`;
+}
+
+// ---------- OUTLOOK ----------
+function rangeRows(n){
+  const vol=volOf(S.metal), pct=Z80*vol.value/100/Math.sqrt(252)*Math.sqrt(n), k=S.unit;
+  return items().map(it=>{ const p=it.pg*k, f=v=>fmtCur(it.cur,v);
+    return `<div class="tr"><span><b>${esc(it.name)}</b><br><span class="meta">now ${f(p)} · ±${(pct*100).toFixed(1)}%</span></span>
+      <span class="down"><span class="meta">could fall to</span><br><b>${f(p*(1-pct))}</b></span>
+      <span class="up" style="text-align:right"><span class="meta">could rise to</span><br><b>${f(p*(1+pct))}</b></span></div>`
+      + (it.inrPg?`<div class="meta" style="margin:-4px 0 6px">≈ ${inr(it.inrPg*k*(1-pct))} to ${inr(it.inrPg*k*(1+pct))} in rupees</div>`:""); }).join("");
+}
+function renderOutlook(){
+  document.getElementById("rangeDay").innerHTML=rangeRows(1);
+  document.getElementById("rangeWeek").innerHTML=rangeRows(5);
+  const v=volOf(S.metal);
+  document.getElementById("rangeNote").innerHTML=`${metalName()} range is based on the ${esc(v.name)} = ${v.value} (${esc(v.asof)}) ${badge(v.status)}. ${S.mkt==="india"?"India ranges assume the rupee stays steady.":""}`;
+}
+
+// ---------- NEWS ----------
+function renderNews(){
+  const ok=x=>!x||/gold & silver/i.test(x)||x===metalName()||(x==="India"&&S.mkt==="india")||x==="Both";
+  const ar={down:"↓",up:"↑",mixed:"↕"};
+  const tag=x=>x==="India"?'<span class="tag i">India</span>':x==="Silver"?'<span class="tag s">Silver</span>':x==="Gold"?'<span class="tag">Gold</span>':'<span class="tag">Gold</span><span class="tag s">Silver</span>';
+  const dr=D.drivers.filter(d=>ok(d.metal));
+  document.getElementById("drivers").innerHTML=dr.map(d=>`
+    <div class="drv"><div class="arrow a-${d.impact}">${ar[d.impact]||"•"}</div>
+      <div>${tag(d.metal)}<b>${esc(d.title)}</b>${esc(d.detail)}
+      <div class="meta">${esc(d.date)} · <a href="${d.url}" target="_blank" rel="noopener">${esc(d.source)}</a></div></div></div>`).join("") || '<div class="meta">No items for this selection.</div>';
+  document.getElementById("events").innerHTML=`<tr><th>Date</th><th style="text-align:left">Event</th></tr>`+
+    D.events.map(e=>`<tr><td style="white-space:nowrap"><b>${esc(e.date)}</b></td><td style="text-align:left">${esc(e.title)}<div class="meta">${esc(e.why)} · <a href="${e.url}" target="_blank" rel="noopener">${esc(e.source)}</a></div></td></tr>`).join("");
+  document.getElementById("views").innerHTML=D.views.map(v=>`<div class="drv" style="grid-template-columns:1fr"><div><b>${esc(v.who)}</b>${esc(v.view)}<div class="meta">${esc(v.date)} · <a href="${v.url}" target="_blank" rel="noopener">source</a></div></div></div>`).join("");
+}
+
+// ---------- GUIDE ----------
+function renderGuide(){
+  const G=D.guidance||{};
+  document.getElementById("guideTop").innerHTML=`<div class="moodt">Current situation</div><div class="moodv">${esc(G.mood)}</div><div>${esc(G.summary)}</div>`;
+  const pts=(G.points||[]).slice().sort((a,b)=>((b.metal===metalName())-(a.metal===metalName())));
+  document.getElementById("guidePoints").innerHTML=pts.map(p=>`<div class="card gp"><div class="who">${p.metal==="Silver"?'<span class="tag s">Silver</span>':p.metal==="Gold"?'<span class="tag">Gold</span>':''}${esc(p.who)}</div><div>${esc(p.tip)}</div></div>`).join("");
+  document.getElementById("guideNote").textContent=G.note||"";
+}
+
+// ---------- HISTORY ----------
+const mName=ym=>{const [y,m]=ym.split("-");return new Date(+y,+m-1,1).toLocaleString("en",{month:"short"})+" "+y;};
+function series(metal, cur){ return H.rows.filter(r=>r[metal==="gold"?1:2]!=null).map(r=>{const o=r[metal==="gold"?1:2]; return [r[0], (cur==="usd"?o:o*r[3])/OZ*S.unit];}); }
+function renderHist(){
+  if(!H||typeof Chart==="undefined"||!document.querySelector('section[data-tab="history"]').classList.contains("show")) return;
+  const cur=S.mkt==="india"?"inr":"usd", f=v=>fmtCur(cur,v);
+  const s=series(S.metal,cur), cut=s.slice(-Math.min(hr+1,s.length));
+  if(hChart) hChart.destroy();
+  const col=S.metal==="gold"?css("--gold"):css("--silver");
+  hChart=new Chart(document.getElementById("hChart"),{type:"line",
+    data:{labels:cut.map(x=>mName(x[0])),datasets:[{data:cut.map(x=>x[1]),borderColor:col,backgroundColor:S.metal==="gold"?css("--goldsoft"):css("--silversoft"),fill:true,pointRadius:0,borderWidth:2,tension:.2}]},
+    options:{responsive:true,maintainAspectRatio:false,interaction:{mode:"index",intersect:false},plugins:{legend:{display:false},tooltip:{callbacks:{label:c=>f(c.raw)}}},
+      scales:{x:{ticks:{color:css("--muted"),maxTicksLimit:6,maxRotation:0},grid:{display:false}},y:{ticks:{color:css("--muted"),callback:v=>f(v)},grid:{color:css("--line")}}}}});
+  const a=cut[0], b=cut[cut.length-1], hi=cut.reduce((x,y)=>y[1]>x[1]?y:x);
+  document.getElementById("hNote").innerHTML=`<b>${metalName()} ${esc(unitName())}</b> · ${mName(a[0])}: <b>${f(a[1])}</b> → ${mName(b[0])}: <b>${f(b[1])}</b> (${chg((b[1]/a[1]-1)*100)}). Highest month: ${mName(hi[0])} at ${f(hi[1])}. `+
+    (cur==="inr"?"The India view shows the international price converted to rupees, before import duty and GST, so it runs below IBJA rates. ":"")+esc(H.note);
+  const per=[[1,"1 month"],[6,"6 months"],[12,"1 year"],[36,"3 years"],[60,"5 years"],[120,"10 years"],[999,"Since start"]];
+  const n=s.length-1;
+  document.getElementById("growth").innerHTML=`<tr><th>Period</th><th>Price then</th><th>Now</th><th>Change</th><th>Per year</th></tr>`+
+    per.map(([mo,lab])=>{const kk=Math.min(mo,n), p=s[n-kk], g=(s[n][1]/p[1]-1)*100, yrs=kk/12;
+      return `<tr><td>${mo===999?lab+" ("+mName(p[0])+")":lab}</td><td>${f(p[1])}</td><td>${f(s[n][1])}</td><td class="${g>=0?'pos':'neg'}">${g>=0?'+':''}${g.toFixed(1)}%</td><td>${yrs>=1?((Math.pow(s[n][1]/p[1],1/yrs)-1)*100).toFixed(1)+"%":"–"}</td></tr>`;}).join("");
+  document.getElementById("gNote").textContent=`${metalName()}, ${cur==="inr"?"in rupees":"in US dollars"}, ${unitName()}. "Per year" = average growth per year (CAGR). ${S.metal==="gold"?"Gold history uses monthly averages since 1990.":"Silver history uses month-end prices since 2012."} ${cur==="inr"?"Rupee figures include the rupee's fall against the dollar.":""}`;
+  document.querySelectorAll("#hRange button").forEach(x=>x.classList.toggle("on",+x.dataset.r===hr));
+}
+function renderRecent(){
+  const k=S.unit, rows=(D.history||[]).slice().reverse(), d=r=>new Date(r.date+"T00:00:00").toLocaleDateString("en-IN",{day:"numeric",month:"short"});
+  let head, body;
+  if(S.metal==="gold"&&S.mkt==="india"){ head="<th>Date</th><th>24K</th><th>22K</th><th>18K</th>";
+    body=rows.map(r=>`<tr><td>${d(r)}</td><td>${r.gold_999_10g?inr(r.gold_999_10g/10*k):"–"}</td><td>${r.gold_916_10g?inr(r.gold_916_10g/10*k):"–"}</td><td>${r.gold_750_10g?inr(r.gold_750_10g/10*k):"–"}</td></tr>`); }
+  else if(S.metal==="silver"&&S.mkt==="india"){ head="<th>Date</th><th>Silver 999</th>";
+    body=rows.map(r=>`<tr><td>${d(r)}</td><td>${r.silver_999_kg?inr(r.silver_999_kg/1000*k):"–"}</td></tr>`); }
+  else { const key=S.metal==="gold"?"gold_usd":"silver_usd"; head="<th>Date</th><th>Spot (USD)</th><th>USD-INR</th>";
+    body=rows.map(r=>`<tr><td>${d(r)}</td><td>${r[key]?usd(r[key]/OZ*k):"–"}</td><td>${r.usd_inr??"–"}</td></tr>`); }
+  document.getElementById("recent").innerHTML=`<tr>${head}</tr>`+body.join("");
+}
+
+// ---------- tabs & controls ----------
+const TABS=["today","prices","outlook","news","history","guide"];
+function showTab(){ let h=(location.hash||"#today").slice(1); if(!TABS.includes(h)) h="today";
+  document.querySelectorAll("section[data-tab]").forEach(s=>s.classList.toggle("show",s.dataset.tab===h));
+  document.querySelectorAll("#tabs a").forEach(a=>a.classList.toggle("on",a.dataset.t===h));
+  const on=document.querySelector("#tabs a.on"); if(on) on.scrollIntoView({inline:"center",block:"nearest"});
+  window.scrollTo(0,0); if(h==="history") renderHist(); }
+window.addEventListener("hashchange",showTab);
+document.querySelectorAll("#swMetal button").forEach(b=>b.onclick=()=>{S.metal=b.dataset.v; if(S.metal==="silver"&&S.unit<10) {} save(); renderAll();});
+document.querySelectorAll("#swMkt button").forEach(b=>b.onclick=()=>{S.mkt=b.dataset.v; save(); renderAll();});
+document.getElementById("swUnit").onchange=e=>{S.unit=+e.target.value; save(); renderAll();};
+document.querySelectorAll("#hRange button").forEach(b=>b.onclick=()=>{hr=+b.dataset.r; renderHist();});
+document.getElementById("reload").onclick=load;
+
+// ---------- install / share / offline ----------
+let deferredPrompt=null;
+window.addEventListener("beforeinstallprompt",e=>{e.preventDefault();deferredPrompt=e;document.getElementById("install").hidden=false;});
+document.getElementById("install").onclick=async()=>{ if(!deferredPrompt) return; deferredPrompt.prompt(); await deferredPrompt.userChoice; deferredPrompt=null; document.getElementById("install").hidden=true; };
+document.getElementById("share").onclick=async()=>{ const data={title:"SY · Gold & Silver Live",text:"Verified daily gold & silver rates (24K/22K/18K, silver), ranges and news",url:location.href.split("#")[0]};
+  try{ if(navigator.share) await navigator.share(data); else { await navigator.clipboard.writeText(data.url); alert("Link copied"); } }catch(e){} };
+if("serviceWorker" in navigator) navigator.serviceWorker.register("sw.js").catch(()=>{});
+showTab(); load(); loadHist(); setInterval(load,5*60*1000);
+</script>
+</body>
+</html>

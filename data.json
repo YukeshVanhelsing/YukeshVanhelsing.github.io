@@ -1,0 +1,372 @@
+{
+ "updated_at": "2026-11-20T08:05:00+05:30",
+ "next_update": "Weekdays ~08:45 and ~13:20 IST",
+ "fx": {
+  "usd_inr": 93.32,
+  "asof": "19 Nov 2026, close (Mumbai interbank)",
+  "status": "verified",
+  "sources": [
+   {
+    "name": "PTI via ThePrint (final close 93.32)",
+    "url": "https://theprint.in/economy/rupee-rallies-for-4th-session-to-close-9-paise-higher-at-93-32-against-us-dollar/3103570/"
+   },
+   {
+    "name": "PTI via HDFC Sky (provisional 93.36)",
+    "url": "https://hdfcsky.com/news/rupee-rallies-for-4th-session-to-close-5-paise-higher-at-93-36-against-us-dollar"
+   }
+  ]
+ },
+ "gold": {
+  "intl": {
+   "usd_oz": 3626.5,
+   "change_pct": 0.14,
+   "asof": "20 Nov 2026, early Asian trading (~7:30–8:00 am IST)",
+   "status": "verified",
+   "note": "Kitco precious-metals page $3,626.50; Huitong Finance (via CoinTelegraph/KuCoin) ~$3,628.16. Change is against the Kitco 19 Nov close of $3,621.40. Alpha Vantage's live feed showed $3,538 at the same time, about 2.5% below both, so it was not used.",
+   "sources": [
+    {
+     "name": "Kitco precious metals prices",
+     "url": "https://www.kitco.com/price/precious-metals"
+    },
+    {
+     "name": "Huitong Finance via KuCoin News",
+     "url": "https://www.kucoin.com/news/flash/gold-tests-3600-level-amid-dollar-strength-and-fed-hike-expectations"
+    }
+   ]
+  },
+  "india": {
+   "p999_10g": 129985,
+   "p916_10g": 119066,
+   "session": "IBJA AM",
+   "date": "19 Nov 2026",
+   "prev_999_10g": 131505,
+   "change_pct": -1.16,
+   "pm_999_10g": 129531,
+   "pm_916_10g": 118650,
+   "status": "verified",
+   "note": "IBJA benchmark rates exclude 3% GST and making charges. 24K = 999, 22K = 916, 18K = 750 purity. AM rates for all purities match in 5paisa and Bhavflow; the PM rate is from one source only.",
+   "sources": [
+    {
+     "name": "5paisa: full IBJA AM table (999/916/750), with previous AM",
+     "url": "https://www.5paisa.com/blog/gold-rate-today-19-november-2026"
+    },
+    {
+     "name": "Bhavflow — IBJA AM/PM table",
+     "url": "https://bhavflow.com/"
+    }
+   ],
+   "p750_10g": 97489,
+   "pm_750_10g": 97148,
+   "prev_916_10g": 120459,
+   "prev_750_10g": 98629
+  },
+  "vol": {
+   "value": 25.35,
+   "name": "Cboe Gold Volatility Index (GVZ)",
+   "asof": "13 Nov 2026 close",
+   "status": "verified",
+   "sources": [
+    {
+     "name": "CNBC .GVZ quote",
+     "url": "https://www.cnbc.com/quotes/.GVZ"
+    },
+    {
+     "name": "Yahoo Finance ^GVZ history",
+     "url": "https://finance.yahoo.com/quote/%5EGVZ/history/"
+    }
+   ]
+  }
+ },
+ "silver": {
+  "intl": {
+   "usd_oz": 43.92,
+   "change_pct": -2.28,
+   "asof": "19 Nov 2026, 3:31 pm New York (2:01 am IST 20 Nov)",
+   "status": "single source",
+   "note": "Kitco spot bid. Earlier on 19 Nov USAGOLD reported silver at $45.16, consistent with the day's fall.",
+   "sources": [
+    {
+     "name": "Kitco live silver chart",
+     "url": "https://www.kitco.com/charts/silver"
+    },
+    {
+     "name": "USAGOLD daily report, 19 Nov (earlier quote)",
+     "url": "https://www.usagold.com/daily-precious-metals-market-report-november-19-2026/"
+    }
+   ]
+  },
+  "india": {
+   "p999_kg": 161575,
+   "session": "IBJA AM",
+   "date": "19 Nov 2026",
+   "prev_999_kg": 164506,
+   "change_pct": -1.78,
+   "pm_999_kg": 160439,
+   "status": "verified",
+   "note": "IBJA silver 999 AM ₹1,61,575/kg (previous ₹1,64,506), matching in 5paisa and Bhavflow.",
+   "sources": [
+    {
+     "name": "Bhavflow — IBJA silver 999 AM/PM",
+     "url": "https://bhavflow.com/"
+    },
+    {
+     "name": "5paisa — silver fell ₹2,931",
+     "url": "https://www.5paisa.com/blog/gold-rate-today-19-november-2026"
+    }
+   ]
+  },
+  "vol": {
+   "value": 39.13,
+   "name": "Cboe Silver ETF Volatility Index (VXSLV)",
+   "asof": "30 Sep 2026 (latest published value found)",
+   "status": "stale",
+   "sources": [
+    {
+     "name": "Cbonds — VXSLV",
+     "url": "https://cbonds.es/indexes/215283/"
+    }
+   ]
+  }
+ },
+ "india_outlook": {
+  "text": "International gold fell about 2.6% and silver about 2.3% during the US session on 19 Nov, mostly after India's IBJA AM fix. Gold is flat in early Asian trade on 20 Nov (~$3,627), and the rupee firmed to 93.32. Unless that reverses, today's IBJA rates should come in lower than on 19 Nov.",
+  "basis": "Arithmetic from the verified figures above; not a forecast from any source."
+ },
+ "drivers": [
+  {
+   "date": "19 Nov 2026",
+   "metal": "Gold & Silver",
+   "impact": "down",
+   "title": "Near-certain US rate hike in December",
+   "detail": "Kitco reports roughly 90% odds of a 25 bp Fed hike in December; Fed Governor Waller has floated a 50 bp move. Higher rates make non-yielding metals less attractive.",
+   "source": "Startup Fortune citing Kitco",
+   "url": "https://startupfortune.com/golds-bad-year-is-getting-worse-as-it-sinks-below-3650/"
+  },
+  {
+   "date": "18 Nov 2026",
+   "metal": "Gold & Silver",
+   "impact": "down",
+   "title": "Hawkish Fed minutes",
+   "detail": "Minutes of the October meeting showed policymakers saw rising inflation risks that may need a stronger response; markets fully price a December hike.",
+   "source": "Reuters via CNBC",
+   "url": "https://www.cnbc.com/amp/2026/11/19/gold-silver-metals-price-treasury.html"
+  },
+  {
+   "date": "19 Nov 2026",
+   "metal": "Gold & Silver",
+   "impact": "down",
+   "title": "Strong dollar, 10-year yield above 5%",
+   "detail": "The dollar index this week hit its highest since April 2025, making gold costlier for non-US buyers; the 10-year Treasury yield is just above 5%.",
+   "source": "Reuters via CNBC; Startup Fortune",
+   "url": "https://www.cnbc.com/amp/2026/11/19/gold-silver-metals-price-treasury.html"
+  },
+  {
+   "date": "Nov 2026",
+   "metal": "Gold",
+   "impact": "down",
+   "title": "ETF outflows and slower central-bank buying",
+   "detail": "World Gold Council data show November ETF outflows turned year-to-date ETF demand negative; Poland likely paused buying after reaching its 700-tonne target. Gold is also being sold to raise cash.",
+   "source": "Startup Fortune citing WGC, Kitco",
+   "url": "https://startupfortune.com/golds-bad-year-is-getting-worse-as-it-sinks-below-3650/"
+  },
+  {
+   "date": "16 Nov 2026",
+   "metal": "Silver",
+   "impact": "down",
+   "title": "Weaker silver demand forecast",
+   "detail": "Metals Focus research for the Silver Institute forecasts a 5% fall in global silver demand in 2026 on weaker jewellery and solar-cell use.",
+   "source": "Trading Economics",
+   "url": "https://tradingeconomics.com/commodity/silver/news/601732"
+  },
+  {
+   "date": "19 Nov 2026",
+   "metal": "India",
+   "impact": "down",
+   "title": "Rupee strengthens for 4th session",
+   "detail": "The rupee closed at 93.32 per dollar on FII inflows and strong equities. A stronger rupee lowers the rupee price of imported gold and silver.",
+   "source": "PTI via ThePrint",
+   "url": "https://theprint.in/economy/rupee-rallies-for-4th-session-to-close-9-paise-higher-at-93-32-against-us-dollar/3103570/"
+  },
+  {
+   "date": "19 Nov 2026",
+   "metal": "Gold",
+   "impact": "mixed",
+   "title": "Safe-haven demand not helping",
+   "detail": "Softer US data, a 2% fall in the S&P 500 and Strait of Hormuz tensions did not lift gold, which signals that selling pressure is dominant for now.",
+   "source": "Startup Fortune",
+   "url": "https://startupfortune.com/golds-bad-year-is-getting-worse-as-it-sinks-below-3650/"
+  }
+ ],
+ "events": [
+  {
+   "date": "10 Dec 2026",
+   "title": "US November CPI (inflation) report",
+   "why": "Seen as the next major catalyst for gold before the Fed decision.",
+   "source": "FOREX.com analyst via Startup Fortune",
+   "url": "https://startupfortune.com/golds-bad-year-is-getting-worse-as-it-sinks-below-3650/"
+  },
+  {
+   "date": "Dec 2026",
+   "title": "Fed December policy meeting",
+   "why": "A rate hike is largely priced in; a 50 bp hike or hawkish guidance would add pressure, a pause would likely lift metals.",
+   "source": "Reuters via CNBC",
+   "url": "https://www.cnbc.com/amp/2026/11/19/gold-silver-metals-price-treasury.html"
+  }
+ ],
+ "views": [
+  {
+   "who": "Fawad Razaqzada, FOREX.com",
+   "date": "19 Nov 2026",
+   "view": "Sees downside as more likely; target $3,500 gold and $40 silver; resistance $3,837–3,870.",
+   "url": "https://startupfortune.com/golds-bad-year-is-getting-worse-as-it-sinks-below-3650/"
+  },
+  {
+   "who": "Matt Simpson, StoneX",
+   "date": "19 Nov 2026",
+   "view": "Called the small rebound more likely profit-taking by bears than a real catalyst.",
+   "url": "https://ancstockinvestments.com/blog/2026/11/19/gold-price-today-14-month-low-fed-minutes/"
+  }
+ ],
+ "history": [
+  {
+   "date": "2026-11-12",
+   "gold_usd": 3876.4,
+   "silver_usd": null,
+   "gold_999_10g": null,
+   "gold_916_10g": null,
+   "gold_750_10g": null,
+   "silver_999_kg": null,
+   "usd_inr": null,
+   "src": "Kitco 12 Nov 5:48 pm ET"
+  },
+  {
+   "date": "2026-11-13",
+   "gold_usd": 3879.8,
+   "silver_usd": null,
+   "gold_999_10g": null,
+   "gold_916_10g": null,
+   "gold_750_10g": null,
+   "silver_999_kg": null,
+   "usd_inr": 94.19,
+   "src": "Kitco 13 Nov; PTI FX close"
+  },
+  {
+   "date": "2026-11-16",
+   "gold_usd": 3861.5,
+   "silver_usd": 46.97,
+   "gold_999_10g": 134380,
+   "gold_916_10g": null,
+   "gold_750_10g": null,
+   "silver_999_kg": null,
+   "usd_inr": 93.94,
+   "src": "Kitco; USAGOLD silver; IBJA AM via 5paisa; PTI FX"
+  },
+  {
+   "date": "2026-11-17",
+   "gold_usd": 3873.6,
+   "silver_usd": null,
+   "gold_999_10g": 134418,
+   "gold_916_10g": null,
+   "gold_750_10g": null,
+   "silver_999_kg": null,
+   "usd_inr": 93.51,
+   "src": "Kitco; IBJA AM via 5paisa; PTI FX"
+  },
+  {
+   "date": "2026-11-18",
+   "gold_usd": null,
+   "silver_usd": null,
+   "gold_999_10g": 131505,
+   "gold_916_10g": 120459,
+   "gold_750_10g": 98629,
+   "silver_999_kg": 164506,
+   "usd_inr": 93.41,
+   "src": "IBJA AM via 5paisa; PTI FX via Deccan Herald"
+  },
+  {
+   "date": "2026-11-19",
+   "gold_usd": 3621.4,
+   "silver_usd": 43.92,
+   "gold_999_10g": 129985,
+   "gold_916_10g": 119066,
+   "gold_750_10g": 97489,
+   "silver_999_kg": 161575,
+   "usd_inr": 93.32,
+   "src": "Kitco; IBJA AM via 5paisa & Bhavflow; PTI FX"
+  },
+  {
+   "date": "2026-11-20",
+   "gold_usd": 3626.5,
+   "silver_usd": null,
+   "gold_999_10g": null,
+   "gold_916_10g": null,
+   "gold_750_10g": null,
+   "silver_999_kg": null,
+   "usd_inr": null,
+   "src": "Kitco & Huitong, early Asia"
+  }
+ ],
+ "history_note": "Monthly series: average international gold price (USD/oz) and USD-INR from datasets/gold-prices and datasets/exchange-rates (GitHub), Jan 1990 – Oct 2026. Daily rows: verified figures collected by this app's refreshes.",
+ "highlights": [
+  {
+   "level": "alert",
+   "text": "Gold is at a 14-month low, about 35% below its January 2026 record (~$5,600). Silver is down about 64% from its January peak.",
+   "src": "Kitco, Trading Economics",
+   "url": "https://tradingeconomics.com/commodity/gold",
+   "metal": "Both"
+  },
+  {
+   "level": "alert",
+   "text": "Main reason: markets are pricing in about a 90% chance of a US rate hike in December, and the dollar is at a 19-month high.",
+   "src": "Startup Fortune citing Kitco",
+   "url": "https://startupfortune.com/golds-bad-year-is-getting-worse-as-it-sinks-below-3650/",
+   "metal": "Both"
+  },
+  {
+   "level": "info",
+   "text": "India: international gold fell about 2.6% after the 19 Nov IBJA fix and the rupee strengthened, so expect lower Indian rates today.",
+   "src": "Arithmetic from verified prices",
+   "url": "",
+   "metal": "India"
+  },
+  {
+   "level": "info",
+   "text": "Next big event: the US inflation (CPI) report on 10 Dec, ahead of the Fed's December decision. Expect large moves around those dates.",
+   "src": "FOREX.com via Startup Fortune",
+   "url": "https://startupfortune.com/golds-bad-year-is-getting-worse-as-it-sinks-below-3650/",
+   "metal": "Both"
+  }
+ ],
+ "guidance": {
+  "mood": "Falling, high volatility",
+  "summary": "Prices are in a clear downtrend, and daily moves of 2–3% are common right now. Nobody can reliably call the bottom. If you need gold or silver, how you buy matters more than the exact day you buy.",
+  "points": [
+   {
+    "who": "Buying jewellery for a fixed date (wedding, festival)",
+    "tip": "Don't wait for the bottom. Spread the purchase over 2–4 weeks, or use a jeweller's rate-booking or advance scheme so a sudden rebound doesn't hurt you.",
+    "metal": "Gold"
+   },
+   {
+    "who": "Investing or saving in gold",
+    "tip": "Buy in small fixed amounts each week or month instead of one lump sum, especially before the 10 Dec US CPI report and the Fed decision. Gold has grown about 15% a year in rupees over 10 years, but it fell about 26% from its Feb 2026 peak, so think in years, not days.",
+    "metal": "Gold"
+   },
+   {
+    "who": "Already holding gold",
+    "tip": "Selling in panic after a big fall locks in the loss. Check whether your reason for holding (long-term saving, hedge against a weak rupee) still applies.",
+    "metal": "Gold"
+   },
+   {
+    "who": "Silver",
+    "tip": "Silver moves about 1.5× as much as gold, both up and down. Keep it a smaller share than gold unless you can handle big swings.",
+    "metal": "Silver"
+   },
+   {
+    "who": "At the shop",
+    "tip": "Compare the jeweller's per-gram rate with today's IBJA rate in this app. Add 3% GST and making charges, which vary widely, so ask for them separately. Insist on the BIS hallmark with a HUID number.",
+    "metal": "Both"
+   }
+  ],
+  "note": "General guidance based on the verified data in this app. This is not personal financial advice: consider your own needs or speak to a SEBI-registered adviser before large purchases."
+ }
+}
