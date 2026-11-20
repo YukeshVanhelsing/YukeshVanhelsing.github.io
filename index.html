@@ -86,7 +86,7 @@ details summary{cursor:pointer;font-size:12px;color:var(--muted);margin-top:8px}
   </nav>
   <div class="wrap ctl">
     <div class="sw metal" id="swMetal"><button data-v="gold">🟡 Gold</button><button data-v="silver">⚪ Silver</button></div>
-    <div class="sw" id="swMkt"><button data-v="india">🇮🇳 India</button><button data-v="intl">🌍 International</button></div>
+    <div class="sw" id="swMkt"><button data-v="india">₹ India</button><button data-v="intl">🌍 International</button></div>
     <button class="gstb" id="swGst" aria-pressed="false" title="Show India prices including 3% GST">+GST</button>
     <select id="swUnit" aria-label="Unit">
       <option value="1">per 1 g</option><option value="8">per 8 g (sovereign)</option><option value="10">per 10 g</option>
@@ -119,6 +119,8 @@ details summary{cursor:pointer;font-size:12px;color:var(--muted);margin-top:8px}
 <section data-tab="prices">
   <h3 class="sec" id="pTitle"></h3>
   <div class="card" id="priceDetail"></div>
+  <h3 class="sec">🌍 World price vs ₹ India price</h3>
+  <div class="card" id="wvi"></div>
   <h3 class="sec">Same metal in the other market</h3>
   <div class="card" id="priceOther"></div>
   <div id="cityWrap" hidden><h3 class="sec">🏙️ City rates <span class="meta" id="cityAsof"></span></h3>
@@ -398,6 +400,14 @@ button.x{border:0;background:none;color:var(--muted);cursor:pointer;font-size:15
 .estg .ev b{font-size:20px}
 .score{margin-top:12px;border-top:2px solid var(--line);padding-top:10px}.score .sh{font-weight:800;margin-bottom:4px}
 .score.empty{font-size:13px;color:var(--muted);border-top:1px dashed var(--line)}
+.vr{font-size:15px;font-weight:700;color:var(--gold);text-align:right}
+.nowbar{background:var(--goldsoft);border-radius:12px;padding:10px 12px;margin-bottom:6px}
+.nb-h{font-weight:800;margin-bottom:4px}.nb-v{display:flex;gap:16px;flex-wrap:wrap}.nb-v span{display:flex;flex-direction:column}.nb-v em{font-style:normal;font-size:12px;color:var(--muted)}.nb-v b{font-size:20px}
+.wv{display:grid;grid-template-columns:150px 1fr auto;gap:10px;align-items:center;padding:8px 0}
+.wv span{display:flex;flex-direction:column;font-weight:700;font-size:14px}.wv em{font-style:normal;font-weight:500;font-size:11px;color:var(--muted)}
+.wv .bt{height:16px}.wv .bt>div.w{background:#3a5a8c}.wv .bt>div.i{background:var(--gold)}
+.wv b{font-size:17px;font-variant-numeric:tabular-nums}
+@media(max-width:420px){.wv{grid-template-columns:110px 1fr auto}}
 .tag{display:inline-block;font-size:11px;font-weight:700;padding:1px 7px;border-radius:6px;background:var(--goldsoft);color:var(--gold);margin-right:4px}
 .tag.s{background:var(--silversoft);color:var(--silver)} .tag.i{background:rgba(31,122,77,.12);color:var(--up)}
 </style>
@@ -409,7 +419,7 @@ try{ Object.assign(S, JSON.parse(localStorage.getItem("gs_state")||"{}")); }catc
 const save = () => { try{ localStorage.setItem("gs_state", JSON.stringify(S)); }catch(e){} };
 
 const inr=(v,dp)=>{ if(dp==null) dp = v<100?2:0; return "₹"+v.toLocaleString("en-IN",{minimumFractionDigits:dp,maximumFractionDigits:dp}); };
-const usd=(v,dp)=>{ if(dp==null) dp = v<100?2:0; return "$"+v.toLocaleString("en-US",{minimumFractionDigits:dp,maximumFractionDigits:dp}); };
+const usd=(v,dp)=>{ if(dp==null) dp = v<1000?2:0; return "$"+v.toLocaleString("en-US",{minimumFractionDigits:dp,maximumFractionDigits:dp}); };
 const chg=p=>p==null?"":`<span class="${p>=0?'up':'down'}">${p>=0?'▲ +':'▼ '}${p.toFixed(2)}%</span>`;
 const badge=s=>`<span class="badge ${s==='verified'?'b-ok':s==='stale'?'b-bad':'b-warn'}">${s}</span>`;
 const esc=s=>String(s??"").replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
@@ -447,7 +457,7 @@ function syncControls(){
   document.querySelectorAll("#swMkt button").forEach(b=>b.classList.toggle("on",b.dataset.v===S.mkt));
   document.getElementById("swUnit").value=String(S.unit);
   const gb=document.getElementById("swGst"); gb.classList.toggle("on",S.gst); gb.setAttribute("aria-pressed",S.gst); gb.hidden=S.mkt!=="india";
-  document.getElementById("ribbon").textContent = `${S.metal==="gold"?"🟡":"⚪"} ${metalName()} · ${S.mkt==="india"?"🇮🇳":"🌍"} ${mktName()} · prices per ${unitName()}${S.gst&&S.mkt==="india"?" · incl. 3% GST":""}`;
+  document.getElementById("ribbon").textContent = `${S.metal==="gold"?"🟡":"⚪"} ${metalName()} · ${S.mkt==="india"?"₹":"🌍"} ${mktName()} · prices per ${unitName()}${S.gst&&S.mkt==="india"?" · incl. 3% GST":""}`;
 }
 
 function renderAll(){
@@ -497,15 +507,37 @@ function renderXcheck(){
     <div class="src">${esc(X.note)} · ${esc(X.asof)}</div>`;
 }
 
+
+function renderWvI(){
+  const el=document.getElementById("wvi"); if(!el) return;
+  const k=S.unit, fx=D.fx.usd_inr, g=S.metal==="gold";
+  const world=(g?D.gold.intl.usd_oz:D.silver.intl.usd_oz)/OZ*fx;
+  const E=D.india_estimate, ES=E&&(E.am||E);
+  const india = ES ? (g?ES.gold_999_10g/10:ES.silver_999_kg/1000) : (g?D.gold.india.p999_10g/10:D.silver.india.p999_kg/1000);
+  const gap=india-world, gp=gap/world*100, mx=Math.max(world,india);
+  const bar=(lab,v,cls,sub)=>`<div class="wv"><span>${lab}<em>${sub}</em></span><div class="bt"><div class="${cls}" style="width:${v/mx*100}%"></div></div><b>${inr(v*k)}</b></div>`;
+  el.innerHTML = bar("🌍 World price in ₹",world,"w",`$${(g?D.gold.intl.usd_oz:D.silver.intl.usd_oz).toLocaleString("en-US")}/oz × ₹${fx.toFixed(2)}`)
+    + bar("₹ India (IBJA)",india,"i",ES?"expected today":"last official")
+    + `<div class="ol tot"><span>India costs more by</span><b>${inr(gap*k)} (${gp.toFixed(1)}%)</b></div>
+       <div class="meta">${g?"24K":"Silver 999"}, ${esc(unitName())}. The gap is mainly India's import duty and taxes on bullion plus local dealer premium; GST (3%) is extra on top. The rupee rate also matters: a weaker rupee makes both bars taller.</div>`;
+}
+
 // ---------- PRICES ----------
 function priceBlock(metal, mkt){
   const its=items(metal,mkt), k=S.unit, m=its[0].m;
+  let pre="";
+  const E=D.india_estimate, ES=E&&(E.am||E);
+  if(mkt==="india" && ES){
+    const gk=S.gst?1.03:1, f=v=>inr(v*k*gk, v*k*gk<100?2:0);
+    const vals = metal==="gold" ? [["24K",ES.gold_999_10g/10],["22K",ES.gold_916_10g/10],["18K",ES.gold_750_10g/10]] : [["Silver",ES.silver_999_kg/1000]];
+    pre=`<div class="nowbar"><div class="nb-h">🎯 Expected today <span class="badge b-warn">estimate</span></div><div class="nb-v">${vals.map(([n,v])=>`<span><em>${n}</em><b>${f(v)}</b></span>`).join("")}</div><div class="meta">Official IBJA rate for ${esc(ES.for||"today")} comes at ~12:30 pm. Below is the last official rate.</div></div>`;
+  }
   const pmRow = (mkt==="india" && metal==="gold" && m.pm_999_10g) ? `<div class="meta">PM session: 24K ${inr(m.pm_999_10g/10*k)}${m.pm_916_10g?" · 22K "+inr(m.pm_916_10g/10*k):""}${m.pm_750_10g?" · 18K "+inr(m.pm_750_10g/10*k):""}</div>`
              : (mkt==="india" && metal==="silver" && m.pm_999_kg) ? `<div class="meta">PM session: ${inr(m.pm_999_kg/1000*k)}</div>` : "";
-  return its.map(it=>`
-    <div class="pr"><div class="nm">${esc(it.name)}</div><div class="vv">${fmtCur(it.cur,it.pg*k)}</div>
-      <div class="sub"><span>${chg(m.change_pct)}${it.prevPg?" · previous "+fmtCur(it.cur,it.prevPg*k):""}${it.inrPg?" · ≈ "+inr(it.inrPg*k):""}</span>${badge(m.status)}</div></div>`).join("")
-    + pmRow + `<div class="meta" style="margin-top:6px">${esc(mkt==="india"?m.session+", "+m.date:m.asof)}</div>`
+  return pre + its.map(it=>`
+    <div class="pr"><div class="nm">${esc(it.name)}</div><div class="vv">${fmtCur(it.cur,it.pg*k)}${it.inrPg?`<div class="vr">${inr(it.inrPg*k)}</div>`:""}</div>
+      <div class="sub"><span>${chg(m.change_pct)}${it.prevPg?" · previous "+fmtCur(it.cur,it.prevPg*k):""}</span>${badge(m.status)}</div></div>`).join("")
+    + pmRow + `<div class="meta" style="margin-top:6px">${mkt==="india"?"Last official: "+esc(m.session+", "+m.date):esc(m.asof)+" · ₹ at USD-INR "+D.fx.usd_inr.toFixed(2)}</div>`
     + `<details><summary>Sources & notes</summary><div class="src">${esc(m.note)}</div>${links(m.sources)}</details>`;
 }
 function renderPrices(){
@@ -513,7 +545,7 @@ function renderPrices(){
   document.getElementById("priceDetail").innerHTML=priceBlock(S.metal,S.mkt);
   const other=S.mkt==="india"?"intl":"india";
   document.getElementById("priceOther").innerHTML=`<div class="meta" style="margin-bottom:4px">${metalName()} · ${other==="india"?"India":"International"}</div>`+priceBlock(S.metal,other);
-  renderCities();
+  renderCities(); renderWvI();
   document.getElementById("fxCard").innerHTML=`<div class="pr"><div class="nm">1 US dollar</div><div class="vv">₹${D.fx.usd_inr.toFixed(2)}</div><div class="sub"><span>${esc(D.fx.asof)}</span>${badge(D.fx.status)}</div></div><details><summary>Sources</summary>${links(D.fx.sources)}</details>`;
 }
 
@@ -795,7 +827,7 @@ function renderSplit(){
   el.parentElement.hidden=false;
   const sp=(D.gold.intl.usd_oz/g.spot_at_fix_usd-1)*100, fx=(D.fx.usd_inr/g.fx_at_fix-1)*100, tot=((1+sp/100)*(1+fx/100)-1)*100;
   const bar=(v,lab)=>`<div class="bar"><span>${lab}</span><div class="bt mid"><div class="${v<0?'neg':'pos'}" style="width:${Math.min(50,Math.abs(v)*12)}%;${v<0?'right:50%':'left:50%'}"></div></div><b class="${v<0?'down':'up'}">${v>=0?'+':''}${v.toFixed(2)}%</b></div>`;
-  el.innerHTML=bar(sp,"🌍 "+T("intl_gold"))+bar(fx,"💱 "+T("rupee_eff"))+bar(tot,"🇮🇳 "+T("india_net"))
+  el.innerHTML=bar(sp,"🌍 "+T("intl_gold")+" ($)")+bar(fx,"💱 "+T("rupee_eff"))+bar(tot,"₹ "+T("india_net"))
     +`<div class="meta">${T("split_note")}</div>`;
 }
 
@@ -886,7 +918,7 @@ function applyLang(){
   document.querySelectorAll("[data-i18n]").forEach(el=>{ const k=el.dataset.i18n; if(!(k in EN_STATIC)) EN_STATIC[k]=el.textContent; el.textContent = LANG==="ta" && TS.ta[k] ? TS.ta[k] : EN_STATIC[k]; });
   document.querySelectorAll("#tabs a").forEach(a=>a.textContent=T("tab_"+a.dataset.t));
   document.querySelectorAll("#swMetal button").forEach(b=>b.textContent=(b.dataset.v==="gold"?"🟡 ":"⚪ ")+T(b.dataset.v));
-  document.querySelectorAll("#swMkt button").forEach(b=>b.textContent=(b.dataset.v==="india"?"🇮🇳 ":"🌍 ")+(LANG==="ta"?(b.dataset.v==="india"?"இந்தியா":"சர்வதேசம்"):(b.dataset.v==="india"?"India":"International")));
+  document.querySelectorAll("#swMkt button").forEach(b=>b.textContent=(b.dataset.v==="india"?"₹ ":"🌍 ")+(LANG==="ta"?(b.dataset.v==="india"?"இந்தியா":"சர்வதேசம்"):(b.dataset.v==="india"?"India":"International")));
   $("langBtn").textContent = LANG==="ta"?"EN":"தமிழ்";
   renderLearn(); renderWhy(); if(D){ renderTools(); renderSplit(); } try{ renderGuideTab(); }catch(e){}
 }
@@ -943,8 +975,8 @@ why(){
            ["🏦","↑","🪙","↓",{en:"Interest rates go up → gold falls (gold pays no interest)",ta:"வட்டி விகிதம் உயர்ந்தால் → தங்கம் குறையும் (தங்கத்துக்கு வட்டி இல்லை)"}],
            ["😟","↑","🪙","↑",{en:"War, crisis or fear → gold rises (a 'safe' place for money)",ta:"போர்/நெருக்கடி/பயம் → தங்கம் உயரும் (பாதுகாப்பான இடம்)"}],
            ["🏛️","↑","🪙","↑",{en:"Central banks buy more gold → gold rises",ta:"மத்திய வங்கிகள் அதிகம் வாங்கினால் → தங்கம் உயரும்"}],
-           ["₹","↓","🇮🇳","↑",{en:"Rupee gets weaker → gold in India costs more",ta:"ரூபாய் பலவீனமானால் → இந்தியாவில் தங்கம் விலை உயரும்"}],
-           ["💍","↑","🇮🇳","↑",{en:"Wedding & festival buying → Indian demand rises",ta:"திருமணம்/பண்டிகை → இந்திய தேவை உயரும்"}]];
+           ["₹","↓","₹","↑",{en:"Rupee gets weaker → gold in India costs more",ta:"ரூபாய் பலவீனமானால் → இந்தியாவில் தங்கம் விலை உயரும்"}],
+           ["💍","↑","₹","↑",{en:"Wedding & festival buying → Indian demand rises",ta:"திருமணம்/பண்டிகை → இந்திய தேவை உயரும்"}]];
   const today = D ? D.drivers.slice(0,3).map(d=>`<div class="dchip ${d.impact}">${d.impact==="down"?"⬇️":d.impact==="up"?"⬆️":"↕️"} ${esc(d.title)} <span class="meta">${esc(d.date)}</span></div>`).join("") : "";
   return big("🎢","Gold's price is like a see-saw. These things push it up or down:","தங்க விலை ஒரு ஊஞ்சல் போல. இவை மேலே/கீழே தள்ளும்:")
    + `<div class="cause">${c.map(([a,ad,b,bd,t])=>`<div class="cz"><div class="cicons" aria-hidden="true"><span>${a}<i class="${ad==="↑"?"u":"d"}">${ad}</i></span><span class="arr">➜</span><span>${b}<i class="${bd==="↑"?"u":"d"}">${bd}</i></span></div><div>${L2(t)}</div></div>`).join("")}</div>`
