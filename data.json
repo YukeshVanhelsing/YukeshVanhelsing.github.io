@@ -368,5 +368,22 @@
    }
   ],
   "note": "General guidance based on the verified data in this app. This is not personal financial advice: consider your own needs or speak to a SEBI-registered adviser before large purchases."
+ },
+ "india_estimate": {
+  "for_date": "20 Nov 2026 (IBJA AM)",
+  "gold_999_10g": 126270,
+  "gold_916_10g": 115663,
+  "gold_750_10g": 94703,
+  "silver_999_kg": 157004,
+  "margin_pct": {
+   "gold": 0.8,
+   "silver": 1.3
+  },
+  "basis": "Previous IBJA AM rate × (international spot now ÷ spot at that fix) × (USD-INR now ÷ USD-INR then). Spot at the 19 Nov fix ≈ $3,730 gold (Guardian Gold, 08:35 GMT) and ≈ $45.16 silver (USAGOLD, 19 Nov); now $3,626.50 gold / $43.92 silver; USD-INR 93.40 → 93.32. The margin covers the hours left until the next fix plus small changes in India's premium. This is an estimate, not an IBJA figure.",
+  "status": "estimate"
+ },
+ "accuracy": {
+  "note": "Tracking starts 20 Nov 2026. Each day the estimate above is compared with the actual IBJA AM rate.",
+  "log": []
  }
 }
