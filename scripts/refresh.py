@@ -25,15 +25,28 @@ def log(*a): print(*a, file=sys.stderr)
 # ---------- live feeds ----------
 def spot():
     out = {"gold": [], "silver": []}
+    # 1) Swissquote public bid/ask feed (mid of the first platform's best quote)
+    for metal, sym in (("gold", "XAU"), ("silver", "XAG")):
+        try:
+            j = jget(f"https://forex-data-feed.swissquote.com/public-quotes/bboquotes/instrument/{sym}/USD")
+            q = j[0]["spreadProfilePrices"][0]
+            out[metal].append(("Swissquote", (float(q["bid"]) + float(q["ask"])) / 2, "https://www.swissquote.com"))
+        except Exception as e: log("swissquote", sym, "failed", e)
+    # 2) Stooq spot quotes (CSV)
+    for metal, sym in (("gold", "xauusd"), ("silver", "xagusd")):
+        try:
+            t = get(f"https://stooq.com/q/l/?s={sym}&f=sd2t2c&h&e=csv").strip().splitlines()
+            v = float(t[1].split(",")[4])
+            out[metal].append(("Stooq", v, f"https://stooq.com/q/?s={sym}"))
+        except Exception as e: log("stooq", sym, "failed", e)
+    # 3) goldprice.org (needs browser-like headers)
     try:
-        j = jget("https://api.gold-api.com/price/XAU"); out["gold"].append(("gold-api.com", float(j["price"]), "https://gold-api.com"))
-        j = jget("https://api.gold-api.com/price/XAG"); out["silver"].append(("gold-api.com", float(j["price"]), "https://gold-api.com"))
-    except Exception as e: log("gold-api failed", e)
-    try:
-        j = jget("https://data-asg.goldprice.org/dbXRates/USD"); it = j["items"][0]
+        req = urllib.request.Request("https://data-asg.goldprice.org/dbXRates/USD", headers={**UA, "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0 Safari/537.36", "Referer": "https://goldprice.org/", "Accept": "application/json"})
+        with urllib.request.urlopen(req, timeout=25) as r: it = json.loads(r.read())["items"][0]
         out["gold"].append(("goldprice.org", float(it["xauPrice"]), "https://goldprice.org"))
         out["silver"].append(("goldprice.org", float(it["xagPrice"]), "https://goldprice.org"))
     except Exception as e: log("goldprice.org failed", e)
+    log("spot feeds:", out)
     return out
 
 def fx():
