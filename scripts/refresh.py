@@ -32,20 +32,28 @@ def spot():
             q = j[0]["spreadProfilePrices"][0]
             out[metal].append(("Swissquote", (float(q["bid"]) + float(q["ask"])) / 2, "https://www.swissquote.com"))
         except Exception as e: log("swissquote", sym, "failed", e)
-    # 2) Stooq spot quotes (CSV)
-    for metal, sym in (("gold", "xauusd"), ("silver", "xagusd")):
+    # 2) Kitco public quote feed (bid/ask)
+    for metal, sym in (("gold", "AU"), ("silver", "AG")):
         try:
-            t = get(f"https://stooq.com/q/l/?s={sym}&f=sd2t2c&h&e=csv").strip().splitlines()
-            v = float(t[1].split(",")[4])
-            out[metal].append(("Stooq", v, f"https://stooq.com/q/?s={sym}"))
-        except Exception as e: log("stooq", sym, "failed", e)
-    # 3) goldprice.org (needs browser-like headers)
+            t = get(f"https://proxy.kitco.com/getPM?symbol={sym}&currency=USD").strip().split(",")
+            nums = [float(x) for x in t if re.fullmatch(r"\d+(\.\d+)?", x.strip())]
+            lo, hi = (100, 20000) if metal == "gold" else (3, 500)
+            cand = [x for x in nums if lo < x < hi]
+            if len(cand) >= 2: out[metal].append(("Kitco", (cand[0] + cand[1]) / 2, "https://www.kitco.com"))
+            else: log("kitco", sym, "unparsed", t[:12])
+        except Exception as e: log("kitco", sym, "failed", e)
+    # 3) FXRatesAPI (free; rates per USD, inverted)
     try:
-        req = urllib.request.Request("https://data-asg.goldprice.org/dbXRates/USD", headers={**UA, "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0 Safari/537.36", "Referer": "https://goldprice.org/", "Accept": "application/json"})
-        with urllib.request.urlopen(req, timeout=25) as r: it = json.loads(r.read())["items"][0]
-        out["gold"].append(("goldprice.org", float(it["xauPrice"]), "https://goldprice.org"))
-        out["silver"].append(("goldprice.org", float(it["xagPrice"]), "https://goldprice.org"))
-    except Exception as e: log("goldprice.org failed", e)
+        j = jget("https://api.fxratesapi.com/latest?base=USD&currencies=XAU,XAG")
+        out["gold"].append(("FXRatesAPI", 1 / float(j["rates"]["XAU"]), "https://fxratesapi.com"))
+        out["silver"].append(("FXRatesAPI", 1 / float(j["rates"]["XAG"]), "https://fxratesapi.com"))
+    except Exception as e: log("fxratesapi failed", e)
+    # 4) Yahoo Finance spot symbols
+    for metal, sym in (("gold", "XAUUSD=X"), ("silver", "XAGUSD=X")):
+        try:
+            j = jget(f"https://query1.finance.yahoo.com/v8/finance/chart/{sym}?interval=1m&range=1d")
+            out[metal].append(("Yahoo Finance", float(j["chart"]["result"][0]["meta"]["regularMarketPrice"]), "https://finance.yahoo.com"))
+        except Exception as e: log("yahoo", sym, "failed", e)
     log("spot feeds:", out)
     return out
 
