@@ -1,18 +1,18 @@
 {
- "updated_at": "2026-11-24T10:45:00+05:30",
+ "updated_at": "2026-11-24T10:20:06+05:30",
  "next_update": "Every 30 min on weekdays (prices); news ~08:45 and ~13:45 IST",
  "fx": {
-  "usd_inr": 92.97,
-  "asof": "24 Nov 2026, 10:12 am IST",
-  "status": "single source",
+  "usd_inr": 92.96,
+  "asof": "24 Nov 2026, 10:20 AM IST",
+  "status": "verified",
   "sources": [
    {
-    "name": "Alpha Vantage live USD-INR (92.97 at 04:42 GMT)",
-    "url": "https://www.alphavantage.co/"
+    "name": "ExchangeRate-API (92.995)",
+    "url": "https://www.exchangerate-api.com"
    },
    {
-    "name": "PTI via Telangana Today (18 Nov close 93.44, for context)",
-    "url": "https://telanganatoday.com/rupee-closes-higher-at-93-44-despite-strong-dollar-and-market-weakness"
+    "name": "Frankfurter (ECB reference) (92.920)",
+    "url": "https://www.frankfurter.app"
    }
   ]
  },
@@ -66,7 +66,7 @@
    "am_750_10g": 93842,
    "pm_spot_at_fix_usd": 3617.0,
    "pm_fx_at_fix": 92.97,
-   "today_note": "IBJA has not published today's rates (holiday)."
+   "today_note": "IBJA has not published today's rates (holiday or delay)."
   },
   "vol": {
    "value": 25.35,
@@ -606,5 +606,6 @@
     "status": "single source"
    }
   ]
- }
+ },
+ "spot_log": []
 }
