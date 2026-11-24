@@ -495,7 +495,7 @@ function freshBadge(upd){
 }
 function renderAll(){
   if(!D) return; syncControls();
-  try{ const f=D.india_estimate&&D.india_estimate.am&&D.india_estimate.am.for, today=new Date().toLocaleDateString('en-GB',{day:'numeric',month:'short',year:'numeric',timeZone:'Asia/Kolkata'}); document.getElementById('estFor').textContent = f&&f!==today ? ' · for '+f+' (IBJA closed today)' : ''; }catch(e){}
+  try{ const f=D.india_estimate&&D.india_estimate.am&&D.india_estimate.am.for, today=new Date().toLocaleDateString('en-GB',{day:'numeric',month:'short',year:'numeric',timeZone:'Asia/Kolkata'}); const f2=D.india_estimate&&D.india_estimate.pm&&D.india_estimate.pm.for; document.getElementById('estFor').textContent = f&&f!==today&&f2!==today ? ' · for '+f+(D.gold.india.today_note?' (IBJA closed today)':'') : ''; }catch(e){}
   const upd=new Date(D.updated_at), ageH=(Date.now()-upd)/36e5;
   document.getElementById("stamp").textContent="Last verified: "+upd.toLocaleString("en-IN",{day:"numeric",month:"short",hour:"numeric",minute:"2-digit",timeZone:"Asia/Kolkata"})+" IST";
   document.getElementById("fresh").innerHTML=freshBadge(upd);
@@ -633,7 +633,7 @@ function estimateBlock(){
   const keys = met==="gold" ? [["24K","gold_999_10g",10,D.gold.india.p999_10g],["22K","gold_916_10g",10,D.gold.india.p916_10g],["18K","gold_750_10g",10,D.gold.india.p750_10g]]
                             : [["Silver 999","silver_999_kg",1000,D.silver.india.p999_kg]];
   const f=v=>inr(v, v<100?2:0);
-  const head=`<div class="estg head"><span></span>${ses.map(s=>`<span>${esc((s.label||"Today").split(" · ")[0])}<em>${esc((s.label||"").split(" · ")[1]||"")}</em></span>`).join("")}</div>`;
+  const head=`<div class="estg head"><span></span>${ses.map(s=>`<span>${esc((s.label||"Today").split(" · ")[0])}<em>${esc((s.label||"").split(" · ").slice(1).join(" · "))}</em></span>`).join("")}</div>`;
   const rows=keys.map(([nm,key,div,last])=>`<div class="estg"><span><b>${nm}</b><em>last ${f(last/div*k)}</em></span>${ses.map(s=>{ const v=s[key]/div*k, m=(met==="gold"?s.margin_pct.gold:s.margin_pct.silver)/100; return `<span class="ev"><b>${f(v)}</b><em>± ${inr(v*m, v*m<10?2:0)}</em></span>`;}).join("")}</div>`).join("");
   const chgp=((ses[0][keys[0][1]])/keys[0][3]-1)*100;
   return head+rows

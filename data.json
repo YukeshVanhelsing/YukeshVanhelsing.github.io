@@ -1,6 +1,6 @@
 {
  "updated_at": "2026-11-24T10:45:00+05:30",
- "next_update": "Weekdays ~08:45 and ~13:45 IST",
+ "next_update": "Every 30 min on weekdays (prices); news ~08:45 and ~13:45 IST",
  "fx": {
   "usd_inr": 92.97,
   "asof": "24 Nov 2026, 10:12 am IST",
@@ -65,7 +65,8 @@
    "am_916_10g": 114613,
    "am_750_10g": 93842,
    "pm_spot_at_fix_usd": 3617.0,
-   "pm_fx_at_fix": 92.97
+   "pm_fx_at_fix": 92.97,
+   "today_note": "IBJA has not published today's rates (holiday)."
   },
   "vol": {
    "value": 25.35,
@@ -411,7 +412,7 @@
   "basis": "23 Nov IBJA PM × (spot now ÷ spot at that fix). Gold $3,617 (10:36 GMT, Reuters) → $3,636 (+0.5%); silver $42.54 → $43.40 (+2.0%). USD-INR assumed unchanged at 92.97 (no verified 23 Nov fix-time rate). IBJA did not publish on 24 Nov (holiday), so this is for 25 Nov; margins are wide because the fix is a day away and will narrow at the next refresh.",
   "am": {
    "for": "25 Nov 2026",
-   "label": "Midday · IBJA AM ~12:30 pm",
+   "label": "Midday · IBJA AM ~12:30 pm · 25 Nov",
    "gold_999_10g": 125601,
    "gold_916_10g": 115051,
    "gold_750_10g": 94201,
@@ -423,7 +424,7 @@
   },
   "pm": {
    "for": "25 Nov 2026",
-   "label": "Evening · IBJA PM ~5 pm",
+   "label": "Evening · IBJA PM ~5 pm · 25 Nov",
    "gold_999_10g": 125601,
    "gold_916_10g": 115051,
    "gold_750_10g": 94201,

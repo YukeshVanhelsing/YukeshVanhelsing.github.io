@@ -1,0 +1,29 @@
+name: SY price refresh
+on:
+  schedule:
+    - cron: "*/30 3-12 * * 1-5"   # every 30 min, ~08:30–18:00 IST, Mon–Fri
+  workflow_dispatch: {}
+permissions:
+  contents: write
+concurrency:
+  group: sy-refresh
+  cancel-in-progress: false
+jobs:
+  refresh:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - name: Refresh prices
+        run: python3 scripts/refresh.py
+      - name: Check JSON
+        run: python3 -c "import json;json.load(open('data.json'));json.load(open('history_monthly.json'))"
+      - name: Commit and push
+        run: |
+          git config user.name "SY auto-refresh"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add data.json history_monthly.json
+          git diff --cached --quiet && exit 0
+          git commit -m "Auto price refresh $(TZ=Asia/Kolkata date '+%Y-%m-%d %H:%M IST')"
+          for i in 1 2 3; do git pull --rebase -X theirs origin main && git push && exit 0; sleep 5; done
+          exit 1
