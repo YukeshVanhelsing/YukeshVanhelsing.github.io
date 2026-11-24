@@ -101,7 +101,7 @@ details summary{cursor:pointer;font-size:12px;color:var(--muted);margin-top:8px}
 
 <section data-tab="today">
   <div id="boardWrap" hidden><h3 class="sec">🏪 Shop rate today <span class="meta" id="boardSub"></span></h3><div class="card" id="board" style="border-left:5px solid var(--up)"></div></div>
-  <div id="estWrap"><h3 class="sec" data-i18n="s_est">🎯 Expected rates today</h3>
+  <div id="estWrap"><h3 class="sec"><span data-i18n="s_est">🎯 Expected rates today</span><span id="estFor" class="muted" style="font-weight:600"></span></h3>
   <div class="card" id="estimate" style="border-left:5px solid var(--gold)"></div>
   <h3 class="sec">🔍 Do other trusted sources agree?</h3><div class="card" id="xcheck"></div></div>
   <div class="card hero" id="mood"></div>
@@ -495,6 +495,7 @@ function freshBadge(upd){
 }
 function renderAll(){
   if(!D) return; syncControls();
+  try{ const f=D.india_estimate&&D.india_estimate.am&&D.india_estimate.am.for, today=new Date().toLocaleDateString('en-GB',{day:'numeric',month:'short',year:'numeric',timeZone:'Asia/Kolkata'}); document.getElementById('estFor').textContent = f&&f!==today ? ' · for '+f+' (IBJA closed today)' : ''; }catch(e){}
   const upd=new Date(D.updated_at), ageH=(Date.now()-upd)/36e5;
   document.getElementById("stamp").textContent="Last verified: "+upd.toLocaleString("en-IN",{day:"numeric",month:"short",hour:"numeric",minute:"2-digit",timeZone:"Asia/Kolkata"})+" IST";
   document.getElementById("fresh").innerHTML=freshBadge(upd);

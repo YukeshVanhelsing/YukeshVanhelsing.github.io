@@ -1,70 +1,71 @@
 {
- "updated_at": "2026-11-20T10:05:00+05:30",
- "next_update": "Weekdays ~08:45 and ~13:20 IST",
+ "updated_at": "2026-11-24T10:45:00+05:30",
+ "next_update": "Weekdays ~08:45 and ~13:45 IST",
  "fx": {
-  "usd_inr": 93.32,
-  "asof": "19 Nov 2026, close (Mumbai interbank)",
-  "status": "verified",
+  "usd_inr": 92.97,
+  "asof": "24 Nov 2026, 10:12 am IST",
+  "status": "single source",
   "sources": [
    {
-    "name": "PTI via ThePrint (final close 93.32)",
-    "url": "https://theprint.in/economy/rupee-rallies-for-4th-session-to-close-9-paise-higher-at-93-32-against-us-dollar/3103570/"
+    "name": "Alpha Vantage live USD-INR (92.97 at 04:42 GMT)",
+    "url": "https://www.alphavantage.co/"
    },
    {
-    "name": "PTI via HDFC Sky (provisional 93.36)",
-    "url": "https://hdfcsky.com/news/rupee-rallies-for-4th-session-to-close-5-paise-higher-at-93-36-against-us-dollar"
+    "name": "PTI via Telangana Today (18 Nov close 93.44, for context)",
+    "url": "https://telanganatoday.com/rupee-closes-higher-at-93-44-despite-strong-dollar-and-market-weakness"
    }
   ]
  },
  "gold": {
   "intl": {
-   "usd_oz": 3547.0,
-   "change_pct": -2.22,
-   "asof": "20 Nov 2026, ~8:30–9:40 am IST (Asian trading)",
+   "usd_oz": 3636.0,
+   "change_pct": 2.51,
+   "asof": "24 Nov 2026, ~9:30–10:15 am IST",
    "status": "verified",
-   "note": "Three independent feeds agree within 0.4%: Reuters report $3,551.68 at 02:57 GMT; Business Upturn $3,542.94 at 9:36 am IST; Alpha Vantage $3,538.08 at 07:52 am IST. Change vs the 19 Nov settlement of $3,627.4. Correction: an earlier SY figure ($3,626.50) was a stale Thursday-close quote.",
+   "note": "Three same-morning quotes agree within 0.4%: Alpha Vantage $3,630.43 (10:12 am IST), The Open Press $3,631.20, Goodreturns $3,645.29. Change is vs the 20 Nov low area (~$3,547) after Monday's rebound.",
    "sources": [
     {
-     "name": "Reuters via Rallies.ai ($3,551.68, 02:57 GMT)",
-     "url": "https://rallies.ai/news/gold-set-for-worst-week-in-eight-months-as-firm-dollar-fed-hike-bets-weigh-17c788828354aa0b"
+     "name": "Alpha Vantage live ($3,630.43, 04:42 GMT)",
+     "url": "https://www.alphavantage.co/"
     },
     {
-     "name": "Business Upturn ($3,542.94, 9:36 am IST)",
-     "url": "https://businessupturn.com/sectors/commodities/gold-rate-today-check-latest-gold-prices-in-mumbai-chennai-kolkata-as-gold-and-silver-crash-on-us-inflation-and-fed-worries/"
+     "name": "Goodreturns ($3,645.29)",
+     "url": "https://www.goodreturns.in/news/gold-rates-today-november-24-gold-jumps-rs-27200-24k-22k-18k-gold-prices-in-bangalore-chennai-cities-1549221.html"
     },
     {
-     "name": "BigGo Finance (19 Nov settle $3,627.4)",
-     "url": "https://finance.biggo.com/news/80c5ff3d-6dba-41af-aa8d-4d9b735d18e7"
+     "name": "The Open Press ($3,631.20)",
+     "url": "https://theopenpress.in/article/gold-silver-price-today-24-november"
     }
    ]
   },
   "india": {
-   "p999_10g": 129985,
-   "p916_10g": 119066,
-   "session": "IBJA AM",
-   "date": "19 Nov 2026",
-   "prev_999_10g": 131505,
-   "change_pct": -1.16,
-   "pm_999_10g": 129531,
-   "pm_916_10g": 118650,
+   "p999_10g": 124945,
+   "p916_10g": 114450,
+   "session": "IBJA PM",
+   "date": "23 Nov 2026",
+   "prev_999_10g": 125123,
+   "change_pct": 0.85,
+   "pm_999_10g": 124945,
+   "pm_916_10g": 114450,
    "status": "verified",
-   "note": "Matches IBJA's official website (ibjarates.com) exactly: 19/11/2026 AM 999 ₹1,29,985 · 916 ₹1,19,066 · 750 ₹97,489; PM 999 ₹1,29,531. Rates per 10 g, without 3% GST and making charges.",
+   "note": "From IBJA's official website (ibjarates.com): 23/11/2026 AM 999 ₹1,25,123 · 916 ₹1,14,613 · 750 ₹93,842; PM 999 ₹1,24,945 · 916 ₹1,14,450 · 750 ₹93,709. No rates for 24 Nov: the site shows 'Holiday', and MCX traded only a half day. Per 10 g, without 3% GST and making.",
    "sources": [
     {
      "name": "IBJA official website",
      "url": "https://www.ibjarates.com/"
-    },
-    {
-     "name": "5paisa: IBJA AM table",
-     "url": "https://www.5paisa.com/blog/gold-rate-today-19-november-2026"
     }
    ],
-   "p750_10g": 97489,
+   "p750_10g": 93709,
    "pm_750_10g": 97148,
    "prev_916_10g": 120459,
    "prev_750_10g": 98629,
-   "spot_at_fix_usd": 3730.0,
-   "fx_at_fix": 93.4
+   "spot_at_fix_usd": 3617.0,
+   "fx_at_fix": 92.97,
+   "am_999_10g": 125123,
+   "am_916_10g": 114613,
+   "am_750_10g": 93842,
+   "pm_spot_at_fix_usd": 3617.0,
+   "pm_fx_at_fix": 92.97
   },
   "vol": {
    "value": 25.35,
@@ -85,38 +86,40 @@
  },
  "silver": {
   "intl": {
-   "usd_oz": 41.92,
-   "change_pct": -2.24,
-   "asof": "20 Nov 2026, 9:36 am IST",
+   "usd_oz": 43.4,
+   "change_pct": 3.5,
+   "asof": "24 Nov 2026, morning IST",
    "status": "single source",
-   "note": "Business Upturn $41.92 (−2.2%). Kitco's 19 Nov close was $42.88. A second same-time quote is still to be confirmed.",
+   "note": "Goodreturns $43.55 (+1.2%); its live blog says around $43. Monday open was $43.14 (USAGOLD).",
    "sources": [
     {
-     "name": "Business Upturn",
-     "url": "https://businessupturn.com/sectors/commodities/gold-rate-today-check-latest-gold-prices-in-mumbai-chennai-kolkata-as-gold-and-silver-crash-on-us-inflation-and-fed-worries/"
+     "name": "Goodreturns ($43.55)",
+     "url": "https://www.goodreturns.in/news/gold-rates-today-november-24-gold-jumps-rs-27200-24k-22k-18k-gold-prices-in-bangalore-chennai-cities-1549221.html"
     },
     {
-     "name": "Kitco (19 Nov close $42.88)",
-     "url": "https://www.kitco.com/price/precious-metals"
+     "name": "USAGOLD 23 Nov report ($43.14)",
+     "url": "https://www.usagold.com/daily-precious-metals-market-report-november-23-2026/"
     }
    ]
   },
   "india": {
-   "p999_kg": 161575,
-   "session": "IBJA AM",
-   "date": "19 Nov 2026",
-   "prev_999_kg": 164506,
-   "change_pct": -1.78,
-   "pm_999_kg": 160439,
+   "p999_kg": 152625,
+   "session": "IBJA PM",
+   "date": "23 Nov 2026",
+   "prev_999_kg": 152941,
+   "change_pct": 0.06,
+   "pm_999_kg": 152625,
    "status": "verified",
-   "note": "Matches IBJA's official website: 19/11/2026 AM ₹1,61,575/kg, PM ₹1,60,439/kg (without GST).",
+   "note": "IBJA official website: 23/11/2026 AM ₹1,52,941/kg, PM ₹1,52,625/kg (without GST). 24 Nov: holiday, no rates.",
    "sources": [
     {
      "name": "IBJA official website",
      "url": "https://www.ibjarates.com/"
     }
    ],
-   "spot_at_fix_usd": 45.16
+   "spot_at_fix_usd": 42.54,
+   "am_999_kg": 152941,
+   "pm_spot_at_fix_usd": 42.54
   },
   "vol": {
    "value": 39.13,
@@ -132,7 +135,7 @@
   }
  },
  "india_outlook": {
-  "text": "Gold fell another ~2% in Asian trading on 20 Nov to about $3,547 (worst week since March, down ~8.9%), after the 19 Nov IBJA fix was set near $3,730. Expect today's IBJA 24K near ₹12,350/g (about 5% below yesterday's ₹12,999); MCX futures already show ₹12,243/g.",
+  "text": "IBJA is closed today (24 Nov). Since the last fix (23 Nov PM, gold ~$3,617), gold is up ~0.5% to ~$3,636 and silver ~2% to ~$43.4. If that holds, Wednesday's IBJA 24K would be near ₹12,560/g.",
   "basis": "Arithmetic from the verified figures above; not a forecast from any source."
  },
  "drivers": [
@@ -301,48 +304,70 @@
    "date": "2026-11-20",
    "gold_usd": 3547.0,
    "silver_usd": 41.92,
+   "gold_999_10g": 123584,
+   "gold_916_10g": 113203,
+   "gold_750_10g": 92688,
+   "silver_999_kg": 150650,
+   "usd_inr": null,
+   "src": "IBJA official AM; Reuters/Alpha Vantage spot"
+  },
+  {
+   "date": "2026-11-23",
+   "gold_usd": 3617.41,
+   "silver_usd": 42.54,
+   "gold_999_10g": 125123,
+   "gold_916_10g": 114613,
+   "gold_750_10g": 93842,
+   "silver_999_kg": 152941,
+   "usd_inr": null,
+   "src": "IBJA official AM; Reuters London spot 10:36 GMT"
+  },
+  {
+   "date": "2026-11-24",
+   "gold_usd": 3636.0,
+   "silver_usd": 43.4,
    "gold_999_10g": null,
    "gold_916_10g": null,
    "gold_750_10g": null,
    "silver_999_kg": null,
-   "usd_inr": null,
-   "src": "Reuters/Business Upturn/Alpha Vantage spot (Asian session)"
+   "usd_inr": 92.97,
+   "src": "Alpha Vantage/Goodreturns/Open Press spot; IBJA holiday"
   }
  ],
  "history_note": "Monthly series: average international gold price (USD/oz) and USD-INR from datasets/gold-prices and datasets/exchange-rates (GitHub), Jan 1990 – Oct 2026. Daily rows: verified figures collected by this app's refreshes.",
  "highlights": [
   {
-   "level": "alert",
+   "level": "info",
    "metal": "Both",
-   "text": "Gold fell below $3,550 this morning, down about 8.9% this week (its worst week since March); silver is below $42.",
-   "src": "Reuters via Rallies.ai; Business Upturn",
-   "url": "https://rallies.ai/news/gold-set-for-worst-week-in-eight-months-as-firm-dollar-fed-hike-bets-weigh-17c788828354aa0b"
-  },
-  {
-   "level": "alert",
-   "text": "Main reason: markets are pricing in about a 90% chance of a US rate hike in December, and the dollar is at a 19-month high.",
-   "src": "Startup Fortune citing Kitco",
-   "url": "https://startupfortune.com/golds-bad-year-is-getting-worse-as-it-sinks-below-3650/",
-   "metal": "Both"
+   "text": "Gold bounced about 3.5% on Monday from a 14-month low and is near $3,636 today; silver is up to about $43.",
+   "src": "The Nation (Reuters data); Alpha Vantage",
+   "url": "https://www.nationthailand.com/business/trading-investment/40073846"
   },
   {
    "level": "alert",
    "metal": "India",
-   "text": "Indian rates are falling sharply today: MCX gold futures are down nearly 4% at ₹1,22,430 per 10 g; SY expects today's IBJA 24K near ₹12,350/g.",
-   "src": "NewsBytes (MCX); SY estimate",
-   "url": "https://www.newsbytesapp.com/news/business/gold-and-silver-drop-sharply-on-mcx-amid-dollar-strength/tldr"
+   "text": "No IBJA rates today (24 Nov holiday) and MCX trades only half a day. Shop boards moved up: Chennai 22K ₹11,715/g (+₹115).",
+   "src": "IBJA official website; Goodreturns",
+   "url": "https://www.ibjarates.com/"
   },
   {
    "level": "info",
-   "text": "Next big event: the US inflation (CPI) report on 10 Dec, ahead of the Fed's December decision. Expect large moves around those dates.",
-   "src": "FOREX.com via Startup Fortune",
-   "url": "https://startupfortune.com/golds-bad-year-is-getting-worse-as-it-sinks-below-3650/",
-   "metal": "Both"
+   "metal": "Both",
+   "text": "Why the bounce: bargain buying after last week's ~9% fall and calmer tech stocks.",
+   "src": "Goodreturns; USAGOLD",
+   "url": "https://www.usagold.com/daily-precious-metals-market-report-november-23-2026/"
+  },
+  {
+   "level": "alert",
+   "metal": "Both",
+   "text": "Next big event: US PCE inflation data on 25 Nov. Markets still expect a quarter-point Fed rate rise in December, which could cap gold.",
+   "src": "The Nation (Reuters data); Goodreturns",
+   "url": "https://www.nationthailand.com/business/trading-investment/40073846"
   }
  ],
  "guidance": {
-  "mood": "Falling, high volatility",
-  "summary": "Prices are in a clear downtrend, and daily moves of 2–3% are common right now. Nobody can reliably call the bottom. If you need gold or silver, how you buy matters more than the exact day you buy.",
+  "mood": "Rebounding, still very volatile",
+  "summary": "Gold and silver bounced sharply on Monday after last week's steep fall, but daily swings of 2–4% are still common. The US inflation data on 25 Nov and the Fed's December decision can move prices either way. Spreading purchases out still matters more than picking the exact day.",
   "points": [
    {
     "who": "Buying jewellery for a fixed date (wedding, festival)",
@@ -373,142 +398,164 @@
   "note": "General guidance based on the verified data in this app. This is not personal financial advice: consider your own needs or speak to a SEBI-registered adviser before large purchases."
  },
  "india_estimate": {
-  "for_date": "20 Nov 2026 (IBJA AM, ~12:30 pm)",
-  "gold_999_10g": 123502,
-  "gold_916_10g": 113127,
-  "gold_750_10g": 92627,
-  "silver_999_kg": 149854,
+  "for_date": "25 Nov 2026 (IBJA AM, ~12:30 pm)",
+  "gold_999_10g": 125601,
+  "gold_916_10g": 115051,
+  "gold_750_10g": 94201,
+  "silver_999_kg": 155711,
   "margin_pct": {
-   "gold": 0.8,
-   "silver": 1.3
+   "gold": 2.4,
+   "silver": 4.1
   },
   "status": "estimate",
-  "basis": "19 Nov IBJA AM × (spot now ÷ spot at that fix) × (USD-INR now ÷ then). Gold $3,730 → $3,547 (−4.9%); silver $45.16 → $41.92; USD-INR 93.40 → 93.32 (19 Nov close; today's rate not yet confirmed). Cross-check: MCX Dec gold ₹1,22,430/10 g at 9:33 am and Goodreturns ₹12,557/g early today are both within about 1% of this.",
+  "basis": "23 Nov IBJA PM × (spot now ÷ spot at that fix). Gold $3,617 (10:36 GMT, Reuters) → $3,636 (+0.5%); silver $42.54 → $43.40 (+2.0%). USD-INR assumed unchanged at 92.97 (no verified 23 Nov fix-time rate). IBJA did not publish on 24 Nov (holiday), so this is for 25 Nov; margins are wide because the fix is a day away and will narrow at the next refresh.",
   "am": {
-   "for": "20 Nov 2026",
+   "for": "25 Nov 2026",
    "label": "Midday · IBJA AM ~12:30 pm",
-   "gold_999_10g": 123502,
-   "gold_916_10g": 113127,
-   "gold_750_10g": 92627,
-   "silver_999_kg": 149854,
+   "gold_999_10g": 125601,
+   "gold_916_10g": 115051,
+   "gold_750_10g": 94201,
+   "silver_999_kg": 155711,
    "margin_pct": {
-    "gold": 0.8,
-    "silver": 1.3
+    "gold": 2.4,
+    "silver": 4.1
    }
   },
   "pm": {
-   "for": "20 Nov 2026",
+   "for": "25 Nov 2026",
    "label": "Evening · IBJA PM ~5 pm",
-   "gold_999_10g": 123502,
-   "gold_916_10g": 113127,
-   "gold_750_10g": 92627,
-   "silver_999_kg": 149854,
+   "gold_999_10g": 125601,
+   "gold_916_10g": 115051,
+   "gold_750_10g": 94201,
+   "silver_999_kg": 155711,
    "margin_pct": {
-    "gold": 1.1,
-    "silver": 1.8
+    "gold": 2.6,
+    "silver": 4.4
    }
   },
   "pm_note": "Best guess for later today is the current price; the margin is wider because there are more hours for the price to move."
  },
  "accuracy": {
-  "note": "Scoring starts today: each estimate is compared with the real IBJA rate once published.",
-  "log": []
+  "note": "4 estimates scored since 20 Nov 2026.",
+  "log": [
+   {
+    "date": "2026-11-20",
+    "session": "AM",
+    "metal": "gold",
+    "est": 123502,
+    "actual": 123584,
+    "err_pct": 0.07,
+    "margin_pct": 0.8
+   },
+   {
+    "date": "2026-11-20",
+    "session": "AM",
+    "metal": "silver",
+    "est": 149854,
+    "actual": 150650,
+    "err_pct": 0.53,
+    "margin_pct": 1.3
+   },
+   {
+    "date": "2026-11-20",
+    "session": "PM",
+    "metal": "gold",
+    "est": 123502,
+    "actual": 123893,
+    "err_pct": 0.32,
+    "margin_pct": 1.1
+   },
+   {
+    "date": "2026-11-20",
+    "session": "PM",
+    "metal": "silver",
+    "est": 149854,
+    "actual": 152528,
+    "err_pct": 1.78,
+    "margin_pct": 1.8
+   }
+  ]
  },
  "crosscheck": {
-  "asof": "20 Nov 2026, ~10 am IST",
+  "asof": "24 Nov 2026, ~10:15 am IST",
   "note": "Same moment, different kinds of price. Compare like with like: SY's estimate is IBJA-style (includes import duty, excludes GST).",
   "rows": [
    {
     "src": "IBJA (official benchmark)",
     "kind": "Official · ex-GST",
-    "g24": 12998.5,
-    "when": "19 Nov, 12:30 pm",
-    "url": "https://www.5paisa.com/blog/gold-rate-today-19-november-2026",
+    "g24": 12494.5,
+    "when": "23 Nov, ~5 pm (PM)",
+    "url": "https://www.ibjarates.com/",
     "flag": "yesterday"
    },
    {
     "src": "MCX gold futures (Dec)",
     "kind": "Exchange price · ex-GST",
-    "g24": 12243,
-    "when": "20 Nov, 9:33 am",
-    "url": "https://www.newsbytesapp.com/news/business/gold-and-silver-drop-sharply-on-mcx-amid-dollar-strength/tldr",
-    "flag": ""
+    "g24": 12602.1,
+    "when": "23 Nov, last trade",
+    "url": "https://www.goodreturns.in/news/gold-rates-today-november-24-gold-jumps-rs-27200-24k-22k-18k-gold-prices-in-bangalore-chennai-cities-1549221.html",
+    "flag": "yesterday"
    },
    {
     "src": "TN board rate (Chennai / Madurai shops)",
     "kind": "Shop board rate · ex-GST",
-    "g24": 12557,
-    "when": "20 Nov, morning",
-    "url": "https://www.goodreturns.in/news/gold-rate-crash-today-20-11-2026-rs-51200-24k-22k-18k-gold-price-chennai-bangalore-hyderabad-cities-1548441.html",
+    "g24": 12780,
+    "when": "24 Nov, 9:57 am",
+    "url": "https://www.goodreturns.in/news/gold-rates-today-november-24-gold-jumps-rs-27200-24k-22k-18k-gold-prices-in-bangalore-chennai-cities-1549221.html",
     "flag": ""
    },
    {
-    "src": "Paytm (Bengaluru)",
+    "src": "The Open Press (India retail)",
+    "kind": "Retail rate",
+    "g24": 12664,
+    "when": "24 Nov, morning",
+    "url": "https://theopenpress.in/article/gold-silver-price-today-24-november",
+    "flag": ""
+   },
+   {
+    "src": "Paytm (Chennai)",
     "kind": "City rate",
-    "g24": 12792.75,
-    "when": "20 Nov",
-    "url": "https://paytm.com/tools/gold-rates/gold-rates-bengaluru/",
+    "g24": 12835.39,
+    "when": "23 Nov",
+    "url": "https://paytm.com/tools/gold-rates/24k-gold-rates-chennai/",
     "flag": "older update"
-   },
-   {
-    "src": "FinVedik",
-    "kind": "Includes 3% GST",
-    "g24": 13461,
-    "when": "20 Nov",
-    "url": "https://goldbiz.finvedik.com/gold-rates",
-    "flag": "GST included"
-   },
-   {
-    "src": "Angel One",
-    "kind": "World price in ₹ · no import duty",
-    "g24": 11474.14,
-    "when": "20 Nov",
-    "url": "https://www.angelone.in/gold-rates-today",
-    "flag": "no duty"
    }
   ],
   "global": [
    {
-    "src": "LBMA Gold Price PM (London benchmark)",
-    "usd": 3673.76,
-    "when": "19 Nov, 3 pm London (indication)",
-    "url": "https://www.raiffeisenzertifikate.at/en/produkt/commodity/gold-XC0009655157"
+    "src": "Spot gold (Alpha Vantage)",
+    "usd": 3630.43,
+    "when": "24 Nov, 04:42 GMT"
    },
    {
-    "src": "COMEX Dec futures (Reuters)",
-    "usd": 3551.9,
-    "when": "20 Nov, 02:57 GMT",
-    "url": "https://rallies.ai/news/gold-set-for-worst-week-in-eight-months-as-firm-dollar-fed-hike-bets-weigh-17c788828354aa0b"
+    "src": "Spot gold (Reuters, London)",
+    "usd": 3617.41,
+    "when": "23 Nov, 10:36 GMT"
    },
    {
-    "src": "Spot gold (Reuters)",
-    "usd": 3551.68,
-    "when": "20 Nov, 02:57 GMT",
-    "url": "https://rallies.ai/news/gold-set-for-worst-week-in-eight-months-as-firm-dollar-fed-hike-bets-weigh-17c788828354aa0b"
+    "src": "Spot gold (Kitco)",
+    "usd": 3651.5,
+    "when": "23 Nov, 7:34 pm NY"
    }
   ]
  },
  "board": {
   "region": "Tamil Nadu (Chennai / Madurai board rate)",
-  "asof": "20 Nov 2026, morning",
-  "status": "verified",
-  "g24": 12557,
-  "g22": 11510,
-  "g18": 9418,
+  "asof": "24 Nov 2026, 9:57 am",
+  "status": "single source",
+  "g24": 12780,
+  "g22": 11715,
+  "g18": 9585,
   "silver_g": 175,
-  "note": "Shop board rate set each morning by the jewellers' association; excludes 3% GST and making charges. Same figures shown by Jai Jewellers, Madurai, and Goodreturns (Chennai).",
+  "note": "Shop board rate set each morning; excludes 3% GST and making charges. Today's gold figures are from Goodreturns; its implied 23 Nov 22K (₹11,600) matches DT Next's 23 Nov Chennai rate. Silver ₹175/g is DT Next's 23 Nov rate (today's not yet confirmed).",
   "sources": [
    {
-    "name": "Goodreturns: Chennai 22K ₹11,510, 8 g ₹92,080, silver ₹1,75,000/kg",
-    "url": "https://www.goodreturns.in/news/gold-rate-crash-today-20-11-2026-rs-51200-24k-22k-18k-gold-price-chennai-bangalore-hyderabad-cities-1548441.html"
+    "name": "Goodreturns, 24 Nov (Chennai 24K ₹12,780 · 22K ₹11,715 · 18K ₹9,585)",
+    "url": "https://www.goodreturns.in/news/gold-rates-today-november-24-gold-jumps-rs-27200-24k-22k-18k-gold-prices-in-bangalore-chennai-cities-1549221.html"
    },
    {
-    "name": "The Hans India: Chennai 22K ₹1,15,100 per 10 g",
-    "url": "https://www.thehansindia.com/business/gold-and-silver-rates-today-20-nov-2026-slashes-in-bengaluru-and-chennai-check-gold-prices-of-18k-22k-24k-1143932"
-   },
-   {
-    "name": "Goodreturns Bangalore (same 24K/22K/18K)",
-    "url": "https://www.goodreturns.in/gold-rates/bangalore.html"
+    "name": "DT Next, 23 Nov (22K ₹11,600, silver ₹175/g)",
+    "url": "https://www.dtnext.in/news/chennai/chennai-gold-price-rises-by-rs-1080-on-november-23-2026-check-todays-gold-silver-rate"
    }
   ]
  },
