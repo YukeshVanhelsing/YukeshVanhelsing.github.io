@@ -1,9 +1,9 @@
 {
- "updated_at": "2026-11-24T10:24:51+05:30",
+ "updated_at": "2026-11-24T21:04:36+05:30",
  "next_update": "Every 30 min on weekdays (prices); news ~08:45 and ~13:45 IST",
  "fx": {
   "usd_inr": 92.96,
-  "asof": "24 Nov 2026, 10:24 AM IST",
+  "asof": "24 Nov 2026, 9:04 PM IST",
   "status": "verified",
   "sources": [
    {
@@ -18,18 +18,18 @@
  },
  "gold": {
   "intl": {
-   "usd_oz": 3635.53,
+   "usd_oz": 3592.51,
    "change_pct": 2.51,
-   "asof": "24 Nov 2026, 10:24 AM IST",
+   "asof": "24 Nov 2026, 9:04 PM IST",
    "status": "verified",
    "note": "Live spot from two independent feeds, checked automatically every 30 minutes on weekdays.",
    "sources": [
     {
-     "name": "Swissquote ($3,635.66)",
+     "name": "Swissquote ($3,592.11)",
      "url": "https://www.swissquote.com"
     },
     {
-     "name": "Kitco ($3,635.40)",
+     "name": "Kitco ($3,592.90)",
      "url": "https://www.kitco.com"
     }
    ]
@@ -83,18 +83,18 @@
  },
  "silver": {
   "intl": {
-   "usd_oz": 42.721,
+   "usd_oz": 41.441,
    "change_pct": 3.5,
-   "asof": "24 Nov 2026, 10:24 AM IST",
+   "asof": "24 Nov 2026, 9:04 PM IST",
    "status": "verified",
    "note": "Live spot from two independent feeds, checked automatically every 30 minutes on weekdays.",
    "sources": [
     {
-     "name": "Swissquote (42.752)",
+     "name": "Swissquote (41.452)",
      "url": "https://www.swissquote.com"
     },
     {
-     "name": "Kitco (42.690)",
+     "name": "Kitco (41.430)",
      "url": "https://www.kitco.com"
     }
    ]
@@ -132,7 +132,7 @@
   }
  },
  "india_outlook": {
-  "text": "Since the last IBJA fix (23 Nov 2026, PM), gold has moved +0.50% in rupee terms and silver +0.41%. If that holds, the next IBJA 24K would be near ₹12,557/g.",
+  "text": "Since the last IBJA fix (23 Nov 2026, PM), gold has moved -0.69% in rupee terms and silver -2.60%. If that holds, the next IBJA 24K would be near ₹12,408/g.",
   "basis": "Arithmetic from the live figures above; not a forecast from any source."
  },
  "drivers": [
@@ -396,38 +396,38 @@
  },
  "india_estimate": {
   "for_date": "25 Nov 2026 (IBJA AM, ~12:30 pm)",
-  "gold_999_10g": 125568,
-  "gold_916_10g": 115021,
-  "gold_750_10g": 94176,
-  "silver_999_kg": 153253,
+  "gold_999_10g": 124082,
+  "gold_916_10g": 113660,
+  "gold_750_10g": 93062,
+  "silver_999_kg": 148662,
   "margin_pct": {
-   "gold": 2.4,
-   "silver": 4.1
+   "gold": 1.9,
+   "silver": 3.2
   },
   "status": "estimate",
-  "basis": "23 Nov 2026 IBJA PM × (spot now ÷ spot at that fix) × (USD-INR now ÷ then). Gold $3,617.00 → $3,635.53; silver $42.54 → $42.72; USD-INR 92.97 → 92.96. Updated automatically at 24 Nov 2026, 10:24 AM IST.",
+  "basis": "23 Nov 2026 IBJA PM × (spot now ÷ spot at that fix) × (USD-INR now ÷ then). Gold $3,617.00 → $3,592.51; silver $42.54 → $41.44; USD-INR 92.97 → 92.96. Updated automatically at 24 Nov 2026, 9:04 PM IST.",
   "am": {
    "for": "25 Nov 2026",
    "label": "Midday · IBJA AM ~12:30 pm · 25 Nov",
-   "gold_999_10g": 125568,
-   "gold_916_10g": 115021,
-   "gold_750_10g": 94176,
-   "silver_999_kg": 153253,
+   "gold_999_10g": 124082,
+   "gold_916_10g": 113660,
+   "gold_750_10g": 93062,
+   "silver_999_kg": 148662,
    "margin_pct": {
-    "gold": 2.4,
-    "silver": 4.1
+    "gold": 1.9,
+    "silver": 3.2
    }
   },
   "pm": {
    "for": "25 Nov 2026",
    "label": "Evening · IBJA PM ~5 pm · 25 Nov",
-   "gold_999_10g": 125568,
-   "gold_916_10g": 115021,
-   "gold_750_10g": 94176,
-   "silver_999_kg": 153253,
+   "gold_999_10g": 124082,
+   "gold_916_10g": 113660,
+   "gold_750_10g": 93062,
+   "silver_999_kg": 148662,
    "margin_pct": {
-    "gold": 2.6,
-    "silver": 4.4
+    "gold": 2.1,
+    "silver": 3.6
    }
   },
   "pm_note": "Best guess for later today is the current price; the margin is wider because there are more hours for the price to move."
@@ -620,6 +620,12 @@
    "t": "2026-11-24T10:24+05:30",
    "gold": 3635.53,
    "silver": 42.721,
+   "fx": 92.957
+  },
+  {
+   "t": "2026-11-24T21:04+05:30",
+   "gold": 3592.51,
+   "silver": 41.441,
    "fx": 92.957
   }
  ]
