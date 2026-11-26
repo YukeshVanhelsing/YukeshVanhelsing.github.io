@@ -1,31 +1,35 @@
 {
- "updated_at": "2026-11-26T17:28:10+05:30",
+ "updated_at": "2026-11-27T02:52:34+05:30",
  "next_update": "Every 30 min on weekdays (prices); news ~08:45 and ~13:45 IST",
  "fx": {
-  "usd_inr": 92.93,
-  "asof": "26 Nov 2026, 5:28 PM IST",
-  "status": "single source",
+  "usd_inr": 92.4,
+  "asof": "27 Nov 2026, 2:52 AM IST",
+  "status": "verified",
   "sources": [
    {
-    "name": "ExchangeRate-API (92.925)",
+    "name": "ExchangeRate-API (92.345)",
     "url": "https://www.exchangerate-api.com"
+   },
+   {
+    "name": "Frankfurter (ECB reference) (92.450)",
+    "url": "https://www.frankfurter.app"
    }
   ]
  },
  "gold": {
   "intl": {
-   "usd_oz": 3568.68,
-   "change_pct": 1.68,
-   "asof": "26 Nov 2026, 5:28 PM IST",
+   "usd_oz": 3566.7,
+   "change_pct": -0.06,
+   "asof": "27 Nov 2026, 2:52 AM IST",
    "status": "verified",
    "note": "Live spot from two independent feeds, checked automatically every 30 minutes on weekdays.",
    "sources": [
     {
-     "name": "Swissquote ($3,568.75)",
+     "name": "Swissquote ($3,567.39)",
      "url": "https://www.swissquote.com"
     },
     {
-     "name": "Kitco ($3,568.60)",
+     "name": "Kitco ($3,566.00)",
      "url": "https://www.kitco.com"
     }
    ]
@@ -79,18 +83,18 @@
  },
  "silver": {
   "intl": {
-   "usd_oz": 41.519,
-   "change_pct": 4.72,
-   "asof": "26 Nov 2026, 5:28 PM IST",
+   "usd_oz": 41.512,
+   "change_pct": -0.02,
+   "asof": "27 Nov 2026, 2:52 AM IST",
    "status": "verified",
    "note": "Live spot from two independent feeds, checked automatically every 30 minutes on weekdays.",
    "sources": [
     {
-     "name": "Swissquote (41.544)",
+     "name": "Swissquote (41.543)",
      "url": "https://www.swissquote.com"
     },
     {
-     "name": "Kitco (41.495)",
+     "name": "Kitco (41.480)",
      "url": "https://www.kitco.com"
     }
    ]
@@ -128,7 +132,7 @@
   }
  },
  "india_outlook": {
-  "text": "Since the last IBJA fix (25 Nov 2026, PM), gold has moved +1.69% in rupee terms and silver +4.72%. If that holds, the next IBJA 24K would be near ₹12,308/g.",
+  "text": "Since the last IBJA fix (25 Nov 2026, PM), gold has moved +1.05% in rupee terms and silver +4.11%. If that holds, the next IBJA 24K would be near ₹12,231/g.",
   "basis": "Arithmetic from the live figures above; not a forecast from any source."
  },
  "drivers": [
@@ -402,39 +406,39 @@
   "note": "General guidance based on the verified data in this app. This is not personal financial advice: consider your own needs or speak to a SEBI-registered adviser before large purchases."
  },
  "india_estimate": {
-  "for_date": "27 Nov 2026 (IBJA AM, ~12:30 pm)",
-  "gold_999_10g": 123080,
-  "gold_916_10g": 112742,
-  "gold_750_10g": 92311,
-  "silver_999_kg": 149695,
+  "for_date": "30 Nov 2026 (IBJA AM, ~12:30 pm)",
+  "gold_999_10g": 122314,
+  "gold_916_10g": 112040,
+  "gold_750_10g": 91736,
+  "silver_999_kg": 148818,
   "margin_pct": {
-   "gold": 2.1,
-   "silver": 3.5
+   "gold": 4.3,
+   "silver": 7.2
   },
   "status": "estimate",
-  "basis": "25 Nov 2026 IBJA PM × (spot now ÷ spot at that fix) × (USD-INR now ÷ then). Gold $3,509.54 → $3,568.68; silver $39.65 → $41.52; USD-INR 92.92 → 92.93. Updated automatically at 26 Nov 2026, 5:28 PM IST.",
+  "basis": "25 Nov 2026 IBJA PM × (spot now ÷ spot at that fix) × (USD-INR now ÷ then). Gold $3,509.54 → $3,566.70; silver $39.65 → $41.51; USD-INR 92.92 → 92.40. Updated automatically at 27 Nov 2026, 2:52 AM IST.",
   "am": {
-   "for": "27 Nov 2026",
-   "label": "Midday · IBJA AM ~12:30 pm · 27 Nov",
-   "gold_999_10g": 123080,
-   "gold_916_10g": 112742,
-   "gold_750_10g": 92311,
-   "silver_999_kg": 149695,
+   "for": "30 Nov 2026",
+   "label": "Midday · IBJA AM ~12:30 pm · 30 Nov",
+   "gold_999_10g": 122314,
+   "gold_916_10g": 112040,
+   "gold_750_10g": 91736,
+   "silver_999_kg": 148818,
    "margin_pct": {
-    "gold": 2.1,
-    "silver": 3.5
+    "gold": 4.3,
+    "silver": 7.2
    }
   },
   "pm": {
-   "for": "27 Nov 2026",
-   "label": "Evening · IBJA PM ~5 pm · 27 Nov",
-   "gold_999_10g": 123080,
-   "gold_916_10g": 112742,
-   "gold_750_10g": 92311,
-   "silver_999_kg": 149695,
+   "for": "30 Nov 2026",
+   "label": "Evening · IBJA PM ~5 pm · 30 Nov",
+   "gold_999_10g": 122314,
+   "gold_916_10g": 112040,
+   "gold_750_10g": 91736,
+   "silver_999_kg": 148818,
    "margin_pct": {
-    "gold": 2.3,
-    "silver": 3.9
+    "gold": 4.4,
+    "silver": 7.4
    }
   },
   "pm_note": "Best guess for later today is the current price; the margin is wider because there are more hours for the price to move."
@@ -652,6 +656,12 @@
    "gold": 3568.68,
    "silver": 41.519,
    "fx": 92.925
+  },
+  {
+   "t": "2026-11-27T02:52+05:30",
+   "gold": 3566.7,
+   "silver": 41.512,
+   "fx": 92.398
   }
  ]
 }
