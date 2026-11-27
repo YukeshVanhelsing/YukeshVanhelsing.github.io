@@ -1,13 +1,13 @@
 {
- "updated_at": "2026-11-27T02:52:34+05:30",
+ "updated_at": "2026-11-27T17:20:03+05:30",
  "next_update": "Every 30 min on weekdays (prices); news ~08:45 and ~13:45 IST",
  "fx": {
-  "usd_inr": 92.4,
-  "asof": "27 Nov 2026, 2:52 AM IST",
+  "usd_inr": 92.49,
+  "asof": "27 Nov 2026, 5:20 PM IST",
   "status": "verified",
   "sources": [
    {
-    "name": "ExchangeRate-API (92.345)",
+    "name": "ExchangeRate-API (92.520)",
     "url": "https://www.exchangerate-api.com"
    },
    {
@@ -18,50 +18,50 @@
  },
  "gold": {
   "intl": {
-   "usd_oz": 3566.7,
-   "change_pct": -0.06,
-   "asof": "27 Nov 2026, 2:52 AM IST",
+   "usd_oz": 3668.37,
+   "change_pct": 2.79,
+   "asof": "27 Nov 2026, 5:20 PM IST",
    "status": "verified",
    "note": "Live spot from two independent feeds, checked automatically every 30 minutes on weekdays.",
    "sources": [
     {
-     "name": "Swissquote ($3,567.39)",
+     "name": "Swissquote ($3,668.14)",
      "url": "https://www.swissquote.com"
     },
     {
-     "name": "Kitco ($3,566.00)",
+     "name": "Kitco ($3,668.60)",
      "url": "https://www.kitco.com"
     }
    ]
   },
   "india": {
-   "p999_10g": 121038,
-   "p916_10g": 110871,
+   "p999_10g": 122641,
+   "p916_10g": 112339,
    "session": "IBJA PM",
-   "date": "25 Nov 2026",
-   "prev_999_10g": 121310,
-   "change_pct": -0.22,
-   "pm_999_10g": 121038,
-   "pm_916_10g": 110871,
+   "date": "26 Nov 2026",
+   "prev_999_10g": 122982,
+   "change_pct": -0.28,
+   "pm_999_10g": 122641,
+   "pm_916_10g": 112339,
    "status": "verified",
-   "note": "From IBJA's official website (ibjarates.com), 25 Nov 2026 PM: 999 ₹121,038 · 916 ₹110,871 · 750 ₹90,779 per 10 g, without 3% GST and making charges. Read automatically.",
+   "note": "From IBJA's official website (ibjarates.com), 26 Nov 2026 PM: 999 ₹122,641 · 916 ₹112,339 · 750 ₹91,981 per 10 g, without 3% GST and making charges. Read automatically.",
    "sources": [
     {
      "name": "IBJA official website",
      "url": "https://www.ibjarates.com/"
     }
    ],
-   "p750_10g": 90779,
+   "p750_10g": 91981,
    "pm_750_10g": 97148,
    "prev_916_10g": 120459,
    "prev_750_10g": 98629,
-   "spot_at_fix_usd": 3509.54,
-   "fx_at_fix": 92.923,
+   "spot_at_fix_usd": 3568.68,
+   "fx_at_fix": 92.925,
    "am_999_10g": 125123,
    "am_916_10g": 114613,
    "am_750_10g": 93842,
-   "pm_spot_at_fix_usd": 3509.54,
-   "pm_fx_at_fix": 92.923,
+   "pm_spot_at_fix_usd": 3568.68,
+   "pm_fx_at_fix": 92.925,
    "today_note": "IBJA has not published today's rates (holiday or delay)."
   },
   "vol": {
@@ -83,40 +83,40 @@
  },
  "silver": {
   "intl": {
-   "usd_oz": 41.512,
-   "change_pct": -0.02,
-   "asof": "27 Nov 2026, 2:52 AM IST",
+   "usd_oz": 43.94,
+   "change_pct": 5.83,
+   "asof": "27 Nov 2026, 5:20 PM IST",
    "status": "verified",
    "note": "Live spot from two independent feeds, checked automatically every 30 minutes on weekdays.",
    "sources": [
     {
-     "name": "Swissquote (41.543)",
+     "name": "Swissquote (43.970)",
      "url": "https://www.swissquote.com"
     },
     {
-     "name": "Kitco (41.480)",
+     "name": "Kitco (43.910)",
      "url": "https://www.kitco.com"
     }
    ]
   },
   "india": {
-   "p999_kg": 142945,
+   "p999_kg": 147347,
    "session": "IBJA PM",
-   "date": "25 Nov 2026",
-   "prev_999_kg": 143522,
-   "change_pct": -0.4,
-   "pm_999_kg": 142945,
+   "date": "26 Nov 2026",
+   "prev_999_kg": 146933,
+   "change_pct": 0.28,
+   "pm_999_kg": 147347,
    "status": "verified",
-   "note": "IBJA official website, 25 Nov 2026 PM: ₹142,945/kg (without GST). Read automatically.",
+   "note": "IBJA official website, 26 Nov 2026 PM: ₹147,347/kg (without GST). Read automatically.",
    "sources": [
     {
      "name": "IBJA official website",
      "url": "https://www.ibjarates.com/"
     }
    ],
-   "spot_at_fix_usd": 39.648,
+   "spot_at_fix_usd": 41.519,
    "am_999_kg": 152941,
-   "pm_spot_at_fix_usd": 39.648
+   "pm_spot_at_fix_usd": 41.519
   },
   "vol": {
    "value": 39.13,
@@ -132,7 +132,7 @@
   }
  },
  "india_outlook": {
-  "text": "Since the last IBJA fix (25 Nov 2026, PM), gold has moved +1.05% in rupee terms and silver +4.11%. If that holds, the next IBJA 24K would be near ₹12,231/g.",
+  "text": "Since the last IBJA fix (26 Nov 2026, PM), gold has moved +2.31% in rupee terms and silver +5.33%. If that holds, the next IBJA 24K would be near ₹12,547/g.",
   "basis": "Arithmetic from the live figures above; not a forecast from any source."
  },
  "drivers": [
@@ -340,6 +340,17 @@
    "silver_999_kg": 143522,
    "usd_inr": 92.923,
    "src": "IBJA official AM (auto); spot feeds"
+  },
+  {
+   "date": "2026-11-26",
+   "gold_usd": 3568.68,
+   "silver_usd": 41.519,
+   "gold_999_10g": 122982,
+   "gold_916_10g": 112652,
+   "gold_750_10g": 92237,
+   "silver_999_kg": 146933,
+   "usd_inr": 92.925,
+   "src": "IBJA official AM (auto); spot feeds"
   }
  ],
  "history_note": "Monthly series: average international gold price (USD/oz) and USD-INR from datasets/gold-prices and datasets/exchange-rates (GitHub), Jan 1990 – Oct 2026. Daily rows: verified figures collected by this app's refreshes.",
@@ -407,38 +418,38 @@
  },
  "india_estimate": {
   "for_date": "30 Nov 2026 (IBJA AM, ~12:30 pm)",
-  "gold_999_10g": 122314,
-  "gold_916_10g": 112040,
-  "gold_750_10g": 91736,
-  "silver_999_kg": 148818,
+  "gold_999_10g": 125470,
+  "gold_916_10g": 114931,
+  "gold_750_10g": 94103,
+  "silver_999_kg": 155201,
   "margin_pct": {
-   "gold": 4.3,
-   "silver": 7.2
+   "gold": 3.9,
+   "silver": 6.6
   },
   "status": "estimate",
-  "basis": "25 Nov 2026 IBJA PM × (spot now ÷ spot at that fix) × (USD-INR now ÷ then). Gold $3,509.54 → $3,566.70; silver $39.65 → $41.51; USD-INR 92.92 → 92.40. Updated automatically at 27 Nov 2026, 2:52 AM IST.",
+  "basis": "26 Nov 2026 IBJA PM × (spot now ÷ spot at that fix) × (USD-INR now ÷ then). Gold $3,568.68 → $3,668.37; silver $41.52 → $43.94; USD-INR 92.92 → 92.49. Updated automatically at 27 Nov 2026, 5:20 PM IST.",
   "am": {
    "for": "30 Nov 2026",
    "label": "Midday · IBJA AM ~12:30 pm · 30 Nov",
-   "gold_999_10g": 122314,
-   "gold_916_10g": 112040,
-   "gold_750_10g": 91736,
-   "silver_999_kg": 148818,
+   "gold_999_10g": 125470,
+   "gold_916_10g": 114931,
+   "gold_750_10g": 94103,
+   "silver_999_kg": 155201,
    "margin_pct": {
-    "gold": 4.3,
-    "silver": 7.2
+    "gold": 3.9,
+    "silver": 6.6
    }
   },
   "pm": {
    "for": "30 Nov 2026",
    "label": "Evening · IBJA PM ~5 pm · 30 Nov",
-   "gold_999_10g": 122314,
-   "gold_916_10g": 112040,
-   "gold_750_10g": 91736,
-   "silver_999_kg": 148818,
+   "gold_999_10g": 125470,
+   "gold_916_10g": 114931,
+   "gold_750_10g": 94103,
+   "silver_999_kg": 155201,
    "margin_pct": {
-    "gold": 4.4,
-    "silver": 7.4
+    "gold": 4.0,
+    "silver": 6.8
    }
   },
   "pm_note": "Best guess for later today is the current price; the margin is wider because there are more hours for the price to move."
@@ -662,6 +673,12 @@
    "gold": 3566.7,
    "silver": 41.512,
    "fx": 92.398
+  },
+  {
+   "t": "2026-11-27T17:20+05:30",
+   "gold": 3668.37,
+   "silver": 43.94,
+   "fx": 92.485
   }
  ]
 }
